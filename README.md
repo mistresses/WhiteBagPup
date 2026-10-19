@@ -1,1 +1,96 @@
-# WhiteBagPup
+# White Bag Pup 🐶
+
+A little desktop companion for **Realm of the Mad God**. It barks in your Discord when a white bag drops, and keeps
+an eye on your DPS, fame, loot, trades and realm events while you play.
+
+<p align="center"><img src="images/app.png" alt="White Bag Pup" width="560"></p>
+
+It only **reads** the game's network traffic (the same way RealmShark/Tomato does). It never touches the game client,
+never sends anything to the game, and never plays for you.
+
+## Download
+
+Get **WhiteBagPup.jar** from the [latest release](../../releases/latest).
+
+When there's a new version, a pink **A new version is out!** button appears at the top of the Home tab.
+Download the new jar and put it in the same folder in place of the old one. Your settings and logs stay.
+See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
+
+## Setup (Windows)
+
+1. Install **Java** (https://www.java.com/download) and **Npcap** (https://npcap.com/#download).
+If you already use Tomato or RealmShark, you have both.
+2. Make a folder somewhere plain, like `C:\\WhiteBagPup` (not inside a zip, OneDrive, Program Files or a protected
+Desktop folder), and put `WhiteBagPup.jar` in it. The app saves its settings and logs next to itself.
+3. Make a Discord webhook: in your server, **Server Settings > Integrations > Webhooks > New Webhook**, pick the
+channel, then **Copy Webhook URL**.
+4. Double-click `WhiteBagPup.jar`, paste the URL and press **Send test post**.
+5. Optional: to get pinged, turn on **Discord Settings > Advanced > Developer Mode**, right-click your name,
+**Copy User ID**, and paste it into **Ping me**.
+6. Press **Start watching**. If you're already in game, change area once (go to the Nexus) so it can sync.
+
+The first time, it reads item names and pictures from your game install. That can take a minute and happens again
+whenever the game updates. If your game is installed somewhere unusual, run
+`java -jar WhiteBagPup.jar --path "C:\\path\\to\\resources.assets"`.
+
+For the posts' profile picture, upload [`images/white-bag-pup-avatar.png`](images/white-bag-pup-avatar.png)
+in your webhook's settings.
+
+## What it does
+
+* **Bag posts**: the bag, every item with its tier (UT, ST, T12...) and rarity (Uncommon to Divine), the dungeon,
+your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity.
+Optionally add a picture of your game window (**Game pictures: On**). Overflow bags are merged into one post.
+* **Bag Log**: every bag it barked about this session.
+* **Chat**: all in-game chat, colour-coded, with filters and search.
+* **DPS**: a leaderboard for each boss in each run, with damage taken and Oryx 3 guarded hits.
+* **About Me**: your character and stats (with max and exaltations), gear with enchantments, your pet with a
+feeding planner, and the Tinkerer's quests (click to cross things off).
+* **Fame**: fame this session, per hour, a chart, and fame by dungeon.
+* **Vault**: your vault, potion storage and gift chest, with stat potion counts.
+* **Loot**: every bag seen (all colours), by dungeon, drop rates ("1 white per 12 Shatters runs") and best drops.
+* **Trades**: every trade you finish, who with, and what you gave and got.
+* **Events**: realm events, dungeon key pops and closing realms on every server from RealmStock's event notifier,
+with tick boxes for what you care about and a sound when one pops up.
+* **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: bags, best drops,
+runs, luckiest dungeon, fame, top DPS, trades and time played. Set it up under **Recaps** on the Home tab.
+* **Two accounts at once**: each game client gets its own tabs; switch with the Account buttons.
+
+<p align="center"><img src="images/fame.png" alt="Fame tab" width="420"></p>
+<p align="center"><img src="images/loot-and-trades.png" alt="Loot and Trades tabs" width="700"></p>
+
+## Sounds
+
+Put `.wav` files in the `sounds` folder next to the app (MP3 doesn't work, convert it first):
+
+* Bags: `white.wav`, `red.wav`, `orange.wav`, `gold.wav`, `egg.wav`, `blue.wav` (and `boosted-white.wav` and so on).
+* Events: `event.wav`, `key-pop.wav`, `realm-closed.wav`, or one named after a single event, like `cube-god.wav`.
+
+## Good to know
+
+* **Keep your webhook URL private.** It's saved in `whitebag-notifier.properties`, which only lives on your PC.
+* **"Extraction access denied"** means Windows blocked the app from saving the game files. Move the folder somewhere
+plain like `C:\\WhiteBagPup`, or allow Java under **Windows Security > Ransomware protection > Controlled folder access**.
+* **Don't run other packet sniffers at the same time** if you see sniffer errors.
+
+## Building from source
+
+`build.sh` compiles the packet library, its dependencies (pcap 1.4.2, JNA 5.12.1, Gson 2.9.1, FlatBuffers 23.5.26)
+and the app into one Java 8 jar. It expects these checkouts next to this folder: `../RealmShark` (or `../Puppy`) and
+`../dl/{pcap,gson,fb,jna}`. The files in `src/main/java/packets` and `src/main/java/assets` replace the library's own
+copies.
+
+To publish a new version: bump `VERSION` in `src/main/java/whitebag/UpdateCheck.java` (1.0, 1.1, 1.2...), build,
+then on GitHub **Releases > Draft a new release**, use the same number as the tag, attach `WhiteBagPup.jar`
+and publish. Add the new version to the top of `CHANGELOG.md` too.
+
+## Credits and licences
+
+* The packet library is based on [RealmShark](https://github.com/X-com/RealmShark) by X-com (MIT licence).
+* The item rarity (enchantment) format follows [DaAwesomePwner's RealmShark fork](https://github.com/DaAwesomePwner/RealmShark) (MIT).
+* The all-servers event feed comes from [RealmStock's event notifier](https://realmstock.com/pages/event-notifier).
+* pcap (MIT/Apache-2.0), JNA (Apache-2.0/LGPL), Gson and FlatBuffers (Apache-2.0).
+
+Their licence texts are in the [`licenses`](licenses) folder and inside the jar.
+Game assets © DECA Live Operations GmbH.
+

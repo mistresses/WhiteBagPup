@@ -1,0 +1,206 @@
+package whitebag;
+
+import com.sun.jna.Callback;
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.MemoryCacheImageOutputStream;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Robot;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * A picture of the game window for the bag post (Windows only, and only when you turn it on).
+ * <p>
+ * It finds the RotMG Exalt window and copies that part of the screen, the same as pressing Print Screen.
+ * It only sees what's on screen, so if the game is minimised or covered by another window the picture shows that
+ * (a minimised game is skipped). Nothing is saved; the picture only goes into the Discord post.
+ */
+final class GameShot {
+    private GameShot() {
+    }
+
+    /** Windows functions used to find the game window. */
+    private interface User32 extends Library {
+        interface EnumProc extends Callback {
+            boolean callback(Pointer hWnd, Pointer data);
+        }
+
+        boolean EnumWindows(EnumProc proc, Pointer data);
+
+        int GetWindowTextW(Pointer hWnd, char[] text, int max);
+
+        int GetClassNameW(Pointer hWnd, char[] text, int max);
+
+        boolean IsWindowVisible(Pointer hWnd);
+
+        boolean IsIconic(Pointer hWnd);
+
+        Pointer GetForegroundWindow();
+
+        boolean GetWindowRect(Pointer hWnd, int[] rect);
+
+        boolean GetClientRect(Pointer hWnd, int[] rect);
+
+        boolean ClientToScreen(Pointer hWnd, int[] point);
+    }
+
+    private static User32 user32;
+    private static boolean tried;
+
+    private static synchronized User32 user32() {
+        if (!tried) {
+            tried = true;
+            if (System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows")) {
+                try {
+                    user32 = Native.load("user32", User32.class, com.sun.jna.win32.W32APIOptions.DEFAULT_OPTIONS);
+                } catch (Throwable e) {
+                    System.out.println("Game screenshot: couldn't load user32: " + e);
+                }
+            }
+        }
+        return user32;
+    }
+
+    /** Why the last capture didn't happen (for the diary), or null. */
+    static volatile String lastProblem;
+
+    /** The game window's picture as a JPEG, or null (not Windows, game not found, or minimised). */
+    static byte[] capture() {
+        lastProblem = null;
+        try {
+            User32 u = user32();
+            if (u == null) {
+                lastProblem = "screenshots only work on Windows";
+                return null;
+            }
+            Pointer game = findGame(u);
+            if (game == null) {
+                lastProblem = "couldn't find the game window";
+                return null;
+            }
+            if (u.IsIconic(game)) {
+                lastProblem = "the game is minimised";
+                return null;
+            }
+            // the inside of the window (no title bar), in real screen pixels
+            int[] client = new int[4];
+            int[] origin = new int[2];
+            if (!u.GetClientRect(game, client) || !u.ClientToScreen(game, origin)) {
+                lastProblem = "couldn't read the game window's position";
+                return null;
+            }
+            Rectangle px = new Rectangle(origin[0], origin[1], client[2] - client[0], client[3] - client[1]);
+            if (px.width < 50 || px.height < 50) {
+                lastProblem = "the game window is too small";
+                return null;
+            }
+            BufferedImage shot = grab(px);
+            if (shot == null) {
+                lastProblem = "the game window is off screen";
+                return null;
+            }
+            return jpeg(fit(shot, 1280));
+        } catch (Throwable e) {
+            lastProblem = e.toString();
+            return null;
+        }
+    }
+
+    /** The RotMG window: the one in front if it's the game (handy with two clients open), else the first one found. */
+    private static Pointer findGame(User32 u) {
+        List<Pointer> found = new ArrayList<>();
+        u.EnumWindows((hWnd, data) -> {
+            if (u.IsWindowVisible(hWnd) && isGame(u, hWnd)) found.add(hWnd);
+            return true;
+        }, null);
+        if (found.isEmpty()) return null;
+        Pointer front = u.GetForegroundWindow();
+        if (front != null) for (Pointer p : found) if (p.equals(front)) return p;
+        return found.get(0);
+    }
+
+    private static boolean isGame(User32 u, Pointer hWnd) {
+        char[] buf = new char[256];
+        int n = u.GetWindowTextW(hWnd, buf, buf.length);
+        String title = new String(buf, 0, Math.max(0, n)).toLowerCase(Locale.ROOT);
+        if (title.contains("rotmg") || title.contains("realm of the mad god")) {
+            // not this app's own window, or a browser tab about the game
+            if (title.contains("white bag pup") || title.contains("chrome") || title.contains("firefox") || title.contains("edge")) return false;
+            char[] cls = new char[128];
+            int c = u.GetClassNameW(hWnd, cls, cls.length);
+            String k = new String(cls, 0, Math.max(0, c));
+            return k.equals("UnityWndClass") || title.startsWith("rotmg");
+        }
+        return false;
+    }
+
+    /** Copies a rectangle of real screen pixels, working out the screen's scaling (125%, 150%...). */
+    private static BufferedImage grab(Rectangle px) throws Exception {
+        for (GraphicsDevice d : GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+            GraphicsConfiguration gc = d.getDefaultConfiguration();
+            Rectangle b = gc.getBounds();
+            AffineTransform t = gc.getDefaultTransform();
+            double sx = t.getScaleX(), sy = t.getScaleY();
+            // this screen in real pixels (Java uses scaled coordinates)
+            Rectangle real = new Rectangle((int) Math.round(b.x * sx), (int) Math.round(b.y * sy),
+                    (int) Math.round(b.width * sx), (int) Math.round(b.height * sy));
+            int cx = px.x + px.width / 2, cy = px.y + px.height / 2;
+            if (!real.contains(cx, cy)) continue;
+            Rectangle logical = new Rectangle((int) Math.round(px.x / sx), (int) Math.round(px.y / sy),
+                    (int) Math.round(px.width / sx), (int) Math.round(px.height / sy));
+            return new Robot(d).createScreenCapture(logical);
+        }
+        return null;
+    }
+
+    private static BufferedImage fit(BufferedImage src, int maxWidth) {
+        if (src.getWidth() <= maxWidth) return toRgb(src);
+        int w = maxWidth, h = (int) Math.round(src.getHeight() * (maxWidth / (double) src.getWidth()));
+        BufferedImage out = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        java.awt.Graphics2D g = out.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(src.getScaledInstance(w, h, Image.SCALE_SMOOTH), 0, 0, null);
+        g.dispose();
+        return out;
+    }
+
+    private static BufferedImage toRgb(BufferedImage src) {
+        if (src.getType() == BufferedImage.TYPE_INT_RGB) return src;
+        BufferedImage out = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_RGB);
+        java.awt.Graphics2D g = out.createGraphics();
+        g.drawImage(src, 0, 0, null);
+        g.dispose();
+        return out;
+    }
+
+    static byte[] jpeg(BufferedImage img) throws Exception {
+        ImageWriter w = ImageIO.getImageWritersByFormatName("jpg").next();
+        ImageWriteParam p = w.getDefaultWriteParam();
+        p.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        p.setCompressionQuality(0.85f);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (MemoryCacheImageOutputStream ios = new MemoryCacheImageOutputStream(out)) {
+            w.setOutput(ios);
+            w.write(null, new IIOImage(img, null, null), p);
+        } finally {
+            w.dispose();
+        }
+        return out.toByteArray();
+    }
+}

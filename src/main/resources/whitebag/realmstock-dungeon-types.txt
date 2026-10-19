@@ -1,0 +1,173 @@
+1804|Sprite World
+1815|Pirate Cave
+24372|Forest Maze
+1816|Snake Pit
+1817|Spider Den
+1818|Undead Lair
+1819|Abyss of Demons
+2192|Mad Lab
+3465|Oryx's Castle
+3451|Oryx's Chamber
+1588|Oryx's Chamber
+2999|Chicken Chamber
+578|Wine Cellar
+24608|Wine Cellar Short
+1886|Battle for the Nexus
+1845|Dreamscape Labyrinth
+1844|Tomb of the Ancients
+1898|Tomb of the Ancients (Heroic)
+8849|Belladonna's Garden
+8853|Legacy Lair of Shaitan
+8193|Court of Oryx
+1840|Ocean Trench
+1843|Forbidden Jungle
+1849|Manor of the Immortals
+1857|Davy Jones' Locker
+1858|Beachzone
+24110|Cave of A Thousand Treasures
+1866|Candyland Hunting Grounds
+1867|Haunted Cemetery
+24357|Haunted Cemetery Gates
+24358|Haunted Cemetery Graves
+24361|Haunted Cemetery Final Battle
+309|Halloween Haunted Cemetery
+9043|Puppet Master's Theatre
+29310|The Shatters
+29798|Puppet Master's Encore
+40189|Ice Citadel
+29835|Ice Cave
+29837|The Inner Sanctum
+30014|Legacy Lair of Draconis
+30030|The Ivory Wyvern
+30015|Consolation of Draconis
+1884|Woodland Labyrinth
+1885|Deadwater Docks
+28811|Legacy Bilgewater's Grotto
+1838|The Crawling Depths
+574|Toxic Sewers
+285|The Hive
+311|Mountain Temple
+9323|Legacy Heroic Undead Lair
+9324|Legacy Heroic Abyss of Demons
+45591|Lair of Draconis
+28057|Lair of Shaitan
+19302|The Third Dimension
+26074|Admin Arena
+26075|Crab Arena
+26078|Thessal Arena
+26127|Xolotl Arena
+26128|Puppet Arena
+1321|Crab Arena 2
+1322|Thessal Arena 2
+1323|Xolotl Arena 2
+1324|Puppet Arena 2
+14883|The Bridge Sentinel Rehearsal
+14884|The Twilight Archmage Rehearsal
+14885|The Forgotten King Rehearsal
+49768|Hidden Interregnum
+25490|Sulfurous Wetlands
+29920|KSW Encounter
+1430|Queen Bunny Chamber
+51922|Hidden Interregnum
+23691|Spectral Penitentiary
+3971|Snowball Rolling Solo 2
+3972|Snowball Rolling Solo
+52103|Cnidaria Arena
+52104|Cnidaria Arena 2
+52105|The Shatters Arena
+52106|The Shatters Arena 2
+38287|Easter Treasure Rooms Test Maps
+13089|Stromwell's Rift I
+13090|Stromwell's Rift II
+13091|Stromwell's Rift III
+53026|Legacy Pirate Cave
+53027|Legacy Spider Den
+53028|Legacy Undead Lair
+53029|Legacy Abyss of Demons
+53030|Legacy Forest Maze
+53031|Legacy Sprite World
+53032|Legacy The Shatters
+53033|Legacy Deadwater Docks
+53034|Legacy The Crawling Depths
+53035|Legacy Woodland Labyrinth
+53181|Time Chamber
+49433|Kogbold Steamworks
+28822|Advanced Kogbold Steamworks
+14861|Infernal Abyss of Demons
+1821|Nexus
+1822|Kitchen
+1862|Nexus Explanation
+1863|Vault Explanation
+1864|Guild Explanation
+635|Exalted Kitchen
+15566|Santa Workshop
+4259|The Nest
+17570|Plagued Nest
+9657|Ancient Ruins
+6817|FR Test
+763|Oryxmania Treasure Room
+1038|Oryxmania Treasure Room 2
+45092|Lost Halls
+45075|The Void
+32255|Remnant of the Void
+2462|Remnant of the Void
+45155|Cultist Hideout
+19459|Cultist Hideout
+45236|LH Test
+45118|LH Boss Test
+6218|Oryx's Sanctuary
+6219|Oryx's Sanctuary
+1905|Oryx Mania Sanctuary
+45752|Malogia
+56417|Neo Malogia
+45751|Untaris
+56418|Neo Untaris
+45771|Forax
+56419|Neo Forax
+45774|Katalund
+56420|Neo Katalund
+13983|Secluded Thicket
+52926|Interregnum Daily Quest Room
+1820|Random Realm
+1824|Vault
+1839|Guild Hall
+1872|Cloth Bazaar
+1875|Pet Yard
+5980|Daily Login Room
+5974|Daily Quest Room
+3873|Oryx Pandemonium Decaract
+20447|Moonlight Village
+15730|High Tech Terror
+45508|LOD Rock Dragon
+50432|The Inner Workings
+43738|Chess
+14690|Heroic Undead Lair
+13100|mgm2 Dungeon
+22060|RRCubeGodTest
+8164|Oryx Horde
+45679|Fungal Cavern
+57958|DPS Test
+5704|Rainbow Road
+48894|Memory of the Infected
+48868|Stoneborn Memory
+1293|Guild Hall
+1553|Guild Hall 2
+1569|Guild Hall 3
+1575|Guild Hall 4
+59915|EdenDayMosaic
+59916|EdenNightMosaic
+59917|WhiteSnakeTest
+59886|White Snake Invasion I
+59887|White Snake Invasion II
+59888|White Snake Invasion III
+2554|Cnidarian Reef
+1944|Parasite Chambers
+43986|The Machine
+2172|Magic Woods
+32696|Ice Tomb
+17744|The Tavern
+17917|Beer Encounter Arena
+43862|Cursed Library
+10042|Crystal Cavern
+26094|Crystal Cavern
+25857|GC encounter
