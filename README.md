@@ -38,10 +38,15 @@ whenever the game updates. If your game is installed somewhere unusual, run
 1. Make a second webhook for the channel the recaps should go to (the same way as step 3).
 2. On the Home tab under **Recaps**, paste it into **Recap webhook URL** and press **Save**.
 3. Pick **Daily**, **Weekly** or **Daily and weekly**, and the day and time to post.
-4. Press **Post daily recap now** to see what one looks like.
+4. Tick the **Bags in recap** you want counted and pictured (White, Red and Orange to start with).
+5. Press **Post daily recap now** to see what one looks like.
 
-With two accounts, each one gets its own recap post. Only time the app was running counts; if the app is closed when a
-recap is due, it's posted the next time you open it.
+The recap shows your in-game name and the classes you played. All the loot comes in that one post as pictures:
+click one and use the arrows to flip through. With two accounts, each one gets its own recap post. Only time the
+app was running counts; if the app is closed when a recap is due, it's posted the next time you open it.
+
+If someone gives you a **bot recap link** (`https://.../recap?key=...`), paste that instead of a webhook. The
+recap then comes with ◀ ▶ buttons under the loot picture.
 
 For the posts' profile picture, upload [`images/white-bag-pup-avatar.png`](images/white-bag-pup-avatar.png)
 in your webhook's settings.
@@ -54,7 +59,7 @@ Optionally add a picture of your game window (**Game pictures: On**). Overflow b
 * **Bag Log**: every bag it barked about this session.
 * **Chat**: all in-game chat, colour-coded, with filters and search.
 * **DPS**: a leaderboard for each boss in each run, with damage taken and Oryx 3 guarded hits.
-* **About Me**: your character and stats (with max and exaltations), gear with enchantments, your pet with a
+* **About Me**: your character, play time and stats (with max and exaltations), gear with enchantments, your pet with a
 feeding planner, and the Tinkerer's quests (click to cross things off).
 * **Fame**: fame this session, per hour, a chart, and fame by dungeon.
 * **Vault**: your vault, potion storage and gift chest, with stat potion counts.
@@ -62,8 +67,9 @@ feeding planner, and the Tinkerer's quests (click to cross things off).
 * **Trades**: every trade you finish, who with, and what you gave and got.
 * **Events**: realm events, dungeon key pops and closing realms on every server from RealmStock's event notifier,
 with tick boxes for what you care about, a search box, a region filter and a sound you can turn off.
-* **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: bags, best drops,
-runs, luckiest dungeon, fame, top DPS, trades and time played. Set it up under **Recaps** on the Home tab.
+* **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: your name and
+classes, bags, runs, luckiest dungeon, fame and time played, with all the loot as pictures you
+flip through with arrows. Set it up under **Recaps** on the Home tab.
 * **Two accounts at once**: each game client gets its own tabs; switch with the Account buttons.
 
 <p align="center"><img src="images/fame.png" alt="Fame tab" width="420"></p>
@@ -87,6 +93,8 @@ Everything stays in the app's folder on your PC:
 |`loot-log.txt`, `runs-log.txt`|Bags seen and dungeons run (for Loot and drop rates)|
 |`fame-log.txt`, `dps-log.txt`|Fame and DPS history (for recaps)|
 |`trade-log.txt`|Your trades|
+|`play-log.txt`|Your time in game (for About Me and recaps)|
+|`names.txt`|Each account's in-game name (for recaps)|
 |`assets/`|Item names and pictures read from the game|
 |`sounds/`|Your custom sounds|
 |`puppy.properties`, `vault\*.txt`, `pet-cache.txt`|Small caches the app keeps for itself|

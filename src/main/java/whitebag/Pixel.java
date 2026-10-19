@@ -602,16 +602,28 @@ final class Pixel {
             return selected;
         }
 
-        /** How far each row of tabs sits below the one before. */
-        private static final int ROW_STEP = H - 6;
+        /** How far each row of tabs sits below the one before (rows never overlap, and never swap places). */
+        private static final int ROW_STEP = H;
+        private int pad = 18, gap = 4;
 
         private int tabWidth(int i) {
-            return textWidth(names[i], 2) + 36 + (unread[i] > 0 ? 26 : 0);
+            return textWidth(names[i], 2) + pad * 2 + (unread[i] > 0 ? 26 : 0);
         }
 
-        /** Tabs split into rows that fit the width, with the selected tab's row last (next to the sheet). */
+        /** Tabs in their fixed order: squeezed a little to fit on one row, and onto a second row only if they still don't. */
         private java.util.List<java.util.List<Integer>> rows() {
             int avail = getWidth() > 0 ? getWidth() : 560;
+            pad = 18;
+            gap = 4;
+            if (totalWidth() > avail) {
+                // squeeze onto one row if that's enough, otherwise wrap at the normal size
+                pad = 10;
+                gap = 2;
+                if (totalWidth() > avail) {
+                    pad = 18;
+                    gap = 4;
+                }
+            }
             java.util.List<java.util.List<Integer>> rows = new java.util.ArrayList<>();
             java.util.List<Integer> row = new java.util.ArrayList<>();
             int x = 0;
@@ -623,16 +635,49 @@ final class Pixel {
                     x = 0;
                 }
                 row.add(i);
-                x += w + 4;
+                x += w + gap;
             }
             rows.add(row);
-            for (int r = 0; r < rows.size() - 1; r++) {
-                if (rows.get(r).contains(selected)) {
-                    rows.add(rows.remove(r));
-                    break;
+            if (rows.size() > 1) {
+                // even the rows out (5 + 5 rather than 9 + 1), keeping the order
+                int n = rows.size();
+                int target = (totalWidth() + gap) / n;
+                java.util.List<java.util.List<Integer>> even = new java.util.ArrayList<>();
+                java.util.List<Integer> cur = new java.util.ArrayList<>();
+                int cx = 0;
+                for (int i = 0; i < names.length; i++) {
+                    int w = tabWidth(i) + gap;
+                    boolean lastRow = even.size() == n - 1;
+                    if (!cur.isEmpty() && !lastRow && (cx + w / 2 > target || cx + w > avail)) {
+                        even.add(cur);
+                        cur = new java.util.ArrayList<>();
+                        cx = 0;
+                    }
+                    cur.add(i);
+                    cx += w;
                 }
+                even.add(cur);
+                boolean fits = true;
+                for (java.util.List<Integer> r : even) {
+                    int t = 0;
+                    for (int i : r) t += tabWidth(i) + gap;
+                    if (t - gap > avail) fits = false;
+                }
+                if (fits) return even;
             }
             return rows;
+        }
+
+        private int totalWidth() {
+            int t = 0;
+            for (int i = 0; i < names.length; i++) t += tabWidth(i) + gap;
+            return t - gap;
+        }
+
+        /** True when the selected tab is on the bottom row, where it opens into the sheet. */
+        private boolean selectedOnLastRow() {
+            java.util.List<java.util.List<Integer>> rows = rows();
+            return rows.get(rows.size() - 1).contains(selected);
         }
 
         @Override
@@ -646,8 +691,9 @@ final class Pixel {
             return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
         }
 
+        /** The selected tab's box, or null if it's on an upper row (then the sheet keeps its top edge). */
         Rectangle selectedBox() {
-            return boxes[selected];
+            return selectedOnLastRow() ? boxes[selected] : null;
         }
 
         void select(int i) {
@@ -704,10 +750,10 @@ final class Pixel {
                 g.fill(ring);
                 g.setColor(fill);
                 g.fill(inner);
-                text(g, names[i], x + 18, top + 11, 2, on ? INK : MUTED);
+                text(g, names[i], x + pad, top + 11, 2, on ? INK : MUTED);
                 if (unread[i] > 0) {
                     String n = unread[i] >= 99 ? "99" : String.valueOf(unread[i]);
-                    int bw = Math.max(18, n.length() * 7 + 8), bx = x + 18 + tw + 8, by = top + 10;
+                    int bw = Math.max(18, n.length() * 7 + 8), bx = x + pad + tw + 8, by = top + 10;
                     frame(g, bx, by, bw, 16, PINK, null, 0);
                     Cute.smooth(g);
                     g.setFont(Cute.font(Font.BOLD, 11));
@@ -715,7 +761,7 @@ final class Pixel {
                     g.setColor(Color.WHITE);
                     g.drawString(n, bx + (bw - fm.stringWidth(n)) / 2, by + 12);
                 }
-                x += w + 4;
+                x += w + gap;
             }
             }
             g.dispose();

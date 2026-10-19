@@ -101,8 +101,8 @@ public class WhiteBagNotifier {
     /** The Recaps section on Home: their own webhook, how often, when, and post-now buttons. */
     private void buildRecaps(JPanel home) {
         section(home, new Pixel.Heading("recaps", 2), 22);
-        JLabel intro = new JLabel("<html><div style='width:470px'>A daily or weekly summary for each account (bags, best drops, runs, fame, "
-                + "top DPS, trades, time played), posted to its own channel. Only what happened while the app was running counts; "
+        JLabel intro = new JLabel("<html><div style='width:470px'>A daily or weekly summary for each account (your name and classes, bags, runs, fame "
+                + "and time played), posted to its own channel, with pictures of the loot in one post. Only what happened while the app was running counts; "
                 + "if it's closed when one is due, it's posted next time you open it.</div></html>");
         intro.setFont(Cute.font(Font.PLAIN, 12));
         intro.setForeground(Color.BLACK);
@@ -111,17 +111,17 @@ public class WhiteBagNotifier {
         JPanel urlRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         urlRow.setOpaque(false);
         JLabel ul = Pixel.label("Recap webhook URL  ");
-        JTextField recapUrl = Pixel.field(settings.getProperty("recap.url", ""), 26, "a webhook for your recap channel");
+        JTextField recapUrl = Pixel.field(settings.getProperty("recap.url", ""), 26, "a webhook or bot recap link");
         Pixel.Button saveUrl = new Pixel.Button("Save", false);
         saveUrl.addActionListener(e -> {
             String u = recapUrl.getText().trim();
-            if (!u.isEmpty() && !DiscordWebhook.isValidUrl(u)) {
-                log("*tilts head* that doesn't look like a Discord webhook URL (it starts with https://discord.com/api/webhooks/).");
+            if (!u.isEmpty() && !Recap.isValidUrl(u)) {
+                log("*tilts head* that doesn't look like a Discord webhook URL (https://discord.com/api/webhooks/...) or a bot recap link (https://.../recap?key=...).");
                 return;
             }
             settings.setProperty("recap.url", u);
             saveSettings();
-            log(u.isEmpty() ? "*boop* recap webhook cleared." : "*boop* recap webhook saved!");
+            log(u.isEmpty() ? "*boop* recap webhook cleared." : Recap.isBotUrl(u) ? "*boop* bot recap link saved! Recaps get ◀ ▶ buttons." : "*boop* recap webhook saved!");
         });
         urlRow.add(ul);
         urlRow.add(recapUrl);
@@ -169,16 +169,37 @@ public class WhiteBagNotifier {
         timeRow.add(Pixel.label("   (daily: same time)"));
         section(home, timeRow, 8);
 
+        // which bags go in the recap (counted and pictured)
+        JPanel bagRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        bagRow.setOpaque(false);
+        bagRow.add(Pixel.label("Bags in recap  "));
+        java.util.Set<BagType> recapBags = Recap.bagFilter(settings);
+        for (BagType c : Recap.COLOURS) {
+            String label = c == BagType.EGG ? "Egg" : c.displayName;
+            Pixel.Check box = new Pixel.Check(label, recapBags.contains(c));
+            box.addActionListener(e -> {
+                java.util.Set<BagType> now = Recap.bagFilter(settings);
+                if (box.isSelected()) now.add(c);
+                else now.remove(c);
+                Recap.setBagFilter(settings, now);
+                saveSettings();
+            });
+            bagRow.add(box);
+            bagRow.add(Box.createHorizontalStrut(4));
+        }
+        section(home, bagRow, 8);
+
         JPanel nowRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         nowRow.setOpaque(false);
         for (Recap.Period per : Recap.Period.values()) {
             Pixel.Button b = new Pixel.Button("Post " + per.label.toLowerCase(java.util.Locale.ROOT) + " recap now", false);
             b.addActionListener(e -> {
                 String u = settings.getProperty("recap.url", "");
-                if (!DiscordWebhook.isValidUrl(u)) {
+                if (!Recap.isValidUrl(u)) {
                     log("*tilts head* paste a recap webhook URL and press Save first.");
                     return;
                 }
+                for (Account a : accounts) a.me.checkpointPlay();
                 int n = Recap.postNow(per, settings, (json, files, what) -> webhook.sendJson(u, json, files, what));
                 log(n == 0 ? "*sniffs around* nothing to recap for the last " + (per == Recap.Period.DAILY ? "day" : "week") + " yet."
                         : "*runs off to Discord* sending the " + per.label.toLowerCase(java.util.Locale.ROOT) + " recap" + (n > 1 ? "s (" + n + " accounts)" : "") + "~");
@@ -199,6 +220,7 @@ public class WhiteBagNotifier {
         t.scheduleWithFixedDelay(() -> {
             try {
                 String u = settings.getProperty("recap.url", "");
+                if (Recap.isDue(settings)) for (Account a : accounts) a.me.checkpointPlay();
                 boolean changed = Recap.tick(settings, (json, files, what) -> webhook.sendJson(u, json, files, what), this::log);
                 if (changed) SwingUtilities.invokeLater(this::saveSettings);
             } catch (Throwable e) {

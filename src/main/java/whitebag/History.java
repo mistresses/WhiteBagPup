@@ -21,10 +21,12 @@ final class History {
     static final class Fame {
         long start, end;       // Unix seconds
         String account = "", character = "", area = "";
+        /** The character's class (Wizard, Priest...), "" for lines saved before 1.3. */
+        String cls = "";
         int gained;
 
         String line() {
-            return start + "|" + end + "|" + clean(account) + "|" + clean(character) + "|" + clean(area) + "|" + gained;
+            return start + "|" + end + "|" + clean(account) + "|" + clean(character) + "|" + clean(area) + "|" + gained + "|" + clean(cls);
         }
 
         static Fame parse(String l) {
@@ -38,6 +40,7 @@ final class History {
                 x.character = f[3];
                 x.area = f[4];
                 x.gained = Integer.parseInt(f[5]);
+                if (f.length > 6) x.cls = f[6];
                 return x;
             } catch (Exception e) {
                 return null;
@@ -60,7 +63,7 @@ final class History {
     }
 
     /** One finished visit (also the time you played there). */
-    static synchronized void addFame(String account, String character, String area, long startMs, long endMs, int gained) {
+    static synchronized void addFame(String account, String character, String cls, String area, long startMs, long endMs, int gained) {
         if (endMs - startMs < 5_000 && gained <= 0) return;
         fame();
         Fame f = new Fame();
@@ -69,9 +72,104 @@ final class History {
         f.account = account == null ? "" : account;
         f.character = character == null ? "" : character;
         f.area = area == null ? "" : area;
+        f.cls = cls == null ? "" : cls;
         f.gained = Math.max(0, gained);
         fame.add(f);
         append(FAME_FILE, f.line());
+    }
+
+    // ---------------------------------------------------------------- play time
+
+    /** One stretch of time in game (play-log.txt: start|end|account|class, Unix seconds). */
+    static final class Play {
+        long start, end;
+        String account = "", cls = "";
+
+        String line() {
+            return start + "|" + end + "|" + clean(account) + "|" + clean(cls);
+        }
+
+        static Play parse(String l) {
+            String[] f = l.split("\\|", -1);
+            if (f.length < 4) return null;
+            try {
+                Play x = new Play();
+                x.start = Long.parseLong(f[0]);
+                x.end = Long.parseLong(f[1]);
+                x.account = f[2];
+                x.cls = f[3];
+                return x.end > x.start ? x : null;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        /** Seconds of this stretch inside [from, to). */
+        long within(long from, long to) {
+            return Math.max(0, Math.min(end, to) - Math.max(start, from));
+        }
+    }
+
+    private static final String PLAY_FILE = "play-log.txt";
+    private static List<Play> play;
+
+    static synchronized List<Play> play() {
+        if (play == null) {
+            play = new ArrayList<>();
+            for (String l : read(PLAY_FILE)) {
+                Play x = Play.parse(l);
+                if (x != null) play.add(x);
+            }
+        }
+        return Collections.unmodifiableList(new ArrayList<>(play));
+    }
+
+    static synchronized void addPlay(String account, String cls, long startMs, long endMs) {
+        if (endMs - startMs < 1000) return;
+        play();
+        Play x = new Play();
+        x.start = startMs / 1000;
+        x.end = endMs / 1000;
+        x.account = account == null ? "" : account;
+        x.cls = cls == null ? "" : cls;
+        play.add(x);
+        append(PLAY_FILE, x.line());
+    }
+
+    // ---------------------------------------------------------------- names
+
+    /** Each account's in-game name (names.txt: account|name), so recaps can say who played. */
+    private static final String NAMES_FILE = "names.txt";
+    private static java.util.Map<String, String> names;
+
+    private static java.util.Map<String, String> names() {
+        if (names == null) {
+            names = new java.util.LinkedHashMap<>();
+            for (String l : read(NAMES_FILE)) {
+                String[] f = l.split("\\|", -1);
+                if (f.length >= 2 && !f[0].isEmpty() && !f[1].isEmpty()) names.put(f[0], f[1]);
+            }
+        }
+        return names;
+    }
+
+    /** The account's in-game name, or "". */
+    static synchronized String nameOf(String account) {
+        String n = names().get(account == null ? "" : account);
+        return n == null ? "" : n;
+    }
+
+    static synchronized void rememberName(String account, String name) {
+        if (account == null || account.isEmpty() || name == null || name.trim().isEmpty()) return;
+        name = clean(name.trim());
+        if (name.equals(names().get(account))) return;
+        names.put(account, name);
+        List<String> lines = new ArrayList<>();
+        for (java.util.Map.Entry<String, String> e : names.entrySet()) lines.add(clean(e.getKey()) + "|" + e.getValue());
+        try {
+            Files.write(Paths.get(NAMES_FILE), lines, StandardCharsets.UTF_8);
+        } catch (Exception ignored) {
+        }
     }
 
     // ---------------------------------------------------------------- dps

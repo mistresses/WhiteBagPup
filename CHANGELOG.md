@@ -5,15 +5,14 @@ Download the latest from [Releases](../../releases/latest).
 
 ## 1.1
 
-- **Recaps**: daily and/or weekly summaries for each account, posted to their own Discord channel
-  (bags, best drops, runs, luckiest dungeon, fame, top DPS, trades, time played).
-  Set them up under **Recaps** on the Home tab.
-- Fame and DPS are now saved between sessions, so recaps can add them up.
+* **Play time** on the About Me tab: this session, today, this week and in total.
+* Recaps count play time properly: all your time in game, not just finished trips to an area.
 
 ## 1.0
 
 First release! 🐶
 
-- Discord posts for the bags you watch, with item tiers, rarities and an optional game picture
-- Tabs for Bag Log, Chat, DPS, About Me, Fame, Vault, Loot (with drop rates), Trades and Events
-- Works with two game accounts at once
+* Discord posts for the bags you watch, with item tiers, rarities and an optional game picture
+* Tabs for Bag Log, Chat, DPS, About Me, Fame, Vault, Loot (with drop rates), Trades and Events
+* Works with two game accounts at once
+

@@ -1,6 +1,7 @@
 package whitebag;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -174,57 +175,110 @@ public class DiscordWebhook {
         }
     }
 
+    /** Tries per post: one retry, and only when the other end couldn't be reached or had a hiccup. */
+    private static final int TRIES = 2;
+
     private void post(String url, String json, Map<String, byte[]> files, String what) {
         String boundary = "----WhiteBag" + Long.toHexString(System.nanoTime());
         byte[] body = files.isEmpty() ? json.getBytes(StandardCharsets.UTF_8) : multipart(boundary, json, files);
         String contentType = files.isEmpty() ? "application/json; charset=utf-8" : "multipart/form-data; boundary=" + boundary;
-        for (int attempt = 1; attempt <= 4; attempt++) {
+        boolean discord = isValidUrl(url);
+        String who = discord ? "Discord" : "the bot (" + host(url) + ")";
+        for (int attempt = 1; attempt <= TRIES; attempt++) {
             HttpURLConnection con = null;
             try {
                 con = (HttpURLConnection) new URL(url.trim()).openConnection();
                 con.setRequestMethod("POST");
                 con.setConnectTimeout(10_000);
-                con.setReadTimeout(15_000);
+                con.setReadTimeout(30_000);
                 con.setDoOutput(true);
+                con.setFixedLengthStreamingMode(body.length);
                 con.setRequestProperty("Content-Type", contentType);
-                con.setRequestProperty("User-Agent", "WhiteBagPup/1.0");
+                con.setRequestProperty("User-Agent", "WhiteBagPup/" + UpdateCheck.VERSION);
+                IOException writeError = null;
                 try (OutputStream os = con.getOutputStream()) {
                     os.write(body);
+                } catch (IOException e) {
+                    writeError = e; // the other end may have answered early (e.g. a wrong key): read that answer below
                 }
-                int code = con.getResponseCode();
-                if (code >= 200 && code < 300) {
-                    log.log("*drops it at Discord's feet* sent the " + what + "! *proud tail wag*");
+                int code;
+                try {
+                    code = con.getResponseCode();
+                } catch (IOException e) {
+                    throw writeError != null ? writeError : e;
+                }
+                if (code >= 200 && code < 300 && writeError == null) {
+                    log.log("*drops it at " + (discord ? "Discord's" : "the bot's") + " feet* sent the " + what + "! *proud tail wag*");
                     return;
                 }
                 String response = readBody(code >= 400 ? con.getErrorStream() : con.getInputStream());
-                if (code == 429) {
-                    long waitMs = retryAfterMs(con.getHeaderField("Retry-After"));
-                    log.log("*waits patiently* Discord says slow down, trying again in " + (waitMs / 1000.0) + "s.");
+                if (response.isEmpty() && code >= 400) {
+                    try {
+                        response = readBody(con.getInputStream());
+                    } catch (IOException ignored) {
+                    }
+                }
+                if (code == 429 && attempt < TRIES) {
+                    long waitMs = Math.min(retryAfterMs(con.getHeaderField("Retry-After")), 30_000);
+                    log.log("*waits patiently* " + who + " says slow down, trying once more in " + (waitMs / 1000) + "s.");
                     Thread.sleep(waitMs);
                     continue;
                 }
-                if (code == 401 || code == 404) {
-                    log.log("*whimper* Discord didn't accept the webhook (HTTP " + code + "). Please check the webhook URL. " + response);
-                    return;
-                }
-                log.log("*whimper* Discord answered HTTP " + code + " for the " + what + ": " + response);
-                if (code < 500) return;
+                log.log("*whimper* couldn't send the " + what + ": " + who + " answered HTTP " + code
+                        + (response.isEmpty() ? "" : " (" + response + ")") + ". " + hint(discord, code, body.length));
+                if (code < 500 || attempt == TRIES) return;
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return;
             } catch (Exception e) {
-                log.log("*whimper* couldn't reach Discord (try " + attempt + "): " + e);
+                if (attempt == TRIES) {
+                    log.log("*whimper* couldn't send the " + what + " to " + who + ": " + e.getMessage() + ". "
+                            + hint(discord, -1, body.length));
+                    return;
+                }
             } finally {
                 if (con != null) con.disconnect();
             }
             try {
-                Thread.sleep(2000L * attempt);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return;
             }
         }
-        log.log("*sad puppy eyes* gave up sending the " + what + " after a few tries.");
+    }
+
+    private static String host(String url) {
+        try {
+            return new URL(url.trim()).getHost();
+        } catch (Exception e) {
+            return "?";
+        }
+    }
+
+    /** What probably went wrong, in plain words. code -1: no answer at all. */
+    static String hint(boolean discord, int code, int bytes) {
+        String size = String.format(java.util.Locale.ROOT, "%.1f MB", bytes / 1048576.0);
+        if (discord) {
+            if (code == 401 || code == 404) return "Please check the webhook URL (the webhook may have been deleted).";
+            if (code == 413 || code == -1) return "The post was " + size + "; if that's big, Discord may have refused it. Otherwise check your internet.";
+            if (code == 400) return "Discord didn't like the post's format.";
+            return "Discord may be having trouble; it'll try again next time.";
+        }
+        switch (code) {
+            case 401: return "The key in the recap link doesn't match the bot's RECAP_KEY.";
+            case 403: return "The &channel= in the link isn't in the bot's RECAP_CHANNEL_ID.";
+            case 404: return "That address isn't the recap inbox: check the link ends in /recap?key=..., and that the bot was redeployed with the new code and has RECAP_KEY set.";
+            case 413: return "The pictures were too big for the bot (" + size + ").";
+            case 429: return "Too many recaps this hour; try later.";
+            case 500: return "The bot isn't set up right yet (see its message in brackets).";
+            case 422: return "The bot got it, but Discord refused its post: check the bot can send messages and attach files in that channel.";
+            case 502: case 503: case 504:
+                return "The bot isn't answering: check it's running on Railway, has RECAP_KEY set, and that its domain's port matches (8080).";
+            case -1:
+                return "The connection was cut off. Usually the bot isn't answering on that address: check RECAP_KEY is set on Railway, the bot redeployed, and the domain's port is 8080.";
+            default: return "";
+        }
     }
 
     /**

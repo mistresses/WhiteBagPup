@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * Daily and weekly recaps posted to their own Discord webhook: bags, best drops, runs, luckiest dungeon,
- * fame, top DPS, trades and time played, one post per game account. Built from the logs next to the app,
+ * fame and time played, one post per game account. Built from the logs next to the app,
  * so only what happened while the app was running counts. If the app was closed when one was due, it's
  * posted the next time the app is open.
  */
@@ -71,6 +71,19 @@ final class Recap {
         return t.isAfter(now) ? t.minusDays(7) : t;
     }
 
+    /**
+     * A recap link to a Discord bot running Femcore's recap inbox (https://.../recap?key=...), which posts the
+     * recap with ◀ ▶ buttons instead of a picture gallery.
+     */
+    static boolean isBotUrl(String url) {
+        return url != null && url.trim().matches("(?i)https://[a-z0-9.-]+(:\\d+)?/recap\\?(.*&)?key=[^&\\s]{8,}(&\\S*)?");
+    }
+
+    /** A Discord webhook or a bot recap link. */
+    static boolean isValidUrl(String url) {
+        return DiscordWebhook.isValidUrl(url) || isBotUrl(url);
+    }
+
     interface Poster {
         void post(String json, Map<String, byte[]> files, String what);
     }
@@ -81,7 +94,7 @@ final class Recap {
      */
     static boolean tick(Properties s, Poster poster, java.util.function.Consumer<String> log) {
         String m = mode(s);
-        if (m.equals("off") || !DiscordWebhook.isValidUrl(s.getProperty("recap.url", ""))) return false;
+        if (m.equals("off") || !isValidUrl(s.getProperty("recap.url", ""))) return false;
         boolean changed = false;
         ZonedDateTime now = ZonedDateTime.now();
         for (Period p : Period.values()) {
@@ -111,6 +124,23 @@ final class Recap {
         return changed;
     }
 
+    /** True if a recap would be posted on this tick. */
+    static boolean isDue(Properties s) {
+        String m = mode(s);
+        if (m.equals("off") || !isValidUrl(s.getProperty("recap.url", ""))) return false;
+        ZonedDateTime now = ZonedDateTime.now();
+        for (Period p : Period.values()) {
+            if (!(m.equals("both") || m.equals(p.name().toLowerCase(Locale.ROOT)))) continue;
+            String last = s.getProperty("recap.last." + p.name().toLowerCase(Locale.ROOT));
+            try {
+                if (last != null && Long.parseLong(last) < lastDue(p, s, now).toEpochSecond()) return true;
+            } catch (NumberFormatException e) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Posts a recap for the period ending now (the "post now" buttons). Returns how many accounts it covered. */
     static int postNow(Period p, Properties s, Poster poster) {
         return post(p, System.currentTimeMillis() / 1000, s, poster);
@@ -121,7 +151,7 @@ final class Recap {
         String legacy = s.getProperty("accounts.legacyOwner", "");
         int n = 0;
         for (String account : accounts(start, end, legacy)) {
-            Built b = build(p, start, end, account, legacy);
+            Built b = build(p, start, end, account, legacy, bagFilter(s), isBotUrl(s.getProperty("recap.url", "")));
             if (b == null) continue;
             poster.post(b.json, b.files, p.label.toLowerCase(Locale.ROOT) + " recap");
             n++;
@@ -144,9 +174,8 @@ final class Recap {
         Set<String> out = new LinkedHashSet<>();
         for (LootStats.Entry e : LootStats.all()) if (in(e.at, start, end)) out.add(acct(e.account, legacy));
         for (RunLog.Run r : RunLog.all()) if (in(r.at, start, end)) out.add(acct(r.account, legacy));
+        for (History.Play p : History.play()) if (p.within(start, end) > 0) out.add(acct(p.account, legacy));
         for (History.Fame f : History.fame()) if (in(f.start, start, end)) out.add(acct(f.account, legacy));
-        for (History.Dps d : History.dps()) if (in(d.at, start, end)) out.add(acct(d.account, legacy));
-        for (TradeLog.Trade t : TradeLog.all()) if (in(t.at, start, end)) out.add(acct(t.account, legacy));
         out.remove("");
         if (out.isEmpty()) {
             // nothing tied to an account (e.g. before accounts were tracked): one recap for everything
@@ -163,30 +192,68 @@ final class Recap {
         Map<String, byte[]> files = new LinkedHashMap<>();
     }
 
-    private static final BagType[] COLOURS = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE};
+    static final BagType[] COLOURS = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE};
+
+    /** Which bag colours go in the recap (setting recap.bags); White, Red and Orange unless changed. */
+    static Set<BagType> bagFilter(Properties s) {
+        Set<BagType> out = new LinkedHashSet<>();
+        String v = s.getProperty("recap.bags", "white,red,orange");
+        for (String p : v.split(",")) {
+            for (BagType c : COLOURS) if (c.name().equalsIgnoreCase(p.trim())) out.add(c);
+        }
+        return out;
+    }
+
+    static void setBagFilter(Properties s, Set<BagType> on) {
+        List<String> names = new ArrayList<>();
+        for (BagType c : COLOURS) if (on.contains(c)) names.add(c.name().toLowerCase(Locale.ROOT));
+        s.setProperty("recap.bags", String.join(",", names));
+    }
+
+    /** At most this many pictures per post (Discord's limit is 10 files). */
+    static final int MAX_PAGES = 10;
+    /** At most this many bags in the pictures; the rest are only counted. */
+    static final int MAX_BAGS = 60;
+    /** Total picture size per post. */
+    static final long MAX_UPLOAD = 7L * 1024 * 1024;
 
     static Built build(Period p, long start, long end, String account, String legacy) {
+        return build(p, start, end, account, legacy, new LinkedHashSet<>(java.util.Arrays.asList(COLOURS)), false);
+    }
+
+    /** {@code bot}: going to the bot's recap inbox (◀ ▶ buttons) rather than a webhook (picture gallery). */
+    static Built build(Period p, long start, long end, String account, String legacy, Set<BagType> shown, boolean bot) {
+        ZoneId zone = ZoneId.systemDefault();
         // ---- bags
         Map<BagType, Integer> bags = new LinkedHashMap<>();
         for (BagType c : COLOURS) bags.put(c, 0);
-        List<ItemInfo> whiteItems = new ArrayList<>();
+        List<LootStats.Entry> picked = new ArrayList<>();
         int[] rarities = new int[5];
         Map<String, Integer> whitesBy = new LinkedHashMap<>();
         int whites = 0;
         for (LootStats.Entry e : LootStats.all()) {
             if (!in(e.at, start, end) || !acct(e.account, legacy).equals(account)) continue;
             BagType c = LootStats.colour(e.type);
+            if (c == BagType.WHITE) {
+                whites++;
+                whitesBy.merge(e.map, 1, Integer::sum);
+            }
+            if (!shown.contains(c)) continue;
             bags.merge(c, 1, Integer::sum);
-            if (c != BagType.WHITE) continue;
-            whites++;
-            whitesBy.merge(e.map, 1, Integer::sum);
+            if (!e.items.isEmpty()) picked.add(e);
             for (int i = 0; i < e.items.size(); i++) {
                 int r = i < e.rarity.size() ? Math.max(0, Math.min(4, e.rarity.get(i))) : 0;
-                rarities[r]++;
-                ItemInfo info = ItemInfo.of(e.items.get(i)).withEnchant(Enchant.values()[r]);
-                if (!info.rarity.isEmpty() && whiteItems.size() < 16) whiteItems.add(info); // UT / ST and the like
+                if (c == BagType.WHITE) rarities[r]++;
             }
         }
+        // best bags first (white, red, orange...), then the rarest items, then oldest first
+        List<BagType> order = java.util.Arrays.asList(COLOURS);
+        picked.sort((a, b) -> {
+            int c = order.indexOf(LootStats.colour(a.type)) - order.indexOf(LootStats.colour(b.type));
+            if (c != 0) return c;
+            c = maxRarity(b) - maxRarity(a);
+            return c != 0 ? c : Long.compare(a.at, b.at);
+        });
         // ---- runs
         Map<String, Integer> runsBy = new LinkedHashMap<>();
         int runs = 0;
@@ -195,15 +262,17 @@ final class Recap {
             runs++;
             runsBy.merge(r.map, 1, Integer::sum);
         }
-        // ---- fame and time played
+        // ---- fame, time played, who and which classes
         long fame = 0, playedSecs = 0, bestRate = 0;
         String bestArea = null, name = "";
+        Map<String, Long> classTime = new LinkedHashMap<>();
         for (History.Fame f : History.fame()) {
             if (!in(f.start, start, end) || !acct(f.account, legacy).equals(account)) continue;
             fame += f.gained;
             long secs = Math.max(0, f.end - f.start);
             playedSecs += secs;
             if (!f.character.isEmpty()) name = f.character;
+            if (!f.cls.isEmpty()) classTime.merge(f.cls, secs, Long::sum);
             if (secs >= 300 && f.gained > 0) {
                 long rate = Math.round(f.gained / (secs / 3600.0));
                 if (rate > bestRate) {
@@ -212,29 +281,76 @@ final class Recap {
                 }
             }
         }
-        // ---- DPS
-        History.Dps top = null;
-        int bosses = 0;
-        for (History.Dps d : History.dps()) {
-            if (!in(d.at, start, end) || !acct(d.account, legacy).equals(account)) continue;
-            bosses++;
-            if (top == null || d.share > top.share) top = d;
+        if (name.isEmpty()) name = History.nameOf(account);
+        // time in game, from the play log (1.6 on); older weeks fall back to the fame log's visits
+        long logged = 0;
+        Map<String, Long> loggedClass = new LinkedHashMap<>();
+        for (History.Play pl : History.play()) {
+            if (!acct(pl.account, legacy).equals(account)) continue;
+            long secs = pl.within(start, end);
+            if (secs <= 0) continue;
+            logged += secs;
+            if (!pl.cls.isEmpty()) loggedClass.merge(pl.cls, secs, Long::sum);
         }
-        // ---- trades
-        int trades = 0;
-        for (TradeLog.Trade t : TradeLog.all()) if (in(t.at, start, end) && acct(t.account, legacy).equals(account)) trades++;
-
+        if (logged > 0) {
+            playedSecs = logged;
+            classTime = loggedClass;
+        }
         int bagTotal = 0;
         for (int v : bags.values()) bagTotal += v;
-        if (bagTotal == 0 && runs == 0 && fame == 0 && playedSecs < 60 && trades == 0 && bosses == 0) return null;
+        if (bagTotal == 0 && whites == 0 && runs == 0 && fame == 0 && playedSecs < 60) return null;
+
+        // ---- loot pictures: one bag per picture, or several per picture when there are lots
+        Built b = new Built();
+        List<LootImage.RecapBag> cards = new ArrayList<>();
+        DateTimeFormatter tf = DateTimeFormatter.ofPattern(p == Period.DAILY ? "h:mm a" : "EEE h:mm a", Locale.ENGLISH);
+        for (int i = 0; i < Math.min(MAX_BAGS, picked.size()); i++) {
+            LootStats.Entry e = picked.get(i);
+            List<ItemInfo> items = new ArrayList<>();
+            for (int k = 0; k < e.items.size(); k++) {
+                int r = k < e.rarity.size() ? Math.max(0, Math.min(4, e.rarity.get(k))) : 0;
+                items.add(ItemInfo.of(e.items.get(k)).withEnchant(Enchant.values()[r]));
+            }
+            String at = java.time.Instant.ofEpochSecond(e.at).atZone(zone).format(tf).toLowerCase(Locale.ROOT);
+            cards.add(new LootImage.RecapBag(LootStats.colour(e.type), e.map + "  ·  " + at, items));
+        }
+        int perPage = Math.max(1, (cards.size() + MAX_PAGES - 1) / MAX_PAGES);
+        int pages = (cards.size() + perPage - 1) / perPage;
+        try {
+            for (int pg = 0; pg < pages; pg++) {
+                byte[] img = LootImage.recapPage(cards.subList(pg * perPage, Math.min(cards.size(), (pg + 1) * perPage)), pg + 1, pages);
+                if (img == null) {
+                    b.files.clear(); // no item pictures available (game files not read yet)
+                    break;
+                }
+                b.files.put("loot-" + (pg + 1) + ".png", img);
+            }
+        } catch (Throwable ignored) {
+            b.files.clear();
+        }
+        // keep the whole post well under Discord's 10 MB upload limit: drop the last pictures if needed
+        long total = 0;
+        for (java.util.Iterator<Map.Entry<String, byte[]>> it = b.files.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, byte[]> f = it.next();
+            if (total + f.getValue().length > MAX_UPLOAD) it.remove();
+            else total += f.getValue().length;
+        }
 
         // ---- the post
-        ZoneId zone = ZoneId.systemDefault();
         LocalDate from = java.time.Instant.ofEpochSecond(start).atZone(zone).toLocalDate();
         LocalDate to = java.time.Instant.ofEpochSecond(end - 1).atZone(zone).toLocalDate();
         DateTimeFormatter d = DateTimeFormatter.ofPattern("d MMM", Locale.ENGLISH);
         String when = p == Period.DAILY ? to.format(DateTimeFormatter.ofPattern("EEEE d MMM", Locale.ENGLISH)) : from.format(d) + " to " + to.format(d);
         StringBuilder sb = new StringBuilder();
+        sb.append("## 🐶 ").append(p.label).append(" recap").append(name.isEmpty() ? "" : " · " + name).append("\n");
+        sb.append("-# ").append(when).append("\n");
+        if (!classTime.isEmpty()) {
+            List<Map.Entry<String, Long>> cs = new ArrayList<>(classTime.entrySet());
+            cs.sort((x, y) -> Long.compare(y.getValue(), x.getValue()));
+            List<String> parts = new ArrayList<>();
+            for (Map.Entry<String, Long> e : cs) parts.add(e.getValue() >= 60 ? e.getKey() + " (" + played(e.getValue()) + ")" : e.getKey());
+            sb.append("🧙 **Played as:** ").append(String.join(", ", parts)).append("\n");
+        }
         List<String> bagParts = new ArrayList<>();
         for (Map.Entry<BagType, Integer> e : bags.entrySet()) if (e.getValue() > 0) bagParts.add(e.getValue() + " " + e.getKey().displayName.toLowerCase(Locale.ROOT));
         String rar = "";
@@ -244,7 +360,7 @@ final class Recap {
         sb.append("🎒 **Bags:** ").append(bagParts.isEmpty() ? "none" : String.join(", ", bagParts)).append(rar).append("\n");
         if (runs > 0) {
             List<Map.Entry<String, Integer>> rs = new ArrayList<>(runsBy.entrySet());
-            rs.sort((a, b) -> b.getValue() - a.getValue());
+            rs.sort((x, y) -> y.getValue() - x.getValue());
             List<String> topRuns = new ArrayList<>();
             for (int i = 0; i < Math.min(3, rs.size()); i++) topRuns.add(rs.get(i).getKey() + " ×" + rs.get(i).getValue());
             sb.append("🏰 **Runs:** ").append(runs).append(" (most played: ").append(String.join(", ", topRuns)).append(")\n");
@@ -254,7 +370,7 @@ final class Recap {
                 Integer r = runsBy.get(e.getKey());
                 if (r == null || r == 0) continue;
                 double per = r / (double) e.getValue();
-                if (per < lucky) {
+                if (per >= 1 && per < lucky) { // (more whites than runs means some runs weren't seen)
                     lucky = per;
                     luckyMap = e.getKey();
                 }
@@ -271,31 +387,31 @@ final class Recap {
             if (bestArea != null) sb.append(", best run ").append(bestArea);
             sb.append("\n");
         }
-        if (top != null) {
-            sb.append("⚔️ **Top DPS:** ").append(String.format(Locale.ROOT, "%.0f%%", top.share)).append(" on ").append(top.boss)
-                    .append(" (#").append(top.rank).append(" of ").append(top.players).append(")\n");
-        }
-        if (trades > 0) sb.append("🤝 **Trades:** ").append(trades).append("\n");
         if (playedSecs >= 60) sb.append("⏱️ **Played:** ").append(played(playedSecs)).append("\n");
+        if (!b.files.isEmpty()) {
+            int shownBags = cards.size();
+            sb.append("📸 **Loot:** ").append(shownBags == 1 ? "1 bag" : shownBags + " bags");
+            if (picked.size() > shownBags) sb.append(" (the best ").append(shownBags).append(" of ").append(picked.size()).append(")");
+            if (b.files.size() > 1) sb.append(bot ? ". Use ◀ ▶ under the picture to flip through" : ". Click a picture, then use the arrows to flip through");
+            sb.append("\n");
+        }
         sb.append("\n").append(pick(whites, runs, rarities));
 
-        Built b = new Built();
-        byte[] img = null;
-        try {
-            if (!whiteItems.isEmpty()) img = LootImage.lootPng(whiteItems);
-        } catch (Throwable ignored) {
-        }
-        if (img != null) b.files.put("loot.png", img);
-        String title = "🐶 " + p.label + " recap: " + when + (name.isEmpty() ? "" : " · " + name);
+        // Plain message text (not an embed) so the pictures sit underneath it as one gallery.
+        String text = sb.toString().trim();
+        if (text.length() > 1990) text = text.substring(0, 1990) + "…";
         StringBuilder j = new StringBuilder("{");
-        j.append("\"username\":\"White Bag Pup\",\"allowed_mentions\":{\"parse\":[]},\"embeds\":[{");
-        j.append("\"title\":").append(DiscordWebhook.str(title)).append(",");
-        j.append("\"description\":").append(DiscordWebhook.str(sb.toString().trim())).append(",");
-        j.append("\"color\":").append(0xFF9EBB);
-        if (img != null) j.append(",\"image\":{\"url\":\"attachment://loot.png\"}");
-        j.append("}]}");
+        j.append("\"username\":\"White Bag Pup\",\"allowed_mentions\":{\"parse\":[]},");
+        j.append("\"content\":").append(DiscordWebhook.str(text));
+        j.append("}");
         b.json = j.toString();
         return b;
+    }
+
+    private static int maxRarity(LootStats.Entry e) {
+        int m = 0;
+        for (int r : e.rarity) m = Math.max(m, r);
+        return m;
     }
 
     private static String played(long secs) {

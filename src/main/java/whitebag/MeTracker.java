@@ -282,10 +282,70 @@ public class MeTracker {
     /** Saves the visit in progress (when the app closes). */
     public synchronized void flush() {
         newVisit();
+        closePlay();
+    }
+
+    // ---------------------------------------------------------------- play time
+
+    /** Time in game counts while the game sends updates; a gap of 2 minutes or more ends a stretch. */
+    private static final long PLAY_GAP_MS = 120_000L;
+    /** Stretches are saved at least this often, so a crash loses little. */
+    private static final long PLAY_SAVE_MS = 10 * 60_000L;
+    private long playStart = -1, playLast = -1, sessionPlayMs;
+    private String playCls = "";
+
+    private void notePlay() {
+        long now = System.currentTimeMillis();
+        String cls = AboutMe.objectName(me.objectType, "");
+        if (playStart >= 0 && (now - playLast > PLAY_GAP_MS || !cls.equals(playCls) || now - playStart > PLAY_SAVE_MS)) {
+            boolean cont = now - playLast <= PLAY_GAP_MS;
+            closePlay();
+            if (cont && cls.equals(playCls)) playStart = playLast; // carry on without losing the moment in between
+        }
+        if (playStart < 0) {
+            playStart = now;
+            playCls = cls;
+        }
+        playLast = now;
+    }
+
+    private void closePlay() {
+        if (playStart >= 0 && playLast > playStart) {
+            History.addPlay(accountId, playCls, playStart, playLast);
+            sessionPlayMs += playLast - playStart;
+        }
+        playStart = -1;
+    }
+
+    /** Saves the stretch in progress (without ending it), so a recap posted now includes it. */
+    public synchronized void checkpointPlay() {
+        boolean open = playStart >= 0 && System.currentTimeMillis() - playLast <= PLAY_GAP_MS;
+        long last = playLast;
+        closePlay();
+        if (open) playStart = last;
+    }
+
+    /**
+     * Play time in milliseconds for this account: {this session, today, last 7 days, all time (since the
+     * app started keeping track)}.
+     */
+    public synchronized long[] playTime() {
+        long now = System.currentTimeMillis();
+        long open = playStart >= 0 && now - playLast <= PLAY_GAP_MS ? playLast - playStart : 0;
+        long today = java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toEpochSecond();
+        long week = now / 1000 - 7 * 86_400L;
+        long[] out = {sessionPlayMs + open, open, open, open};
+        for (History.Play p : History.play()) {
+            if (!p.account.equals(accountId)) continue;
+            out[1] += p.within(today, Long.MAX_VALUE) * 1000;
+            out[2] += p.within(week, Long.MAX_VALUE) * 1000;
+            out[3] += (p.end - p.start) * 1000;
+        }
+        return out;
     }
 
     private void save(FameVisit v) {
-        History.addFame(accountId, me == null ? "" : me.s(StatType.NAME_STAT), v.area, v.startMs, v.endMs, v.gained());
+        History.addFame(accountId, me == null ? "" : me.s(StatType.NAME_STAT), me == null ? "" : AboutMe.objectName(me.objectType, ""), v.area, v.startMs, v.endMs, v.gained());
     }
 
     /** {fame gained, milliseconds since first seen} for the current character this session, or null. */
@@ -372,6 +432,7 @@ public class MeTracker {
         if (p.status == null) return;
         boolean changed = false;
         synchronized (this) {
+            if (me != null) notePlay(); // every game tick counts, even standing still
             for (ObjectStatusData s : p.status) {
                 if (s == null || s.stats == null || s.stats.length == 0) continue;
                 if (s.objectId == myId && me != null) {
@@ -407,6 +468,7 @@ public class MeTracker {
     private void noteFame() {
         String acc = me.s(StatType.ACCOUNT_ID_STAT);
         if (!acc.isEmpty()) accountId = acc;
+        History.rememberName(accountId, me.s(StatType.NAME_STAT));
         int f = me.i(StatType.CURR_FAME_STAT, -1);
         if (f >= 0 && charId != -1 && !fameStart.containsKey(charId)) fameStart.put(charId, new long[]{f, System.currentTimeMillis()});
         if (f >= 0 && charId != -1) {

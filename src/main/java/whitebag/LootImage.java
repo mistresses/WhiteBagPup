@@ -165,6 +165,100 @@ public final class LootImage {
     private static final int PAD = 20;
     private static final int PER_ROW = 4;
 
+    /** One bag on a recap page. */
+    static final class RecapBag {
+        final BagType bag;
+        final String title;
+        final List<ItemInfo> items;
+
+        RecapBag(BagType bag, String title, List<ItemInfo> items) {
+            this.bag = bag;
+            this.title = title;
+            this.items = items;
+        }
+    }
+
+    private static final int PAGE_PER_ROW = 6;
+    private static final int BAG_HEAD = 46;
+
+    /**
+     * One page of the recap's loot gallery: each bag with its sprite, where and when, and its items.
+     * Null if no sprites are available at all.
+     */
+    static byte[] recapPage(List<RecapBag> bags, int page, int pages) {
+        if (bags.isEmpty()) return null;
+        boolean any = false;
+        List<List<BufferedImage>> icons = new ArrayList<>();
+        for (RecapBag b : bags) {
+            List<BufferedImage> row = new ArrayList<>();
+            for (ItemInfo i : b.items) {
+                BufferedImage icon = pixelIcon(sprites.sprite(i.id), SLOT - 30);
+                row.add(icon);
+                any |= icon != null;
+            }
+            icons.add(row);
+        }
+        if (!any) return null;
+        int w = PAD * 2 + PAGE_PER_ROW * SLOT + (PAGE_PER_ROW - 1) * GAP;
+        int h = PAD + 22;
+        for (RecapBag b : bags) {
+            int rows = Math.max(1, (b.items.size() + PAGE_PER_ROW - 1) / PAGE_PER_ROW);
+            h += BAG_HEAD + rows * (SLOT + GAP) + 8;
+        }
+        h += PAD - 8;
+        BufferedImage out = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = out.createGraphics();
+        Cute.smooth(g);
+        g.setColor(Cute.BG);
+        g.fill(new RoundRectangle2D.Double(0, 0, w, h, 28, 28));
+        g.setColor(Cute.CARD_EDGE);
+        g.setStroke(new BasicStroke(2f));
+        g.draw(new RoundRectangle2D.Double(1, 1, w - 2, h - 2, 28, 28));
+        Cute.drawPaw(g, 8, h - 6, 5, new Color(0xFFC2D4));
+
+        // page number, top right
+        g.setFont(Cute.font(Font.BOLD, 13));
+        FontMetrics pm = g.getFontMetrics();
+        String pn = pages > 1 ? "page " + page + " of " + pages : "";
+        g.setColor(Cute.MUTED);
+        g.drawString(pn, w - PAD - pm.stringWidth(pn), PAD + pm.getAscent() - 4);
+
+        int y = PAD + 22;
+        for (int n = 0; n < bags.size(); n++) {
+            RecapBag b = bags.get(n);
+            BufferedImage bagIcon = pixelIcon(sprites.sprite(b.bag.objectType), 36);
+            int tx = PAD;
+            if (bagIcon != null) {
+                g.drawImage(bagIcon, PAD, y + (BAG_HEAD - 8 - bagIcon.getHeight()) / 2, null);
+                tx += bagIcon.getWidth() + 10;
+            } else {
+                Cute.drawBag(g, PAD, y + 2, 32, new Color(b.bag.color), false, false);
+                tx += 42;
+            }
+            g.setFont(Cute.font(Font.BOLD, 17));
+            FontMetrics fm = g.getFontMetrics();
+            g.setColor(Cute.TEXT);
+            String t = b.title;
+            while (fm.stringWidth(t) > w - tx - PAD && t.length() > 4) t = t.substring(0, t.length() - 2);
+            if (!t.equals(b.title)) t = t + "…";
+            g.drawString(t, tx, y + (BAG_HEAD - 8 - fm.getHeight()) / 2 + fm.getAscent());
+            y += BAG_HEAD;
+            List<BufferedImage> row = icons.get(n);
+            for (int i = 0; i < b.items.size(); i++) {
+                int x = PAD + (i % PAGE_PER_ROW) * (SLOT + GAP);
+                drawSlot(g, x, y + 8 + (i / PAGE_PER_ROW) * (SLOT + GAP), b.items.get(i), row.get(i));
+            }
+            int rows = Math.max(1, (b.items.size() + PAGE_PER_ROW - 1) / PAGE_PER_ROW);
+            y += rows * (SLOT + GAP) + 8;
+            if (n < bags.size() - 1) {
+                g.setColor(Cute.CARD_EDGE);
+                g.fillRect(PAD, y - 6, w - PAD * 2, 2);
+            }
+        }
+        g.dispose();
+        return png(out);
+    }
+
     private static void drawSlot(Graphics2D g, int x, int y, ItemInfo item, BufferedImage icon) {
         Color accent = item.rarityColor;
         Enchant ench = item.enchant;

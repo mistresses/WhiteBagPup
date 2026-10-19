@@ -37,6 +37,9 @@ final class AboutMe {
             add(Pixel.scroll(list), BorderLayout.CENTER);
             refresh = new Timer(1200, e -> rebuild());
             refresh.setRepeats(false);
+            // keep the play time ticking along
+            Timer minute = new Timer(60_000, e -> changed());
+            minute.start();
             // catch up when the tab is opened
             addHierarchyListener(e -> {
                 if ((e.getChangeFlags() & java.awt.event.HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing() && stale) refresh.restart();
@@ -87,6 +90,12 @@ final class AboutMe {
                     gap(6);
                     list.add(small(String.format(Locale.ROOT, "%+,d fame this session  ·  about %,d per hour  (%s playing, more on the Fame tab)",
                             fs[0], Math.round(perHour), duration(fs[1]))));
+                }
+                long[] pt = tracker.playTime();
+                {
+                    gap(6);
+                    list.add(small("Play time:  " + duration(pt[0]) + " this session  ·  " + duration(pt[1]) + " today  ·  "
+                            + duration(pt[2]) + " this week  ·  " + duration(pt[3]) + " in total"));
                 }
                 gap(10);
                 int[] max = ClassMax.of(me.objectType);
