@@ -6,8 +6,10 @@ Download the latest from [Releases](../../releases/latest).
 ## 1.8
 
 - **Boss Kills** tab: every boss you help kill, with totals for this session, today and the last 7 days, and
-  per boss: kills, where, your best share of the damage, how often you did the most damage, and your fastest kill.
-  Switch between bosses, minibosses and everything, or search. Fights saved before 1.8 count as kills.
+  per boss: kills, where, your best % of the damage, how often you did the most damage, and your fastest kill.
+  Switch between bosses, minibosses, realm events and everything, or search. Realm events (Cube God, Grand Sphinx,
+  Lord of the Lost Lands...) are matched against RealmStock's event list and count as bosses.
+  **Pick bosses** lets you tick which bosses are shown and counted. Fights saved before 1.8 count as kills.
 
 ## 1.7
 
