@@ -3,7 +3,7 @@
 A little desktop companion for **Realm of the Mad God**. It barks in your Discord when a white bag drops, and keeps
 an eye on your DPS, fame, loot, trades and realm events while you play.
 
-<p align="center"><img src="images/app.png" alt="White Bag Pup" width="560"></p>
+<p align="center"><img src="images/app.png" alt="White Bag Pup" width="520"></p>
 
 It only **reads** the game's network traffic (the same way RealmShark/Tomato does). It never touches the game client,
 never sends anything to the game, and never plays for you.
@@ -33,6 +33,16 @@ The first time, it reads item names and pictures from your game install. That ca
 whenever the game updates. If your game is installed somewhere unusual, run
 `java -jar WhiteBagPup.jar --path "C:\\path\\to\\resources.assets"`.
 
+### Recaps (optional)
+
+1. Make a second webhook for the channel the recaps should go to (the same way as step 3).
+2. On the Home tab under **Recaps**, paste it into **Recap webhook URL** and press **Save**.
+3. Pick **Daily**, **Weekly** or **Daily and weekly**, and the day and time to post.
+4. Press **Post daily recap now** to see what one looks like.
+
+With two accounts, each one gets its own recap post. Only time the app was running counts; if the app is closed when a
+recap is due, it's posted the next time you open it.
+
 For the posts' profile picture, upload [`images/white-bag-pup-avatar.png`](images/white-bag-pup-avatar.png)
 in your webhook's settings.
 
@@ -51,7 +61,7 @@ feeding planner, and the Tinkerer's quests (click to cross things off).
 * **Loot**: every bag seen (all colours), by dungeon, drop rates ("1 white per 12 Shatters runs") and best drops.
 * **Trades**: every trade you finish, who with, and what you gave and got.
 * **Events**: realm events, dungeon key pops and closing realms on every server from RealmStock's event notifier,
-with tick boxes for what you care about and a sound when one pops up.
+with tick boxes for what you care about, a search box, a region filter and a sound you can turn off.
 * **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: bags, best drops,
 runs, luckiest dungeon, fame, top DPS, trades and time played. Set it up under **Recaps** on the Home tab.
 * **Two accounts at once**: each game client gets its own tabs; switch with the Account buttons.
@@ -65,6 +75,23 @@ Put `.wav` files in the `sounds` folder next to the app (MP3 doesn't work, conve
 
 * Bags: `white.wav`, `red.wav`, `orange.wav`, `gold.wav`, `egg.wav`, `blue.wav` (and `boosted-white.wav` and so on).
 * Events: `event.wav`, `key-pop.wav`, `realm-closed.wav`, or one named after a single event, like `cube-god.wav`.
+
+## Files it saves
+
+Everything stays in the app's folder on your PC:
+
+|File|What's in it|
+|-|-|
+|`whitebag-notifier.properties`|Your settings and webhook URLs (keep this private)|
+|`events.properties`|Your Events tick boxes|
+|`loot-log.txt`, `runs-log.txt`|Bags seen and dungeons run (for Loot and drop rates)|
+|`fame-log.txt`, `dps-log.txt`|Fame and DPS history (for recaps)|
+|`trade-log.txt`|Your trades|
+|`assets/`|Item names and pictures read from the game|
+|`sounds/`|Your custom sounds|
+|`puppy.properties`, `vault\*.txt`, `pet-cache.txt`|Small caches the app keeps for itself|
+
+To move to a new PC, copy the whole folder. To start fresh, delete the log files.
 
 ## Good to know
 
