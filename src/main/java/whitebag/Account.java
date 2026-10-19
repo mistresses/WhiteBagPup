@@ -54,6 +54,7 @@ final class Account {
     MoreTabs.VaultPage vaultPage;
     MoreTabs.LootPage lootPage;
     BookPage bookPage;
+    KillsPage killsPage;
     MoreTabs.EventsPage eventsPage;
     MoreTabs.FamePage famePage;
     MoreTabs.TradesPage tradesPage;
@@ -94,7 +95,10 @@ final class Account {
             if (lootPage != null) lootPage.changed();
             if (bookPage != null) bookPage.changed();
         });
-        dps.onRunEnd = (run, boards) -> History.addRun(run, boards, key);
+        dps.onRunEnd = (run, boards) -> {
+            History.addRun(run, boards, key);
+            if (killsPage != null) killsPage.changed();
+        };
         bags.setWatched(host.watched());
         bags.register(bus);
         chat.register(bus);
@@ -114,6 +118,7 @@ final class Account {
         eventsPage = new MoreTabs.EventsPage(events);
         famePage = new MoreTabs.FamePage(me);
         tradesPage = new MoreTabs.TradesPage(t -> key != null && (key.equals(t.account) || (t.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        killsPage = new KillsPage(d -> key != null && (key.equals(d.account) || (d.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         bookPage = new BookPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
                 r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         lootPage = new MoreTabs.LootPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),

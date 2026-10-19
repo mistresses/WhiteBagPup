@@ -180,10 +180,17 @@ final class History {
         long damage;
         double share;          // your % of the boss's damage
         int rank, players;
+        /** Whether it died (lines from before 1.8 don't say, and count as kills). */
+        boolean killed = true;
+        /** BOSS, MINIBOSS or OTHER (a big enemy); "" for lines from before 1.8. */
+        String kind = "";
+        /** How long the fight took (0 if unknown). */
+        double seconds;
 
         String line() {
             return at + "|" + clean(account) + "|" + clean(map) + "|" + clean(boss) + "|" + damage + "|"
-                    + String.format(java.util.Locale.ROOT, "%.1f", share) + "|" + rank + "|" + players;
+                    + String.format(java.util.Locale.ROOT, "%.1f", share) + "|" + rank + "|" + players
+                    + "|" + (killed ? 1 : 0) + "|" + kind + "|" + String.format(java.util.Locale.ROOT, "%.1f", seconds);
         }
 
         static Dps parse(String l) {
@@ -199,6 +206,11 @@ final class History {
                 d.share = Double.parseDouble(f[5]);
                 d.rank = Integer.parseInt(f[6]);
                 d.players = Integer.parseInt(f[7]);
+                if (f.length > 10) {
+                    d.killed = f[8].equals("1");
+                    d.kind = f[9];
+                    d.seconds = Double.parseDouble(f[10]);
+                }
                 return d;
             } catch (Exception e) {
                 return null;
@@ -237,6 +249,9 @@ final class History {
                 d.share = r.percent;
                 d.rank = i + 1;
                 d.players = b.rows.size();
+                d.killed = b.killed;
+                d.kind = b.kind.name();
+                d.seconds = b.seconds;
                 dps.add(d);
                 append(DPS_FILE, d.line());
             }

@@ -59,6 +59,7 @@ Optionally add a picture of your game window (**Game pictures: On**). Overflow b
 * **Bag Log**: every bag it barked about this session.
 * **Chat**: all in-game chat, colour-coded, with filters and search.
 * **DPS**: a leaderboard for each boss in each run, with damage taken and Oryx 3 guarded hits.
+* **Boss Kills**: every boss you've helped kill, per boss, with your best damage share and fastest kill.
 * **About Me**: your character, play time and stats (with max and exaltations), gear with enchantments, your pet with a
 feeding planner, and the Tinkerer's quests (click to cross things off).
 * **Fame**: fame this session, per hour, a chart, and fame by dungeon.

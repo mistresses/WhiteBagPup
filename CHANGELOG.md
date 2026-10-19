@@ -3,6 +3,12 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 1.8
+
+- **Boss Kills** tab: every boss you help kill, with totals for this session, today and the last 7 days, and
+  per boss: kills, where, your best share of the damage, how often you did the most damage, and your fastest kill.
+  Switch between bosses, minibosses and everything, or search. Fights saved before 1.8 count as kills.
+
 ## 1.7
 
 - **Collection** tab: a book of every UT and ST item that can drop, by dungeon, greyed out until you loot it.

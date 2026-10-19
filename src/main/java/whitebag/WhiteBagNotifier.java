@@ -373,7 +373,7 @@ public class WhiteBagNotifier {
         pages = new CardLayout();
         sheet = new Pixel.Sheet(pages);
         sheet.setAlignmentX(Component.LEFT_ALIGNMENT);
-        tabNames = new String[]{"home", "bag log", "chat", "dps", "about me", "fame", "vault", "loot", "collection", "trades", "events"};
+        tabNames = new String[]{"home", "bag log", "chat", "dps", "boss kills", "about me", "fame", "vault", "loot", "collection", "trades", "events"};
         tabs = new Pixel.Tabs(tabNames, i -> showPage());
         // account switcher (only shown once a second game account turns up)
         accountBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -770,7 +770,7 @@ public class WhiteBagNotifier {
         Account a = new Account(accounts.size(), host);
         Runnable ui = () -> {
             a.buildPanels();
-            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.eventsPage, a.famePage, a.tradesPage}) {
+            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.killsPage, a.eventsPage, a.famePage, a.tradesPage}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
             }
             sheet.add(a.bagLog, "bag log@" + a.index);
@@ -780,6 +780,7 @@ public class WhiteBagNotifier {
             sheet.add(a.vaultPage, "vault@" + a.index);
             sheet.add(a.lootPage, "loot@" + a.index);
             sheet.add(a.bookPage, "collection@" + a.index);
+            sheet.add(a.killsPage, "boss kills@" + a.index);
             sheet.add(a.eventsPage, "events@" + a.index);
             sheet.add(a.famePage, "fame@" + a.index);
             sheet.add(a.tradesPage, "trades@" + a.index);
