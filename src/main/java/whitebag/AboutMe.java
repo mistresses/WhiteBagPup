@@ -437,6 +437,10 @@ final class AboutMe {
         a.setFont(Cute.font(Font.PLAIN, 12));
         a.setForeground(Pixel.INK);
         a.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        // plain text, never a cursor: don't let it scroll the page to itself
+        if (a.getCaret() instanceof javax.swing.text.DefaultCaret) {
+            ((javax.swing.text.DefaultCaret) a.getCaret()).setUpdatePolicy(javax.swing.text.DefaultCaret.NEVER_UPDATE);
+        }
         return left(a);
     }
 

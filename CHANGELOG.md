@@ -3,6 +3,14 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 1.7
+
+- **Collection** tab: a book of every UT and ST item that can drop, by dungeon, greyed out until you loot it.
+  Shows how many of each dungeon's items you've found, with a search box and Missing / Found filters.
+  Hover an item to see where it drops and when you first got it.
+- **Dry streaks** on the Loot tab: runs since your last white bag, overall and per dungeon, with your longest
+  ever streak. Recaps mention a long dry streak, or one you broke.
+
 ## 1.6
 
 - **Play time** on the About Me tab: this session, today, this week and in total.

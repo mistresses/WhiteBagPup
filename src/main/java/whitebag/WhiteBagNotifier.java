@@ -373,7 +373,7 @@ public class WhiteBagNotifier {
         pages = new CardLayout();
         sheet = new Pixel.Sheet(pages);
         sheet.setAlignmentX(Component.LEFT_ALIGNMENT);
-        tabNames = new String[]{"home", "bag log", "chat", "dps", "about me", "fame", "vault", "loot", "trades", "events"};
+        tabNames = new String[]{"home", "bag log", "chat", "dps", "about me", "fame", "vault", "loot", "collection", "trades", "events"};
         tabs = new Pixel.Tabs(tabNames, i -> showPage());
         // account switcher (only shown once a second game account turns up)
         accountBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -760,7 +760,7 @@ public class WhiteBagNotifier {
         Squeak.playEvent(e.name);
         log((accounts.size() > 1 ? account.prefix() : "") + "*ears up* " + e.name + "!" + (e.map.isEmpty() ? "" : " in " + e.map)
                 + " (" + String.join(", ", e.how) + ")");
-        SwingUtilities.invokeLater(() -> bumpTab(account, 9));
+        SwingUtilities.invokeLater(() -> bumpTab(account, java.util.Arrays.asList(tabNames).indexOf("events")));
     }
 
     // ---------------------------------------------------------------- accounts
@@ -770,12 +770,16 @@ public class WhiteBagNotifier {
         Account a = new Account(accounts.size(), host);
         Runnable ui = () -> {
             a.buildPanels();
+            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.eventsPage, a.famePage, a.tradesPage}) {
+                page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
+            }
             sheet.add(a.bagLog, "bag log@" + a.index);
             sheet.add(a.chatPanel, "chat@" + a.index);
             sheet.add(a.dpsPanel, "dps@" + a.index);
             sheet.add(a.aboutPanel, "about me@" + a.index);
             sheet.add(a.vaultPage, "vault@" + a.index);
             sheet.add(a.lootPage, "loot@" + a.index);
+            sheet.add(a.bookPage, "collection@" + a.index);
             sheet.add(a.eventsPage, "events@" + a.index);
             sheet.add(a.famePage, "fame@" + a.index);
             sheet.add(a.tradesPage, "trades@" + a.index);
@@ -808,6 +812,7 @@ public class WhiteBagNotifier {
     private void showPage() {
         String name = tabNames[tabs.selected()];
         pages.show(sheet, name.equals("home") ? "home" : name + "@" + selected.index);
+        sheet.revalidate(); // the sheet is as tall as the page on show
         sheet.repaint();
     }
 

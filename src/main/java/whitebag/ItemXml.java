@@ -44,6 +44,13 @@ final class ItemXml {
     private static volatile Map<Integer, Info> table;
     private static final Set<Integer> logged = new HashSet<>();
 
+    /** Every item id in the game files (empty if they aren't there yet). */
+    static java.util.Set<Integer> ids() {
+        Map<Integer, Info> t = table;
+        if (t == null) t = load();
+        return java.util.Collections.unmodifiableSet(t.keySet());
+    }
+
     /** Details for an item type, or null if the game files aren't there or don't list it. */
     static Info of(int id) {
         Map<Integer, Info> t = table;

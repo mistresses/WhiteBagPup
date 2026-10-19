@@ -246,6 +246,41 @@ final class MoreTabs {
             rows.add(new String[]{"Total", String.valueOf(s), String.valueOf(t), ""});
             list.add(table(rows));
 
+            // ---- dry streaks: runs since the last white bag
+            List<RunLog.Run> myRunList = new ArrayList<>();
+            for (RunLog.Run r : RunLog.all()) if (myRuns == null || everyAccount || myRuns.test(r)) myRunList.add(r);
+            Map<String, DryStreak.Streak> streaks = DryStreak.compute(myRunList, all);
+            gap(18);
+            list.add(heading("dry streaks", null));
+            gap(8);
+            DryStreak.Streak overall = streaks.get("");
+            if (overall.runs == 0) {
+                list.add(note("Counts the runs since your last white bag, in each dungeon and overall, from your next run on."));
+            } else {
+                String big = overall.current == 0 ? "Your last run had a white bag! Streak: 0 runs"
+                        : overall.current + (overall.current == 1 ? " run" : " runs") + " since your last white bag"
+                        + (overall.lastWhite > 0 ? " (" + when(overall.lastWhite * 1000L) + ")" : "");
+                JLabel head = new JLabel(big);
+                head.setFont(Cute.font(Font.BOLD, 16));
+                head.setForeground(overall.current >= 20 ? Pixel.PINK_INK : Pixel.INK);
+                list.add(left(head));
+                gap(2);
+                list.add(note("Longest dry streak overall: " + overall.longest + (overall.longest == 1 ? " run" : " runs")
+                        + (overall.isRecord() ? "  (that's this one, a new record!)" : "")));
+                List<DryStreak.Streak> worst = DryStreak.worst(streaks);
+                if (!worst.isEmpty()) {
+                    gap(8);
+                    List<String[]> dr = new ArrayList<>();
+                    dr.add(new String[]{"Dungeon", "Runs without a white", "Longest ever", "Last white"});
+                    for (int i = 0; i < Math.min(10, worst.size()); i++) {
+                        DryStreak.Streak w = worst.get(i);
+                        dr.add(new String[]{w.map, w.current + (w.isRecord() ? "  (record!)" : ""), String.valueOf(w.longest),
+                                w.lastWhite > 0 ? when(w.lastWhite * 1000L) : "not yet"});
+                    }
+                    list.add(table(dr));
+                }
+            }
+
             // ---- by dungeon
             Map<String, int[]> byMap = new LinkedHashMap<>(); // {bags, whites}
             for (LootStats.Entry e : all) {
@@ -288,9 +323,9 @@ final class MoreTabs {
                     n[1]++;
                     n[2] = Math.max(n[2], e.at);
                 }
-                for (RunLog.Run r : runs) {
-                    long[] n = rate.get(r.map);
-                    if (n != null && r.at + r.seconds > n[2]) n[3]++;
+                for (Map.Entry<String, long[]> e : rate.entrySet()) {
+                    DryStreak.Streak st = streaks.get(e.getKey());
+                    if (st != null) e.getValue()[3] = st.current;
                 }
                 List<Map.Entry<String, long[]>> rs = new ArrayList<>(rate.entrySet());
                 rs.sort((a, b) -> Long.compare(b.getValue()[0], a.getValue()[0]));

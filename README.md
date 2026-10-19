@@ -63,7 +63,9 @@ Optionally add a picture of your game window (**Game pictures: On**). Overflow b
 feeding planner, and the Tinkerer's quests (click to cross things off).
 * **Fame**: fame this session, per hour, a chart, and fame by dungeon.
 * **Vault**: your vault, potion storage and gift chest, with stat potion counts.
-* **Loot**: every bag seen (all colours), by dungeon, drop rates ("1 white per 12 Shatters runs") and best drops.
+* **Loot**: every bag seen (all colours), by dungeon, dry streaks ("23 Shatters runs since your last white"),
+drop rates ("1 white per 12 Shatters runs") and best drops.
+* **Collection**: every UT and ST item that can drop, by dungeon, greyed out until you've looted it.
 * **Trades**: every trade you finish, who with, and what you gave and got.
 * **Events**: realm events, dungeon key pops and closing realms on every server from RealmStock's event notifier,
 with tick boxes for what you care about, a search box, a region filter and a sound you can turn off.
@@ -123,6 +125,8 @@ and publish. Add the new version to the top of `CHANGELOG.md` too.
 
 * The packet library is based on [RealmShark](https://github.com/X-com/RealmShark) by X-com (MIT licence).
 * The item rarity (enchantment) format follows [DaAwesomePwner's RealmShark fork](https://github.com/DaAwesomePwner/RealmShark) (MIT).
+* Where each UT and ST item drops (the Collection tab) comes from the [RealmEye wiki](https://www.realmeye.com/wiki).
+`tools/build\_collection.py` rebuilds the list from the Femcore bot's `ut\_items.json`.
 * The all-servers event feed comes from [RealmStock's event notifier](https://realmstock.com/pages/event-notifier).
 * pcap (MIT/Apache-2.0), JNA (Apache-2.0/LGPL), Gson and FlatBuffers (Apache-2.0).
 

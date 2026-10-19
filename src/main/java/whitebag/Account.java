@@ -53,6 +53,7 @@ final class Account {
     AboutMe.Panel aboutPanel;
     MoreTabs.VaultPage vaultPage;
     MoreTabs.LootPage lootPage;
+    BookPage bookPage;
     MoreTabs.EventsPage eventsPage;
     MoreTabs.FamePage famePage;
     MoreTabs.TradesPage tradesPage;
@@ -72,6 +73,7 @@ final class Account {
         bags.onAnyBag = d -> {
             LootStats.add(d, key);
             if (lootPage != null) lootPage.changed();
+            if (bookPage != null) bookPage.changed();
         };
         events = new EventTracker(e -> host.event(this, e), () -> {
             if (eventsPage != null) eventsPage.changed();
@@ -90,6 +92,7 @@ final class Account {
                 visitStart = now;
             }
             if (lootPage != null) lootPage.changed();
+            if (bookPage != null) bookPage.changed();
         });
         dps.onRunEnd = (run, boards) -> History.addRun(run, boards, key);
         bags.setWatched(host.watched());
@@ -111,6 +114,8 @@ final class Account {
         eventsPage = new MoreTabs.EventsPage(events);
         famePage = new MoreTabs.FamePage(me);
         tradesPage = new MoreTabs.TradesPage(t -> key != null && (key.equals(t.account) || (t.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        bookPage = new BookPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
+                r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         lootPage = new MoreTabs.LootPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
                 r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
     }

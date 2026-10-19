@@ -778,6 +778,26 @@ final class Pixel {
             setBorder(new EmptyBorder(20, 22, 22, 22));
         }
 
+        /** Height for pages that scroll inside themselves; the sheet then stretches to fill the window. */
+        static final int SCROLLING_PAGE_HEIGHT = 300;
+
+        /**
+         * Only as tall as the page on show (not the tallest page, which is what a card layout does), so short
+         * tabs don't leave the window scrolling through empty space. Pages with their own scrollbar ask for a
+         * modest height and fill whatever the window has.
+         */
+        @Override
+        public Dimension getPreferredSize() {
+            Component shown = null;
+            for (Component c : getComponents()) if (c.isVisible()) shown = c;
+            if (shown == null) return super.getPreferredSize();
+            Insets in = getInsets();
+            Dimension d = shown.getPreferredSize();
+            int h = Boolean.TRUE.equals(((JComponent) shown).getClientProperty("pixel.ownScroll"))
+                    ? SCROLLING_PAGE_HEIGHT : d.height;
+            return new Dimension(d.width + in.left + in.right, h + in.top + in.bottom);
+        }
+
         @Override
         protected void paintComponent(Graphics g0) {
             Graphics2D g = (Graphics2D) g0.create();

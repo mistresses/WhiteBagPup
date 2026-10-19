@@ -381,6 +381,32 @@ final class Recap {
                         .append(" ").append(luckyMap).append(lucky == 1 ? " run" : " runs").append("\n");
             }
         }
+        // ---- dry streaks (from all of this account's runs, not just this period)
+        {
+            List<RunLog.Run> allRuns = new ArrayList<>();
+            for (RunLog.Run r : RunLog.all()) if (acct(r.account, legacy).equals(account) && r.at < end) allRuns.add(r);
+            List<LootStats.Entry> allBags = new ArrayList<>();
+            for (LootStats.Entry e : LootStats.all()) if (acct(e.account, legacy).equals(account) && e.at < end) allBags.add(e);
+            Map<String, DryStreak.Streak> streaks = DryStreak.compute(allRuns, allBags);
+            String brokeMap = null;
+            long broke = 0;
+            for (DryStreak.Streak st : streaks.values()) {
+                if (st.map.isEmpty()) continue;
+                for (long[] bk : st.broken) if (in(bk[0], start, end) && bk[1] > broke) {
+                    broke = bk[1];
+                    brokeMap = st.map;
+                }
+            }
+            if (brokeMap != null && broke >= 5) {
+                sb.append("🎉 **Streak broken:** a white after ").append(broke).append(" runs of ").append(brokeMap).append("\n");
+            }
+            for (DryStreak.Streak st : DryStreak.worst(streaks)) {
+                if (!runsBy.containsKey(st.map) || st.current < 5) continue; // only dungeons played this period
+                sb.append("🏜️ **Dry streak:** ").append(st.current).append(" runs of ").append(st.map).append(" without a white")
+                        .append(st.isRecord() ? " (longest yet!)" : "").append("\n");
+                break;
+            }
+        }
         if (fame > 0) {
             sb.append("🏆 **Fame:** +").append(String.format(Locale.ROOT, "%,d", fame));
             if (playedSecs >= 600) sb.append(String.format(Locale.ROOT, " (about %,d per hour)", Math.round(fame / (playedSecs / 3600.0))));
