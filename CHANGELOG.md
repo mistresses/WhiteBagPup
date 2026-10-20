@@ -3,6 +3,16 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.3
+
+- The Collection tab has a second page, **Shiny items**: every shiny UT and ST item in the game, filed under the
+  dungeons their normal versions drop in, greyed out until you loot one. It has the same filters, search and
+  Share on Discord button. A shiny you've never had before gets the "NEW to your collection" banner on Discord too.
+- A shiny no longer also ticks off the normal item (they're separate in your collection).
+- Dungeons with no items of their own are left out of the Collection (The Trials of Cronus and others whose bosses
+  are other dungeons' bosses); their items are under the dungeons they really come from, or **Quest chests**.
+- Badge medals with a heart or star show them properly.
+
 ## 2.2
 
 - The Collection tab counts everything you've looted again: before the pup had seen which account you're playing,

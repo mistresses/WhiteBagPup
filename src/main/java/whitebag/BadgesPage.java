@@ -151,7 +151,9 @@ final class BadgesPage extends MoreTabs.Page {
             g.setStroke(new BasicStroke(2f));
             g.draw(new Ellipse2D.Double(cx - r + 4, cy - r + 4, r * 2 - 8, r * 2 - 8));
             g.setColor(on ? Color.WHITE : new Color(0xF4F1F8));
-            g.setFont(Cute.font(Font.BOLD, (int) (s * 0.36)));
+            Font f = Cute.font(Font.BOLD, (int) (s * 0.36));
+            if (f.canDisplayUpTo(b.glyph) != -1) f = new Font("Dialog", Font.BOLD, (int) (s * 0.36)); // ♥ and ★ aren't in Nunito
+            g.setFont(f);
             FontMetrics fm = g.getFontMetrics();
             g.drawString(b.glyph, (float) (cx - fm.stringWidth(b.glyph) / 2.0), (float) (cy + fm.getAscent() / 2.0 - 3));
         }

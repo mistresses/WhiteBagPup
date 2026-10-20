@@ -128,7 +128,7 @@ public class WhiteBagNotifier {
             }
             settings.setProperty("recap.url", u);
             saveSettings();
-            log(u.isEmpty() ? "*boop* recap webhook cleared." : Recap.isBotUrl(u) ? "*boop* bot recap link saved! Recaps get ◀ ▶ buttons." : "*boop* recap webhook saved!");
+            log(u.isEmpty() ? "*boop* recap webhook cleared." : Recap.isBotUrl(u) ? "*boop* bot recap link saved! Recaps get arrow buttons." : "*boop* recap webhook saved!");
         });
         urlRow.add(ul);
         urlRow.add(recapUrl);

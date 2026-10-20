@@ -66,7 +66,8 @@ in your webhook's settings.
 - **Vault**: your vault, potion storage and gift chest, with stat potion counts.
 - **Loot**: every bag seen (all colours), by dungeon, dry streaks ("23 Shatters runs since your last white"),
   drop rates ("1 white per 12 Shatters runs") and best drops.
-- **Collection**: every UT and ST item that can drop, by dungeon, greyed out until you've looted it. Share it on Discord,
+- **Collection**: every UT and ST item that can drop (and every shiny version), by dungeon, greyed out until you've
+  looted it. Share it on Discord,
   and bag posts say when an item is new to your collection.
 - **Badges**: pup achievements that unlock as you play, announced on Discord.
 - **Puzzle**: a solver for The Shatters' Puzzle Room: the towers to shoot to turn them all green.

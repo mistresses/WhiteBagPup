@@ -24,6 +24,8 @@ BOSS_PLACES = [
     ("forgotten king", "The Shatters"), ("limon", "Sprite World"),
 ]
 EVENTS = "Events and seasonal"
+# Dungeons whose fights are other dungeons' bosses again: their drops are filed under where they really come from
+BORROWED = {"The Trials of Cronus"}
 
 
 def place(name):
@@ -40,6 +42,7 @@ def main(src, out):
     data = json.load(open(src, encoding="utf-8"))
     items, where = data["items"], data["enemy_locations"]
     lines = set()
+    per_item = {}
     for item in items.values():
         if not item.get("drops"):
             continue
@@ -49,13 +52,41 @@ def main(src, out):
                 places.add(place(loc["name"]))
         many = "Elsewhere" in places   # the wiki only says "various dungeons"
         places.discard("Elsewhere")
+        places -= BORROWED
         if not places:
             for enemy in item["drops"]:
                 for key, p in BOSS_PLACES:
                     if key in enemy.lower():
                         places.add(p)
-        for p in places or {"Many dungeons" if many else EVENTS}:
-            lines.add(f"{p}|{item['tier']}|{item['name'].strip()}")
+        if not places and any("quest chest" in e.lower() for e in item["drops"]):
+            places = {"Quest chests"}
+        per_item[(item['tier'], item['name'].strip())] = places or {"Many dungeons" if many else EVENTS}
+    # A place whose every item also drops somewhere else has nothing of its own (e.g. The Trials of Cronus, whose
+    # bosses are other dungeons' bosses): leave it out, so its items only show where they really come from.
+    left_out = []
+    while True:
+        own, size = {}, {}
+        for places in per_item.values():
+            for p in places:
+                own.setdefault(p, 0)
+                size[p] = size.get(p, 0) + 1
+            if len(places) == 1:
+                own[next(iter(places))] += 1
+        removed = False
+        for p in sorted((p for p, n in own.items() if n == 0), key=lambda x: size[x]):
+            # only if every item there still has somewhere else to go
+            if all(len(pl) > 1 for pl in per_item.values() if p in pl):
+                for key in per_item:
+                    per_item[key] = per_item[key] - {p}
+                left_out.append(p)
+                removed = True
+                break
+        if not removed:
+            break
+    print("left out (nothing of its own):", ", ".join(sorted(left_out)))
+    for (tier, name), places in per_item.items():
+        for p in places:
+            lines.add(f"{p}|{tier}|{name}")
     with open(out, "w", encoding="utf-8") as f:
         f.write(f"# White Bag Pup collection book: place|tier|item (from the RealmEye wiki, {data.get('generated', '?')})\n")
         for line in sorted(lines):

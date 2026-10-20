@@ -76,13 +76,6 @@ Abyss of Demons|UT|Sheath of Thunderous Rites
 Abyss of Demons|UT|Storm Caller
 Abyss of Demons|UT|Sunken Fire Opal Ring
 Abyss of Demons|UT|Volcanic Sheath
-Advanced Kogbold Steamworks|UT|Faded Heart Scarab
-Advanced Kogbold Steamworks|UT|Fractured Hannya
-Advanced Kogbold Steamworks|UT|Heavy Syndicate Attire
-Advanced Kogbold Steamworks|UT|Light Syndicate Attire
-Advanced Kogbold Steamworks|UT|Mystic Syndicate Attire
-Advanced Kogbold Steamworks|UT|Storied Blades
-Advanced Kogbold Steamworks|UT|Sunken Fire Opal Ring
 Ancient Ruins|ST|Aquamarine Amulet
 Ancient Ruins|ST|Embellished Quiver
 Ancient Ruins|ST|Ornate Armor
@@ -345,11 +338,9 @@ Eternal Frost|UT|Tome of Frigid Protection
 Eternal Frost|UT|Winter's Breath Wand
 Eternal Frost|UT|Yuki
 Events and seasonal|ST|Cane of the Void
-Events and seasonal|ST|Chrysanthemum Corsage
 Events and seasonal|ST|Darkness Overcoat
 Events and seasonal|ST|Executioner's Garb
 Events and seasonal|ST|Gravekeeper's Scythe
-Events and seasonal|ST|Hollyhock Hide
 Events and seasonal|ST|Hooded Skull
 Events and seasonal|ST|Void Leeches
 Events and seasonal|UT|Ashen Talon
@@ -361,11 +352,9 @@ Events and seasonal|UT|Crest of the Rising Sun
 Events and seasonal|UT|Dragon Mace
 Events and seasonal|UT|Dragon Slayer
 Events and seasonal|UT|Eggshell Carapace
-Events and seasonal|UT|Elegant Parasol
 Events and seasonal|UT|Enchanted Ice Blade
 Events and seasonal|UT|Esoteric Buckler
-Events and seasonal|UT|Ethereal Happi
-Events and seasonal|UT|Flowering Kimono
+Events and seasonal|UT|Eternal Echo
 Events and seasonal|UT|Frost Storm Bow
 Events and seasonal|UT|Frozen Wand
 Events and seasonal|UT|Fudgeclad Armor
@@ -378,9 +367,7 @@ Events and seasonal|UT|Makakoyumi
 Events and seasonal|UT|Mimicry Trap
 Events and seasonal|UT|Precisely Calibrated Stringstick
 Events and seasonal|UT|Prismimic
-Events and seasonal|UT|Rain Maker
 Events and seasonal|UT|Random Spell Extraction Device
-Events and seasonal|UT|Sage's Wakibiki
 Events and seasonal|UT|Silex's Hammer
 Events and seasonal|UT|Snow Branch
 Events and seasonal|UT|Snowflake Blade
@@ -392,7 +379,6 @@ Events and seasonal|UT|Sweettreats Katana
 Events and seasonal|UT|Sweettreats Staff
 Events and seasonal|UT|Sweettreats Sword
 Events and seasonal|UT|Sweettreats Wand
-Events and seasonal|UT|Taiko Drums
 Events and seasonal|UT|Tezutsu Hanabi
 Events and seasonal|UT|The Heart of the Dragon
 Events and seasonal|UT|Tome of the Dragon
@@ -408,7 +394,6 @@ Events and seasonal|UT|Venerable Resurrected Warrior's Armor
 Events and seasonal|UT|Venerable Robe of the Mad Scientist
 Events and seasonal|UT|Venerable Spirit Dagger
 Events and seasonal|UT|Venerable Staff of the Crystal Serpent
-Fishing|UT|Barnacle Basher
 Floral Escape|ST|Heavenly Halo
 Floral Escape|UT|An Icicle
 Floral Escape|UT|Blue Beehemoth Armor
@@ -438,17 +423,6 @@ Floral Escape|UT|Winter's Breath Wand
 Floral Escape|UT|Yellow Beehemoth Armor
 Floral Escape|UT|Yellow Beehemoth Quiver
 Floral Escape|UT|Yuki
-Forax|ST|Alien Core: Corrosion
-Forax|UT|Acidic Slasher
-Forax|UT|Corrosion Cutter
-Forax|UT|Faded Heart Scarab
-Forax|UT|Foramite Staff
-Forax|UT|Forbidden Artifact
-Forax|UT|Fractured Hannya
-Forax|UT|Heavy Syndicate Attire
-Forax|UT|Light Syndicate Attire
-Forax|UT|Mystic Syndicate Attire
-Forax|UT|Sunken Fire Opal Ring
 Forbidden Jungle|UT|Corsair's Crown Jewel
 Forbidden Jungle|UT|Cracked Crystal Skull
 Forbidden Jungle|UT|Crystal Bone Ring
@@ -650,17 +624,6 @@ Infernal Abyss of Demons|UT|Storied Blades
 Infernal Abyss of Demons|UT|Sunken Fire Opal Ring
 Infernal Abyss of Demons|UT|Sword of Illumination
 Infernal Abyss of Demons|UT|Volcanic Sheath
-Katalund|ST|Alien Core: Warp
-Katalund|UT|Blazon Bow
-Katalund|UT|Faded Heart Scarab
-Katalund|UT|Forbidden Artifact
-Katalund|UT|Fractured Hannya
-Katalund|UT|Gaseous Glaive
-Katalund|UT|Heavy Syndicate Attire
-Katalund|UT|Light Syndicate Attire
-Katalund|UT|Mystic Syndicate Attire
-Katalund|UT|Sunken Fire Opal Ring
-Katalund|UT|Warlord Wand
 Kogbold Steamworks|UT|Brain Cube
 Kogbold Steamworks|UT|Chain Dagger
 Kogbold Steamworks|UT|Faded Heart Scarab
@@ -729,24 +692,6 @@ Lair of Shaitan|UT|Staff of Horrific Knowledge
 Lair of Shaitan|UT|Staff of Yuletide Carols
 Lair of Shaitan|UT|Wakizashi of Crossing Fires
 Lair of Shaitan|UT|Wand of Ancient Terror
-Legacy Heroic Abyss of Demons|ST|Molten Mantle
-Legacy Heroic Abyss of Demons|ST|Ring of the Inferno
-Legacy Heroic Abyss of Demons|ST|Scorchium Stone
-Legacy Heroic Abyss of Demons|ST|Staff of Eruption
-Legacy Heroic Abyss of Demons|UT|An Icicle
-Legacy Heroic Abyss of Demons|UT|Bow of Eternal Frost
-Legacy Heroic Abyss of Demons|UT|Bow of Nightmares
-Legacy Heroic Abyss of Demons|UT|Corrupted Cleaver
-Legacy Heroic Abyss of Demons|UT|Dagger of the Terrible Talon
-Legacy Heroic Abyss of Demons|UT|Demon Blade
-Legacy Heroic Abyss of Demons|UT|Frostbite
-Legacy Heroic Abyss of Demons|UT|Present Dispensing Wand
-Legacy Heroic Abyss of Demons|UT|Salju
-Legacy Heroic Abyss of Demons|UT|Skull-splitter Sword
-Legacy Heroic Abyss of Demons|UT|Staff of Horrific Knowledge
-Legacy Heroic Abyss of Demons|UT|Staff of Yuletide Carols
-Legacy Heroic Abyss of Demons|UT|Sword of Illumination
-Legacy Heroic Abyss of Demons|UT|Wand of Ancient Terror
 Lost Halls|ST|Brain of the Golem
 Lost Halls|ST|Carved Golem Remains
 Lost Halls|ST|Golem Garments
@@ -762,10 +707,6 @@ Lost Halls|UT|Mystic Syndicate Attire
 Lost Halls|UT|Storied Blades
 Lost Halls|UT|Sunken Fire Opal Ring
 Lost Halls|UT|Sword of the Colossus
-Mad God Mayhem|UT|Cloak of the Mad God
-Mad God Mayhem|UT|Jade Storm
-Mad God Mayhem|UT|Shield of Flowing Clarity
-Mad God Mayhem|UT|Tome of Holy Furor
 Mad Lab|ST|Abomination's Wrath
 Mad Lab|ST|Garment of the Beast
 Mad Lab|ST|Grotesque Scepter
@@ -838,18 +779,6 @@ Manor of the Immortals|UT|St. Abraham's Wand
 Manor of the Immortals|UT|Storm Caller
 Manor of the Immortals|UT|Sunken Fire Opal Ring
 Manor of the Immortals|UT|Tome of Purification
-Moonlight Village|UT|Bachelor's Tuxedo
-Moonlight Village|UT|Big Bad Fursuit
-Moonlight Village|UT|Bow of Nightmares
-Moonlight Village|UT|Corrupted Cleaver
-Moonlight Village|UT|Dagger of the Terrible Talon
-Moonlight Village|UT|Haori of the Wind
-Moonlight Village|UT|Holy Order's Habit
-Moonlight Village|UT|Platinum Segmentata
-Moonlight Village|UT|Red Riding Dress
-Moonlight Village|UT|Skull-splitter Sword
-Moonlight Village|UT|Staff of Horrific Knowledge
-Moonlight Village|UT|Wand of Ancient Terror
 Mountain Temple|ST|Akuma's Tear
 Mountain Temple|ST|Kamishimo
 Mountain Temple|ST|Kazekiri
@@ -877,8 +806,6 @@ Mountain Temple|UT|Staff of Yuletide Carols
 Mountain Temple|UT|Sunken Fire Opal Ring
 Mountain Temple|UT|Wand of Ancient Terror
 Mountain Temple|UT|Wand of the Fallen
-Nature Ruins|UT|Adventurer's Scarf
-Nature Ruins|UT|Quiver of Thunder
 Neo Forax|ST|Alien Core: Corrosion
 Neo Forax|UT|Acidic Slasher
 Neo Forax|UT|Corrosion Cutter
@@ -901,28 +828,6 @@ Neo Katalund|UT|Mystic Syndicate Attire
 Neo Katalund|UT|Storied Blades
 Neo Katalund|UT|Sunken Fire Opal Ring
 Neo Katalund|UT|Warlord Wand
-Neo Malogia|ST|Alien Core: Power
-Neo Malogia|UT|Comet of Calamity
-Neo Malogia|UT|Faded Heart Scarab
-Neo Malogia|UT|Fire Blade
-Neo Malogia|UT|Fractured Hannya
-Neo Malogia|UT|Heavy Syndicate Attire
-Neo Malogia|UT|Light Syndicate Attire
-Neo Malogia|UT|Mystic Syndicate Attire
-Neo Malogia|UT|Storied Blades
-Neo Malogia|UT|Sun's Judgement
-Neo Malogia|UT|Sunken Fire Opal Ring
-Neo Untaris|ST|Alien Core: Dark Matter
-Neo Untaris|UT|Dueling Daggers
-Neo Untaris|UT|Faded Heart Scarab
-Neo Untaris|UT|Fractured Hannya
-Neo Untaris|UT|Heavy Syndicate Attire
-Neo Untaris|UT|Light Syndicate Attire
-Neo Untaris|UT|Moonbeam Blade
-Neo Untaris|UT|Mystic Syndicate Attire
-Neo Untaris|UT|Snowblind Wand
-Neo Untaris|UT|Storied Blades
-Neo Untaris|UT|Sunken Fire Opal Ring
 Ocean Trench|ST|Imperial Keepsake
 Ocean Trench|ST|Oceanic Apparel
 Ocean Trench|ST|Slurpian Sea Scroll
@@ -1097,6 +1002,14 @@ Queen Bunny Chamber|UT|Chocolate Ovipositor
 Queen Bunny Chamber|UT|Egg Basher
 Queen Bunny Chamber|UT|Hatchling Blades
 Queen Bunny Chamber|UT|Shard Launcher
+Quest chests|ST|Chrysanthemum Corsage
+Quest chests|ST|Hollyhock Hide
+Quest chests|UT|Elegant Parasol
+Quest chests|UT|Ethereal Happi
+Quest chests|UT|Flowering Kimono
+Quest chests|UT|Rain Maker
+Quest chests|UT|Sage's Wakibiki
+Quest chests|UT|Taiko Drums
 Rainbow Road|UT|Clover Bow
 Rainbow Road|UT|Clover Star
 Rainbow Road|UT|Katana of Good Fortune
@@ -1105,8 +1018,6 @@ Rainbow Road|UT|Prismatic Slasher
 Rainbow Road|UT|Rainbow Rod
 Rainbow Road|UT|Staff of the Saint
 Rainbow Road|UT|Sword of the Rainbow's End
-Rat Extermination|UT|Mouse Trap
-Rat Extermination|UT|Piper's Pan Flute
 Relentless Springs|UT|Botany Book
 Relentless Springs|UT|Dagger of the Hasteful Rabbit
 Relentless Springs|UT|Deadly Keg
@@ -1421,96 +1332,6 @@ Stromwell's Rift III|UT|Squadron Sheathing
 Stromwell's Rift III|UT|Tome of the Tarnished Gods
 Stromwell's Rift III|UT|Tyrant's Toxin
 Stromwell's Rift III|UT|Tyrant's Wand
-Stromwell's Rift II|ST|Autarch Amulet
-Stromwell's Rift II|ST|Mayhem Medallion
-Stromwell's Rift II|ST|Ring of Wrath
-Stromwell's Rift II|UT|Aegis Armor
-Stromwell's Rift II|UT|Amaterasu
-Stromwell's Rift II|UT|Blacklight Artifice
-Stromwell's Rift II|UT|Blade of the Assailant
-Stromwell's Rift II|UT|Blitz Sheath
-Stromwell's Rift II|UT|Bounty Hunter's Dagger
-Stromwell's Rift II|UT|Brutal Buckler
-Stromwell's Rift II|UT|Chief's War Horn
-Stromwell's Rift II|UT|Cloak of the Darkened Sun
-Stromwell's Rift II|UT|Cursed Spire Spell
-Stromwell's Rift II|UT|Demon Lord's Skull
-Stromwell's Rift II|UT|Hawkmaster Sigil
-Stromwell's Rift II|UT|Helm of Exalted Might
-Stromwell's Rift II|UT|Henchman's Claymore
-Stromwell's Rift II|UT|Judge's Robe
-Stromwell's Rift II|UT|Legion Elite Bow
-Stromwell's Rift II|UT|Legion Elite Cloak
-Stromwell's Rift II|UT|Legion Elite Dagger
-Stromwell's Rift II|UT|Legion Elite Drums
-Stromwell's Rift II|UT|Legion Elite Helm
-Stromwell's Rift II|UT|Legion Elite Katana
-Stromwell's Rift II|UT|Legion Elite Leather Armor
-Stromwell's Rift II|UT|Legion Elite Mace
-Stromwell's Rift II|UT|Legion Elite Orb
-Stromwell's Rift II|UT|Legion Elite Plate Armor
-Stromwell's Rift II|UT|Legion Elite Poison
-Stromwell's Rift II|UT|Legion Elite Prism
-Stromwell's Rift II|UT|Legion Elite Quiver
-Stromwell's Rift II|UT|Legion Elite Robe
-Stromwell's Rift II|UT|Legion Elite Scepter
-Stromwell's Rift II|UT|Legion Elite Seal
-Stromwell's Rift II|UT|Legion Elite Sheath
-Stromwell's Rift II|UT|Legion Elite Shield
-Stromwell's Rift II|UT|Legion Elite Sigil
-Stromwell's Rift II|UT|Legion Elite Skull
-Stromwell's Rift II|UT|Legion Elite Spell
-Stromwell's Rift II|UT|Legion Elite Staff
-Stromwell's Rift II|UT|Legion Elite Star
-Stromwell's Rift II|UT|Legion Elite Sword
-Stromwell's Rift II|UT|Legion Elite Tome
-Stromwell's Rift II|UT|Legion Elite Trap
-Stromwell's Rift II|UT|Legion Elite Wakizashi
-Stromwell's Rift II|UT|Legion Elite Wand
-Stromwell's Rift II|UT|Mad Javelin
-Stromwell's Rift II|UT|Mechanical Mace
-Stromwell's Rift II|UT|Oppressor's Staff
-Stromwell's Rift II|UT|Orb of Conquest
-Stromwell's Rift II|UT|Predator Bow
-Stromwell's Rift II|UT|Prism of Shattered Light
-Stromwell's Rift II|UT|Rage Claws
-Stromwell's Rift II|UT|Seal of the Battle God
-Stromwell's Rift II|UT|Siege Scepter
-Stromwell's Rift II|UT|Squadron Sheathing
-Stromwell's Rift II|UT|Tome of the Tarnished Gods
-Stromwell's Rift II|UT|Tyrant's Toxin
-Stromwell's Rift II|UT|Tyrant's Wand
-Stromwell's Rift I|ST|Autarch Amulet
-Stromwell's Rift I|ST|Mayhem Medallion
-Stromwell's Rift I|ST|Ring of Wrath
-Stromwell's Rift I|UT|Aegis Armor
-Stromwell's Rift I|UT|Amaterasu
-Stromwell's Rift I|UT|Blacklight Artifice
-Stromwell's Rift I|UT|Blade of the Assailant
-Stromwell's Rift I|UT|Blitz Sheath
-Stromwell's Rift I|UT|Bounty Hunter's Dagger
-Stromwell's Rift I|UT|Brutal Buckler
-Stromwell's Rift I|UT|Chief's War Horn
-Stromwell's Rift I|UT|Cloak of the Darkened Sun
-Stromwell's Rift I|UT|Cursed Spire Spell
-Stromwell's Rift I|UT|Demon Lord's Skull
-Stromwell's Rift I|UT|Hawkmaster Sigil
-Stromwell's Rift I|UT|Helm of Exalted Might
-Stromwell's Rift I|UT|Henchman's Claymore
-Stromwell's Rift I|UT|Judge's Robe
-Stromwell's Rift I|UT|Mad Javelin
-Stromwell's Rift I|UT|Mechanical Mace
-Stromwell's Rift I|UT|Oppressor's Staff
-Stromwell's Rift I|UT|Orb of Conquest
-Stromwell's Rift I|UT|Predator Bow
-Stromwell's Rift I|UT|Prism of Shattered Light
-Stromwell's Rift I|UT|Rage Claws
-Stromwell's Rift I|UT|Seal of the Battle God
-Stromwell's Rift I|UT|Siege Scepter
-Stromwell's Rift I|UT|Squadron Sheathing
-Stromwell's Rift I|UT|Tome of the Tarnished Gods
-Stromwell's Rift I|UT|Tyrant's Toxin
-Stromwell's Rift I|UT|Tyrant's Wand
 Sulfurous Wetlands|UT|Bogwood Crook
 Sulfurous Wetlands|UT|Brambletooth Tachi
 Sulfurous Wetlands|UT|Faded Heart Scarab
@@ -1523,36 +1344,6 @@ Sulfurous Wetlands|UT|Sulfuric Stone
 Sulfurous Wetlands|UT|Sunken Fire Opal Ring
 Sulfurous Wetlands|UT|Thistleleaf Necklace
 Sulfurous Wetlands|UT|Warped Mantle
-Syndicate Takeover III|UT|Faded Heart Scarab
-Syndicate Takeover III|UT|Forbidden Artifact
-Syndicate Takeover III|UT|Fractured Hannya
-Syndicate Takeover III|UT|Heavy Syndicate Attire
-Syndicate Takeover III|UT|Light Syndicate Attire
-Syndicate Takeover III|UT|Mystic Syndicate Attire
-Syndicate Takeover III|UT|Sunken Fire Opal Ring
-Syndicate Takeover II|UT|Faded Heart Scarab
-Syndicate Takeover II|UT|Fractured Hannya
-Syndicate Takeover II|UT|Heavy Syndicate Attire
-Syndicate Takeover II|UT|Light Syndicate Attire
-Syndicate Takeover II|UT|Mystic Syndicate Attire
-Syndicate Takeover II|UT|Sheath of Thunderous Rites
-Syndicate Takeover II|UT|Storm Caller
-Syndicate Takeover II|UT|Sunken Fire Opal Ring
-Syndicate Takeover IV|UT|Faded Heart Scarab
-Syndicate Takeover IV|UT|Fractured Hannya
-Syndicate Takeover IV|UT|Heavy Syndicate Attire
-Syndicate Takeover IV|UT|Light Syndicate Attire
-Syndicate Takeover IV|UT|Mystic Syndicate Attire
-Syndicate Takeover IV|UT|Storied Blades
-Syndicate Takeover IV|UT|Sunken Fire Opal Ring
-Syndicate Takeover I|UT|Corsair's Crown Jewel
-Syndicate Takeover I|UT|Faded Heart Scarab
-Syndicate Takeover I|UT|Fractured Hannya
-Syndicate Takeover I|UT|Heavy Syndicate Attire
-Syndicate Takeover I|UT|Light Syndicate Attire
-Syndicate Takeover I|UT|Mystic Syndicate Attire
-Syndicate Takeover I|UT|Rusted Barrel
-Syndicate Takeover I|UT|Sunken Fire Opal Ring
 The Crawling Depths|UT|An Icicle
 The Crawling Depths|UT|Bow of Eternal Frost
 The Crawling Depths|UT|Bow of Nightmares
@@ -1627,26 +1418,6 @@ The Machine|UT|Storm Caller
 The Machine|UT|Sunken Fire Opal Ring
 The Machine|UT|Tome of Moral Support
 The Machine|UT|Unshuriken
-The Nest|ST|Apiary Armor
-The Nest|ST|Honey Circlet
-The Nest|ST|Honeytomb Snare
-The Nest|ST|Nectar Crossfire
-The Nest|UT|Beekeeper's Flamethrower
-The Nest|UT|Blue Beehemoth Armor
-The Nest|UT|Combcutter Kunai
-The Nest|UT|Faded Heart Scarab
-The Nest|UT|Fractured Hannya
-The Nest|UT|Heavy Syndicate Attire
-The Nest|UT|Hivemaster Helm
-The Nest|UT|Hivemind Mace
-The Nest|UT|Light Syndicate Attire
-The Nest|UT|Mystic Syndicate Attire
-The Nest|UT|Queen's Stinger
-The Nest|UT|Red Beehemoth Armor
-The Nest|UT|Storied Blades
-The Nest|UT|Sunken Fire Opal Ring
-The Nest|UT|Swarmlord's Sigil
-The Nest|UT|Yellow Beehemoth Armor
 The Realm|ST|Interregnum
 The Realm|ST|Kiritsukeru
 The Realm|ST|Memento Mori
@@ -1816,49 +1587,6 @@ The Third Dimension|UT|Seal of Cubic Conundra
 The Third Dimension|UT|Shadow Serpent Sidearm
 The Third Dimension|UT|Sunken Fire Opal Ring
 The Third Dimension|UT|The Triangle
-The Trials of Cronus|ST|Aquamarine Amulet
-The Trials of Cronus|ST|Bergenia Bow
-The Trials of Cronus|ST|Cuband
-The Trials of Cronus|ST|Cubic Frame
-The Trials of Cronus|ST|Deathless Crossbow
-The Trials of Cronus|ST|Edictum Praetoris
-The Trials of Cronus|ST|Embellished Quiver
-The Trials of Cronus|ST|Lifebringing Lotus
-The Trials of Cronus|ST|Ornate Armor
-The Trials of Cronus|ST|Polygonal Garbs
-The Trials of Cronus|ST|Resplendent Bow
-The Trials of Cronus|ST|Revenant Ring
-The Trials of Cronus|ST|Soulcursed Scythe
-The Trials of Cronus|ST|Squaroid Staff
-The Trials of Cronus|ST|Toga Picta
-The Trials of Cronus|ST|Vampiric Cape
-The Trials of Cronus|ST|Wraith's Brigandine
-The Trials of Cronus|UT|Amber Encrusted Helmet
-The Trials of Cronus|UT|Arcane Rapier
-The Trials of Cronus|UT|Bone Dagger
-The Trials of Cronus|UT|Chasuble of Holy Light
-The Trials of Cronus|UT|Cloak of Cubic Enigma
-The Trials of Cronus|UT|Corruption Cutter
-The Trials of Cronus|UT|Dirk of Cronus
-The Trials of Cronus|UT|Doom Bow
-The Trials of Cronus|UT|Enchantment Orb
-The Trials of Cronus|UT|Eternal Echo
-The Trials of Cronus|UT|Fairy Ring
-The Trials of Cronus|UT|Kyuuketsuki Hitogoroshi
-The Trials of Cronus|UT|Necronomicon
-The Trials of Cronus|UT|Ring of Divine Faith
-The Trials of Cronus|UT|Sandstone Seal
-The Trials of Cronus|UT|Seal of Cubic Conundra
-The Trials of Cronus|UT|Shadow Serpent Sidearm
-The Trials of Cronus|UT|Shield of Flowing Clarity
-The Trials of Cronus|UT|Spectral Sword
-The Trials of Cronus|UT|Spirit Staff
-The Trials of Cronus|UT|St. Abraham's Wand
-The Trials of Cronus|UT|Titan's Heart
-The Trials of Cronus|UT|Tome of Purification
-The Trials of Cronus|UT|Wand of Hidden Knowledge
-The Trials of Cronus|UT|Wandering Souls Spell
-The Trials of Cronus|UT|Woodland Robe
 The Void|UT|Armor of Nil
 The Void|UT|Bow of the Void
 The Void|UT|Faded Heart Scarab
@@ -1899,18 +1627,6 @@ Tomb of the Ancients|UT|Staff of Yuletide Carols
 Tomb of the Ancients|UT|Sunken Fire Opal Ring
 Tomb of the Ancients|UT|Tome of Holy Protection
 Tomb of the Ancients|UT|Wand of Ancient Terror
-Totalia the Malevolent|UT|Bachelor's Tuxedo
-Totalia the Malevolent|UT|Big Bad Fursuit
-Totalia the Malevolent|UT|Bow of Nightmares
-Totalia the Malevolent|UT|Corrupted Cleaver
-Totalia the Malevolent|UT|Dagger of the Terrible Talon
-Totalia the Malevolent|UT|Haori of the Wind
-Totalia the Malevolent|UT|Holy Order's Habit
-Totalia the Malevolent|UT|Platinum Segmentata
-Totalia the Malevolent|UT|Red Riding Dress
-Totalia the Malevolent|UT|Skull-splitter Sword
-Totalia the Malevolent|UT|Staff of Horrific Knowledge
-Totalia the Malevolent|UT|Wand of Ancient Terror
 Toxic Sewers|ST|Acidic Armor
 Toxic Sewers|ST|Pernicious Peridot
 Toxic Sewers|ST|Toxin Tooth
@@ -1925,7 +1641,6 @@ Toxic Sewers|UT|Sheath of Thunderous Rites
 Toxic Sewers|UT|Storm Caller
 Toxic Sewers|UT|Sunken Fire Opal Ring
 Toxic Sewers|UT|Void Blade
-Undead Forest|UT|Adventurer's Scarf
 Undead Lair|ST|Edictum Praetoris
 Undead Lair|ST|Toga Picta
 Undead Lair|UT|Doom Bow

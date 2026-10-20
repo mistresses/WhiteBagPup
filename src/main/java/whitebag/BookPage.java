@@ -25,6 +25,7 @@ final class BookPage extends MoreTabs.Page {
     /** Your collection counts what all your accounts have looted, unless you pick one. */
     private boolean everyAccount = true;
     private int show = 0;           // 0 all, 1 missing, 2 found
+    private int book = 0;           // 0 UT and ST items, 1 their shiny versions
     private boolean allPlaces = false;
     private final JTextField search = Pixel.field("", 18, "Find an item or dungeon");
     private boolean searching = false;
@@ -66,17 +67,28 @@ final class BookPage extends MoreTabs.Page {
         for (RunLog.Run r : RunLog.all()) {
             if (myRuns == null || everyAccount || myRuns.test(r)) runsBy.merge(r.map, 1, Integer::sum);
         }
-        Map<LootBook.Item, LootBook.Found> found = LootBook.found(bags);
-        List<LootBook.Place> places = LootBook.places();
-        int total = LootBook.itemCount();
+        final boolean shiny = book == 1;
+        Map<LootBook.Item, LootBook.Found> found = shiny ? LootBook.foundShinies(bags) : LootBook.found(bags);
+        List<LootBook.Place> places = shiny ? LootBook.shinyPlaces() : LootBook.places();
+        int total = shiny ? LootBook.shinies().size() : LootBook.itemCount();
 
         list.add(heading("collection", found.size() + " of " + total + " found"));
         gap(8);
+        JPanel books = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        books.setOpaque(false);
+        books.add(new LogTabs.Segments(new String[]{"UT and ST items", "Shiny items"}, book, i -> {
+            book = i;
+            changed();
+        }));
+        list.add(fit(books));
+        gap(10);
         if (total == 0) {
-            list.add(note("The collection book's item list is missing from the app."));
+            list.add(note(shiny ? "The shiny items show up here once the pup has read the game files (they're listed "
+                    + "there as their own items, labelled shiny)." : "The collection book's item list is missing from the app."));
             return;
         }
-        list.add(new AboutMe.AbilityBar("Every UT and ST item that drops in bags", found.size() + " / " + total, found.size() / (double) total));
+        list.add(new AboutMe.AbilityBar(shiny ? "Every shiny UT and ST item" : "Every UT and ST item that drops in bags",
+                found.size() + " / " + total, found.size() / (double) total));
         gap(10);
 
         JPanel controls = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -146,7 +158,7 @@ final class BookPage extends MoreTabs.Page {
                 if (rows.size() >= 12) break;
             }
             String name = who.get();
-            byte[] png = sharePng(name, foundCount, total, rows);
+            byte[] png = sharePng(name, shiny ? "shiny collection" : "collection", foundCount, total, rows);
             if (png != null) sh.accept(png, name);
         });
 
@@ -196,6 +208,10 @@ final class BookPage extends MoreTabs.Page {
 
     /** A picture of your collection for Discord: the total, then each dungeon with a bar and what you've found. */
     static byte[] sharePng(String who, int found, int total, List<ShareRow> rows) {
+        return sharePng(who, "collection", found, total, rows);
+    }
+
+    static byte[] sharePng(String who, String what, int found, int total, List<ShareRow> rows) {
         final int W = 640, PAD = 24, ICON = 30, PER = 16;
         int h = PAD + 34 + 22 + 24 + 16;
         for (ShareRow r : rows) h += 22 + 12 + (r.ids.isEmpty() ? 0 : ICON + 6) + 14;
@@ -213,11 +229,12 @@ final class BookPage extends MoreTabs.Page {
         g.setColor(Cute.TEXT);
         g.setFont(Cute.font(Font.BOLD, 24));
         FontMetrics fm = g.getFontMetrics();
-        g.drawString(who.isEmpty() ? "My collection" : who + "'s collection", PAD, y + fm.getAscent());
+        g.drawString(who.isEmpty() ? "My " + what : who + "'s " + what, PAD, y + fm.getAscent());
         y += 34;
         g.setFont(Cute.font(Font.BOLD, 15));
         fm = g.getFontMetrics();
-        g.drawString(String.format(Locale.ROOT, "%,d of %,d UT and ST items found", found, total), PAD, y + fm.getAscent());
+        g.drawString(String.format(Locale.ROOT, what.startsWith("shiny") ? "%,d of %,d shiny items found" : "%,d of %,d UT and ST items found",
+                found, total), PAD, y + fm.getAscent());
         y += 22;
         bar(g, PAD, y, W - PAD * 2, 14, found / (double) Math.max(1, total));
         y += 24 + 16;
@@ -398,6 +415,22 @@ final class BookPage extends MoreTabs.Page {
                     g.drawString(it.tier, x + (SLOT - fm.stringWidth(it.tier)) / 2, y + (SLOT + fm.getAscent()) / 2 - 2);
                 }
                 if (got) Cute.drawHeart(g, x + SLOT - 13, y + 3, 10, Pixel.PINK);
+                if (it.name.endsWith("(Shiny)")) {
+                    // a little sparkle on shiny items
+                    g.setColor(got ? new Color(0xF0B10A) : new Color(0xD8D2E0));
+                    double cx = x + 10, cy = y + 10, r = 6, k = 1.6;
+                    java.awt.geom.Path2D star = new java.awt.geom.Path2D.Double();
+                    star.moveTo(cx, cy - r);
+                    star.lineTo(cx + k, cy - k);
+                    star.lineTo(cx + r, cy);
+                    star.lineTo(cx + k, cy + k);
+                    star.lineTo(cx, cy + r);
+                    star.lineTo(cx - k, cy + k);
+                    star.lineTo(cx - r, cy);
+                    star.lineTo(cx - k, cy - k);
+                    star.closePath();
+                    g.fill(star);
+                }
             }
             g.dispose();
         }
