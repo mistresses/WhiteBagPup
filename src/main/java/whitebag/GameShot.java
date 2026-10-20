@@ -27,9 +27,10 @@ import java.util.Locale;
 /**
  * A picture of the game window for the bag post (Windows only, and only when you turn it on).
  * <p>
- * It finds the RotMG Exalt window and copies that part of the screen, the same as pressing Print Screen.
- * It only sees what's on screen, so if the game is minimised or covered by another window the picture shows that
- * (a minimised game is skipped). Nothing is saved; the picture only goes into the Discord post.
+ * It finds the RotMG Exalt window and asks Windows for that window's own picture, so other windows in front of it
+ * never end up in the post. If Windows can't give it, the screen is copied instead, but only while the game is the
+ * window in front; otherwise there's no picture. A minimised game is skipped. Nothing is saved; the picture only
+ * goes into the Discord post.
  */
 final class GameShot {
     private GameShot() {
@@ -58,7 +59,30 @@ final class GameShot {
         boolean GetClientRect(Pointer hWnd, int[] rect);
 
         boolean ClientToScreen(Pointer hWnd, int[] point);
+
+        Pointer GetDC(Pointer hWnd);
+
+        int ReleaseDC(Pointer hWnd, Pointer hdc);
+
+        boolean PrintWindow(Pointer hWnd, Pointer hdc, int flags);
     }
+
+    /** Windows drawing functions, to copy the game window's own picture (not whatever is on top of it). */
+    private interface Gdi32 extends Library {
+        Pointer CreateCompatibleDC(Pointer hdc);
+
+        Pointer CreateCompatibleBitmap(Pointer hdc, int w, int h);
+
+        Pointer SelectObject(Pointer hdc, Pointer obj);
+
+        boolean DeleteObject(Pointer obj);
+
+        boolean DeleteDC(Pointer hdc);
+
+        int GetDIBits(Pointer hdc, Pointer bitmap, int start, int lines, Pointer bits, Pointer info, int usage);
+    }
+
+    private static Gdi32 gdi32;
 
     private static User32 user32;
     private static boolean tried;
@@ -69,6 +93,7 @@ final class GameShot {
             if (System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows")) {
                 try {
                     user32 = Native.load("user32", User32.class, com.sun.jna.win32.W32APIOptions.DEFAULT_OPTIONS);
+                    gdi32 = Native.load("gdi32", Gdi32.class);
                 } catch (Throwable e) {
                     System.out.println("Game screenshot: couldn't load user32: " + e);
                 }
@@ -110,7 +135,18 @@ final class GameShot {
                 lastProblem = "the game window is too small";
                 return null;
             }
-            BufferedImage shot = grab(px);
+            // 1. ask the game window for its own picture: correct even when other windows are in front of it
+            BufferedImage shot = printWindow(u, game, px.width, px.height);
+            if (shot == null) {
+                // 2. otherwise copy the screen, but only when the game is the window in front, so the picture can
+                //    never show another window (a chat, a browser...) that happens to be on top of it
+                Pointer front = u.GetForegroundWindow();
+                if (front == null || !front.equals(game)) {
+                    lastProblem = "the game was behind another window, so no picture (keep the game in front)";
+                    return null;
+                }
+                shot = grab(px);
+            }
             if (shot == null) {
                 lastProblem = "the game window is off screen";
                 return null;
@@ -119,6 +155,56 @@ final class GameShot {
         } catch (Throwable e) {
             lastProblem = e.toString();
             return null;
+        }
+    }
+
+    /**
+     * The game window's own picture (Windows PrintWindow, client area, full content), or null if Windows couldn't
+     * give it (or gave back a blank picture, which some graphics modes do).
+     */
+    private static BufferedImage printWindow(User32 u, Pointer game, int w, int h) {
+        Gdi32 g = gdi32;
+        if (g == null) return null;
+        Pointer screen = null, mem = null, bmp = null, old = null;
+        try {
+            screen = u.GetDC(game);
+            if (screen == null) return null;
+            mem = g.CreateCompatibleDC(screen);
+            bmp = g.CreateCompatibleBitmap(screen, w, h);
+            if (mem == null || bmp == null) return null;
+            old = g.SelectObject(mem, bmp);
+            // PW_CLIENTONLY (1) | PW_RENDERFULLCONTENT (2): just the inside of the window, including what the
+            // graphics card draws
+            if (!u.PrintWindow(game, mem, 3)) return null;
+            if (old != null) g.SelectObject(mem, old);
+            old = null;
+            com.sun.jna.Memory info = new com.sun.jna.Memory(44);
+            info.clear();
+            info.setInt(0, 40);          // biSize
+            info.setInt(4, w);           // biWidth
+            info.setInt(8, -h);          // biHeight (negative: top row first)
+            info.setShort(12, (short) 1);  // biPlanes
+            info.setShort(14, (short) 32); // biBitCount
+            com.sun.jna.Memory bits = new com.sun.jna.Memory((long) w * h * 4);
+            if (g.GetDIBits(mem, bmp, 0, h, bits, info, 0) == 0) return null;
+            int[] px = bits.getIntArray(0, w * h);
+            // a blank (all black) picture means Windows couldn't read the game's graphics
+            int lit = 0;
+            for (int i = 0; i < px.length; i += 97) if ((px[i] & 0xFFFFFF) != 0) lit++;
+            if (lit < (px.length / 97) / 50) return null;
+            BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+            img.setRGB(0, 0, w, h, px, 0, w);
+            return img;
+        } catch (Throwable e) {
+            return null;
+        } finally {
+            try {
+                if (old != null && mem != null) g.SelectObject(mem, old);
+                if (bmp != null) g.DeleteObject(bmp);
+                if (mem != null) g.DeleteDC(mem);
+                if (screen != null) u.ReleaseDC(game, screen);
+            } catch (Throwable ignored) {
+            }
         }
     }
 

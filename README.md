@@ -55,7 +55,8 @@ in your webhook's settings.
 
 - **Bag posts**: the bag, every item with its tier (UT, ST, T12...) and rarity (Uncommon to Divine), the dungeon,
   your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity.
-  Optionally add a picture of your game window (**Game pictures: On**). Overflow bags are merged into one post.
+  Optionally add a picture of your game window (**Game pictures: On**); only the game itself is pictured,
+  never other windows in front of it. Overflow bags are merged into one post.
 - **Bag Log**: every bag it barked about this session.
 - **Chat**: all in-game chat, colour-coded, with filters and search.
 - **DPS**: a leaderboard for each boss in each run, with damage taken and Oryx 3 guarded hits.

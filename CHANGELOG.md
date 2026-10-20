@@ -3,6 +3,12 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.4
+
+- **Game pictures only ever show the game.** The picture now comes from the RotMG window itself, so a chat or
+  browser in front of the game can't end up in your Discord post. If Windows can't give the game's own picture,
+  the pup only copies the screen while the game is the window in front; otherwise that bag gets no picture.
+
 ## 2.3
 
 - The Collection tab has a second page, **Shiny items**: every shiny UT and ST item in the game, filed under the
@@ -12,6 +18,7 @@ Download the latest from [Releases](../../releases/latest).
 - Dungeons with no items of their own are left out of the Collection (The Trials of Cronus and others whose bosses
   are other dungeons' bosses); their items are under the dungeons they really come from, or **Quest chests**.
 - Badge medals with a heart or star show them properly.
+- The Puzzle tab no longer draws targets over the towers; the list beside the board says which to shoot.
 
 ## 2.2
 

@@ -58,8 +58,8 @@ final class PuzzlePage extends MoreTabs.Page {
         list.add(heading("shatters puzzle", fromGame ? "Read from the game" : null));
         gap(8);
         list.add(note("In The Shatters' Puzzle Room, shooting a tower flips it and the towers next to it (above, below, left "
-                + "and right). Make all nine green to open the way. Set the towers below to match the game, and the ones "
-                + "to shoot get a pink target."));
+                + "and right). Make all nine green to open the way. Set the towers below to match the game, and the list "
+                + "beside them says which to shoot."));
         gap(10);
 
         JPanel controls = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -231,17 +231,6 @@ final class PuzzlePage extends MoreTabs.Page {
                 g.draw(new Ellipse2D.Double(cx - 8, y + 12, 16, 16));
                 g.setColor(fill);
                 g.fill(new Ellipse2D.Double(cx - 4, y + 16, 8, 8));
-                }
-                if (board != 0x1FF && (shots >> i & 1) != 0) {
-                    // pink target
-                    g.setColor(Pixel.PINK);
-                    g.setStroke(new BasicStroke(3.5f));
-                    g.draw(new Ellipse2D.Double(x + 8, y + 8, CELL - 16, CELL - 16));
-                    g.setStroke(new BasicStroke(2.5f));
-                    g.drawLine(x + CELL / 2, y + 2, x + CELL / 2, y + 14);
-                    g.drawLine(x + CELL / 2, y + CELL - 14, x + CELL / 2, y + CELL - 2);
-                    g.drawLine(x + 2, y + CELL / 2, x + 14, y + CELL / 2);
-                    g.drawLine(x + CELL - 14, y + CELL / 2, x + CELL - 2, y + CELL / 2);
                 }
             }
             g.dispose();
