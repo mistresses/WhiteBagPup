@@ -13,6 +13,9 @@ final class Account {
     interface Host {
         void bag(Account a, BagDrop drop);
 
+        /** Checks this account's badges now (something that might unlock one just happened). */
+        void badgesMaybe(Account a);
+
         void chat(Account a, ChatLog.Line line);
 
         /** A realm event this account hasn't seen yet. */
@@ -56,6 +59,7 @@ final class Account {
     BookPage bookPage;
     KillsPage killsPage;
     PuzzlePage puzzlePage;
+    BadgesPage badgesPage;
     final ShattersPuzzle puzzle;
     MoreTabs.EventsPage eventsPage;
     MoreTabs.FamePage famePage;
@@ -74,6 +78,13 @@ final class Account {
             if (vaultPage != null) vaultPage.changed();
         }, t -> host.log(prefix() + t));
         bags.onAnyBag = d -> {
+            // anything you'd never looted before? (checked before this bag is logged)
+            try {
+                java.util.List<LootStats.Entry> mineBefore = new java.util.ArrayList<>();
+                for (LootStats.Entry e : LootStats.all()) if (isMine(e.account)) mineBefore.add(e);
+                d.newToCollection = LootBook.newItems(d.items(), mineBefore);
+            } catch (Throwable ignored) {
+            }
             LootStats.add(d, key);
             if (lootPage != null) lootPage.changed();
             if (bookPage != null) bookPage.changed();
@@ -125,16 +136,28 @@ final class Account {
         famePage = new MoreTabs.FamePage(me);
         tradesPage = new MoreTabs.TradesPage(t -> key != null && (key.equals(t.account) || (t.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         puzzlePage = new PuzzlePage();
+        puzzlePage.account = () -> key;
+        puzzlePage.onEvent = ev -> {
+            Badges.note(key, ev);
+            host.badgesMaybe(this);
+        };
+        badgesPage = new BadgesPage(() -> key, this::isMine);
         killsPage = new KillsPage(d -> key != null && (key.equals(d.account) || (d.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         bookPage = new BookPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
                 r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        bookPage.who = () -> key == null ? "" : History.nameOf(key);
         lootPage = new MoreTabs.LootPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
                 r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
     }
 
+    /** True for a log line that belongs to this account (lines from before accounts were tracked go to the first one). */
+    boolean isMine(String account) {
+        return key != null && (key.equals(account) || (account.isEmpty() && key.equals(host.legacyOwner(null))));
+    }
+
     /** Redraws the pages that show items (after the game files are read). */
     void refreshPages() {
-        for (MoreTabs.Page p : new MoreTabs.Page[]{lootPage, bookPage, killsPage, tradesPage, vaultPage}) if (p != null) p.changed();
+        for (MoreTabs.Page p : new MoreTabs.Page[]{lootPage, bookPage, killsPage, tradesPage, vaultPage, badgesPage}) if (p != null) p.changed();
         if (aboutPanel != null) aboutPanel.changed();
     }
 

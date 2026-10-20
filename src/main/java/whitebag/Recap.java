@@ -381,6 +381,21 @@ final class Recap {
                         .append(" ").append(luckyMap).append(lucky == 1 ? " run" : " runs").append("\n");
             }
         }
+        // ---- new for the collection: items looted for the first time ever in this period
+        {
+            List<LootStats.Entry> mineAll = new ArrayList<>();
+            for (LootStats.Entry e : LootStats.all()) if (acct(e.account, legacy).equals(account) && e.at < end) mineAll.add(e);
+            List<String> fresh = new ArrayList<>();
+            for (Map.Entry<LootBook.Item, LootBook.Found> e : LootBook.found(mineAll).entrySet()) {
+                if (in(e.getValue().first, start, end)) fresh.add(e.getKey().name);
+            }
+            if (!fresh.isEmpty()) {
+                Collections.sort(fresh);
+                sb.append("📖 **New for your collection:** ").append(fresh.size()).append(" (")
+                        .append(String.join(", ", fresh.subList(0, Math.min(6, fresh.size()))))
+                        .append(fresh.size() > 6 ? ", +" + (fresh.size() - 6) + " more" : "").append(")\n");
+            }
+        }
         // ---- dry streaks (from all of this account's runs, not just this period)
         {
             List<RunLog.Run> allRuns = new ArrayList<>();

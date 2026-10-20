@@ -15,6 +15,14 @@ import static whitebag.AboutMe.note;
 
 /** The Puzzle tab: the Shatters' Puzzle Room (nine towers, make them all green), with the towers to shoot marked. */
 final class PuzzlePage extends MoreTabs.Page {
+    /** This page's account, and where badge-worthy moments go ("puzzle", "puzzle-perfect", "practice-perfect"). */
+    java.util.function.Supplier<String> account = () -> "";
+    java.util.function.Consumer<String> onEvent = e -> { };
+    /** Counting shots in game: the fewest needed when the board was first seen, and shots since. */
+    private int gameMinShots = -1, gameShots = 0;
+    /** Counting shots in practice. */
+    private int practiceMin = -1, practiceShots = 0;
+
     /** Bit i set = tower i is green. */
     private int board = 0;
     /** 0: clicking sets a tower's colour; 1: clicking shoots it (it and its neighbours flip), to follow along. */
@@ -25,6 +33,19 @@ final class PuzzlePage extends MoreTabs.Page {
     /** Called (from the packet thread) when the pup reads the board in game. */
     void boardSeen(int green) {
         SwingUtilities.invokeLater(() -> {
+            if (green != 0x1FF) {
+                if (!fromGame || gameMinShots < 0 || board == 0x1FF) {
+                    gameMinShots = Integer.bitCount(ShattersPuzzle.solve(green));
+                    gameShots = 0;
+                } else {
+                    gameShots++;
+                }
+            } else if (fromGame && board != 0x1FF && gameMinShots >= 0) {
+                gameShots++;
+                onEvent.accept("puzzle");
+                if (gameShots <= gameMinShots) onEvent.accept("puzzle-perfect");
+                gameMinShots = -1;
+            }
             board = green;
             fromGame = true;
             seenAt = System.currentTimeMillis();
@@ -68,6 +89,8 @@ final class PuzzlePage extends MoreTabs.Page {
             board = b;
             fromGame = false;
             mode = 1;
+            practiceMin = Integer.bitCount(ShattersPuzzle.solve(b));
+            practiceShots = 0;
             changed();
         });
         controls.add(random);
@@ -158,7 +181,16 @@ final class PuzzlePage extends MoreTabs.Page {
                     int i = r * 3 + c;
                     Squeak.boop();
                     board = mode == 0 ? board ^ (1 << i) : ShattersPuzzle.shoot(board, i);
-                    if (mode == 0) fromGame = false;
+                    if (mode == 0) {
+                        fromGame = false;
+                        practiceMin = -1; // changed by hand: not a practice run any more
+                    } else if (practiceMin >= 0) {
+                        practiceShots++;
+                        if (board == 0x1FF) {
+                            if (practiceShots <= practiceMin) onEvent.accept("practice-perfect");
+                            practiceMin = -1;
+                        }
+                    }
                     changed();
                 }
             });

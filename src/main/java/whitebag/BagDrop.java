@@ -29,6 +29,8 @@ public class BagDrop {
     volatile byte[] gameShot;
     /** Optional extra line for the post, e.g. the drought tracker's celebration. */
     volatile String note;
+    /** Collection items in this bag you'd never looted before (names), worked out when the bag is logged. */
+    volatile java.util.List<String> newToCollection = java.util.Collections.emptyList();
 
     BagDrop(int objectId, BagType type, String mapName, String playerName) {
         this.objectId = objectId;

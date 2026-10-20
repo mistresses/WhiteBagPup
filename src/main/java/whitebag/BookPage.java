@@ -28,6 +28,11 @@ final class BookPage extends MoreTabs.Page {
     private final JTextField search = Pixel.field("", 18, "Find an item or dungeon");
     private boolean searching = false;
 
+    /** Posts a picture to Discord: (png, who it's for). Set by the main window. */
+    static volatile java.util.function.BiConsumer<byte[], String> share;
+    /** This page's account's in-game name, for the shared picture. */
+    java.util.function.Supplier<String> who = () -> "";
+
     BookPage(Predicate<LootStats.Entry> mine, Predicate<RunLog.Run> myRuns) {
         this.mine = mine;
         this.myRuns = myRuns;
@@ -96,6 +101,9 @@ final class BookPage extends MoreTabs.Page {
         JPanel find = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         find.setOpaque(false);
         find.add(search);
+        find.add(Box.createHorizontalStrut(10));
+        Pixel.Button post = new Pixel.Button("Share on Discord", false);
+        find.add(post);
         list.add(fit(find));
         if (searching) SwingUtilities.invokeLater(() -> {
             search.requestFocusInWindow();
@@ -117,6 +125,25 @@ final class BookPage extends MoreTabs.Page {
         order.sort((a, b) -> {
             int c = runs.get(b) - runs.get(a);
             return c != 0 ? c : a.name.compareToIgnoreCase(b.name);
+        });
+
+        final int foundCount = found.size();
+        post.addActionListener(e -> {
+            java.util.function.BiConsumer<byte[], String> sh = share;
+            if (sh == null) return;
+            List<ShareRow> rows = new ArrayList<>();
+            for (LootBook.Place p : order) {
+                ShareRow r = new ShareRow(p.name, p.items.size());
+                for (LootBook.Item it : LootBook.sorted(p.items)) if (found.containsKey(it)) {
+                    r.have++;
+                    r.ids.add(it.id);
+                }
+                if (r.have > 0 || runs.get(p) > 0) rows.add(r);
+                if (rows.size() >= 12) break;
+            }
+            String name = who.get();
+            byte[] png = sharePng(name, foundCount, total, rows);
+            if (png != null) sh.accept(png, name);
         });
 
         String q = LootBook.norm(search.getText());
@@ -149,6 +176,96 @@ final class BookPage extends MoreTabs.Page {
         gap(6);
         list.add(note("Counted from every bag the pup has seen (the Loot tab's log). Where items drop comes from the "
                 + "RealmEye wiki, so very new items may be missing. Hover an item for details."));
+    }
+
+    static final class ShareRow {
+        final String place;
+        final int of;
+        int have;
+        final List<Integer> ids = new ArrayList<>();
+
+        ShareRow(String place, int of) {
+            this.place = place;
+            this.of = of;
+        }
+    }
+
+    /** A picture of your collection for Discord: the total, then each dungeon with a bar and what you've found. */
+    static byte[] sharePng(String who, int found, int total, List<ShareRow> rows) {
+        final int W = 640, PAD = 24, ICON = 30, PER = 16;
+        int h = PAD + 34 + 22 + 24 + 16;
+        for (ShareRow r : rows) h += 22 + 12 + (r.ids.isEmpty() ? 0 : ICON + 6) + 14;
+        h += PAD - 10;
+        java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(W, h, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        Cute.smooth(g);
+        g.setColor(Cute.BG);
+        g.fill(new RoundRectangle2D.Double(0, 0, W, h, 28, 28));
+        g.setColor(Cute.CARD_EDGE);
+        g.setStroke(new BasicStroke(2f));
+        g.draw(new RoundRectangle2D.Double(1, 1, W - 2, h - 2, 28, 28));
+        Cute.drawPaw(g, W - 18, 22, 7, new Color(0xFFC2D4));
+        int y = PAD;
+        g.setColor(Cute.TEXT);
+        g.setFont(Cute.font(Font.BOLD, 24));
+        FontMetrics fm = g.getFontMetrics();
+        g.drawString(who.isEmpty() ? "My collection" : who + "'s collection", PAD, y + fm.getAscent());
+        y += 34;
+        g.setFont(Cute.font(Font.BOLD, 15));
+        fm = g.getFontMetrics();
+        g.drawString(String.format(Locale.ROOT, "%,d of %,d UT and ST items found", found, total), PAD, y + fm.getAscent());
+        y += 22;
+        bar(g, PAD, y, W - PAD * 2, 14, found / (double) Math.max(1, total));
+        y += 24 + 16;
+        for (ShareRow r : rows) {
+            g.setFont(Cute.font(Font.BOLD, 15));
+            fm = g.getFontMetrics();
+            g.setColor(Cute.TEXT);
+            g.drawString(r.place, PAD, y + fm.getAscent());
+            String n = r.have + " / " + r.of;
+            g.drawString(n, W - PAD - fm.stringWidth(n), y + fm.getAscent());
+            y += 22;
+            bar(g, PAD, y, W - PAD * 2, 8, r.have / (double) Math.max(1, r.of));
+            y += 12;
+            if (!r.ids.isEmpty()) {
+                y += 4;
+                int x = PAD;
+                for (int i = 0; i < Math.min(PER, r.ids.size()); i++) {
+                    java.awt.image.BufferedImage pic = r.ids.get(i) > 0 ? AboutMe.sprite(r.ids.get(i), 24) : null;
+                    g.setColor(Color.WHITE);
+                    g.fill(new RoundRectangle2D.Double(x, y, ICON, ICON, 8, 8));
+                    g.setColor(Cute.CARD_EDGE);
+                    g.draw(new RoundRectangle2D.Double(x, y, ICON, ICON, 8, 8));
+                    if (pic != null) g.drawImage(pic, x + (ICON - pic.getWidth()) / 2, y + (ICON - pic.getHeight()) / 2, null);
+                    x += ICON + 4;
+                }
+                if (r.ids.size() > PER) {
+                    g.setColor(Cute.MUTED);
+                    g.setFont(Cute.font(Font.BOLD, 13));
+                    g.drawString("+" + (r.ids.size() - PER), x + 2, y + ICON / 2 + 5);
+                }
+                y += ICON + 2;
+            }
+            y += 14;
+        }
+        g.dispose();
+        try {
+            java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+            javax.imageio.ImageIO.write(img, "png", out);
+            return out.toByteArray();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static void bar(Graphics2D g, int x, int y, int w, int h, double f) {
+        g.setColor(new Color(0xF3E6EE));
+        g.fill(new RoundRectangle2D.Double(x, y, w, h, h, h));
+        int fw = (int) Math.round(w * Math.max(0, Math.min(1, f)));
+        if (fw > 0) {
+            g.setColor(Cute.PINK);
+            g.fill(new RoundRectangle2D.Double(x, y, Math.max(h, fw), h, h, h));
+        }
     }
 
     private static JComponent fit(JComponent c) {

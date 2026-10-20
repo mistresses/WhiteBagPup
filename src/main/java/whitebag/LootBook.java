@@ -133,6 +133,29 @@ final class LootBook {
         return out;
     }
 
+    /** The collection items in {@code items} that never showed up in {@code before} (names, once each). */
+    static synchronized List<String> newItems(List<ItemInfo> items, List<LootStats.Entry> before) {
+        load();
+        java.util.Set<String> had = new java.util.HashSet<>();
+        Map<Integer, String> names = new HashMap<>();
+        for (LootStats.Entry e : before) {
+            for (int id : e.items) had.add(names.computeIfAbsent(id, k -> norm(ItemInfo.of(k).name)));
+        }
+        List<String> out = new ArrayList<>();
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        for (ItemInfo i : items) {
+            String k = norm(i.name);
+            Item it = items().get(k);
+            if (it != null && !had.contains(k) && seen.add(k)) out.add(it.name);
+        }
+        return out;
+    }
+
+    private static Map<String, Item> items() {
+        load();
+        return items;
+    }
+
     /** True if a dungeon you ran (game map name) is this place of the book. */
     static boolean samePlace(String map, String place) {
         String a = norm(map), b = norm(place);

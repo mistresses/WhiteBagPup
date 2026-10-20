@@ -127,6 +127,9 @@ public class DiscordWebhook {
         StringBuilder desc = new StringBuilder();
         desc.append(BARKS[(int) Math.floorMod(drop.droppedAt + drop.objectId, (long) BARKS.length)]).append("\n");
         if (drop.note != null) desc.append("**").append(drop.note).append("**\n");
+        if (drop.newToCollection != null && !drop.newToCollection.isEmpty()) {
+            desc.append("\n\u2728 **NEW to your collection:** ").append(String.join(", ", drop.newToCollection)).append(" \u2728\n");
+        }
         desc.append("\n");
         if (list.isEmpty()) {
             desc.append("_still sniffing out what's inside~_");

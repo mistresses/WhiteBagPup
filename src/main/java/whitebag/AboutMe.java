@@ -153,6 +153,9 @@ final class AboutMe {
                 }
             }
 
+            // ---- exaltations for every class
+            for (java.awt.Component c : exaltTracker(tracker, me)) list.add(c);
+
             // ---- pet
             gap(22);
             list.add(heading("pet", null));
@@ -427,7 +430,16 @@ final class AboutMe {
 
     /** Wrapping text that sits on the card. */
     static JTextArea wrap(String text) {
-        JTextArea a = new JTextArea(text);
+        // plain text, never a cursor: it must never scroll the page to itself
+        JTextArea a = new JTextArea() {
+            @Override
+            public void scrollRectToVisible(Rectangle r) {
+            }
+        };
+        if (a.getCaret() instanceof javax.swing.text.DefaultCaret) {
+            ((javax.swing.text.DefaultCaret) a.getCaret()).setUpdatePolicy(javax.swing.text.DefaultCaret.NEVER_UPDATE);
+        }
+        a.setText(text);
         a.setEditable(false);
         a.setFocusable(false);
         a.setLineWrap(true);
@@ -530,6 +542,98 @@ final class AboutMe {
         wrapPanel.add(grid);
         wrapPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
         return left(wrapPanel);
+    }
+
+    /**
+     * Every class you've loaded with exaltation progress: how far along it is, which stat is closest to its next
+     * level, and roughly how many dungeon runs that is at your pace (from exalt-log.txt and runs-log.txt).
+     */
+    private static List<java.awt.Component> exaltTracker(MeTracker tracker, MeTracker.Thing me) {
+        List<java.awt.Component> out = new ArrayList<>();
+        String acc = tracker.accountId();
+        Map<Integer, int[]> latest = new java.util.LinkedHashMap<>();
+        List<History.Exalt> mine = new ArrayList<>();
+        for (History.Exalt e : History.exalts()) {
+            if (!e.account.equals(acc)) continue;
+            mine.add(e);
+            latest.put(e.cls, e.v);
+        }
+        if (me != null) {
+            int[] now = tracker.exalts(me.objectType);
+            if (now != null) latest.put(me.objectType, now);
+        }
+        if (latest.isEmpty()) return out;
+        out.add(Box.createVerticalStrut(22));
+        out.add(heading("exalt tracker", null));
+        out.add(Box.createVerticalStrut(8));
+
+        // your pace: exalt potions gained (all classes) per dungeon run, over the last 30 days
+        long since = System.currentTimeMillis() / 1000 - 30 * 86_400L;
+        Map<Integer, Integer> lastTotal = new java.util.HashMap<>();
+        long gained = 0, firstAt = Long.MAX_VALUE;
+        for (History.Exalt e : mine) {
+            Integer before = lastTotal.put(e.cls, e.total());
+            if (before != null && e.at >= since && e.total() > before) {
+                gained += e.total() - before;
+                firstAt = Math.min(firstAt, e.at);
+            }
+        }
+        long runs = 0;
+        long from = Long.MAX_VALUE;
+        for (History.Exalt e : mine) if (e.at >= since) from = Math.min(from, e.at);
+        for (RunLog.Run r : RunLog.all()) {
+            if (r.account.equals(acc) && r.at >= from && !RunLog.isRealm(r.map)) runs++;
+        }
+        double perRun = gained > 0 && runs >= 5 ? gained / (double) runs : 0;
+        if (perRun > 0) {
+            double every = 1 / perRun;
+            out.add(note(every >= 1.5 ? String.format(Locale.ROOT, "Your pace: about 1 exalt potion every %.0f dungeon runs (last 30 days).", every)
+                    : String.format(Locale.ROOT, "Your pace: about %.1f exalt potions per dungeon run (last 30 days).", perRun)));
+        } else {
+            out.add(note("Your pace shows up here once the pup has seen a few exaltations go up (drink potions on a maxed stat)."));
+        }
+        out.add(Box.createVerticalStrut(8));
+
+        List<Map.Entry<Integer, int[]>> classes = new ArrayList<>(latest.entrySet());
+        classes.sort((a, b) -> exaltLevels(b.getValue()) - exaltLevels(a.getValue()));
+        for (Map.Entry<Integer, int[]> c : classes) {
+            int[] v = c.getValue();
+            int levels = exaltLevels(v);
+            String name = objectName(c.getKey(), "Class " + c.getKey());
+            // the stat closest to its next level
+            int best = -1, bestLeft = Integer.MAX_VALUE;
+            for (int k = 0; k < 8; k++) {
+                int x = Math.max(0, v[k]);
+                if (x >= 75) continue;
+                int left = nextExalt(x) - x;
+                if (left < bestLeft) {
+                    bestLeft = left;
+                    best = k;
+                }
+            }
+            String next;
+            if (best < 0) {
+                next = "Fully exalted!";
+            } else {
+                next = "Next: " + STAT_NAMES[best] + " in " + bestLeft + (bestLeft == 1 ? " potion" : " potions")
+                        + (perRun > 0 ? "  (about " + (long) Math.ceil(bestLeft / perRun) + " dungeon runs)" : "");
+            }
+            out.add(new AbilityBar(name, levels + " / 40 levels", Math.min(1, levels / 40.0)));
+            JLabel l = new JLabel(next);
+            l.setFont(Cute.font(Font.PLAIN, 12));
+            l.setForeground(Pixel.INK);
+            out.add(left(l));
+            out.add(Box.createVerticalStrut(8));
+        }
+        out.add(note("Exaltation progress counts potions drunk on a maxed stat: levels at 5, 15, 30, 50 and 75. The run "
+                + "estimate assumes the potions go to that class."));
+        return out;
+    }
+
+    private static int exaltLevels(int[] v) {
+        int t = 0;
+        for (int k = 0; k < 8 && k < v.length; k++) t += exaltLevel(Math.max(0, v[k]));
+        return t;
     }
 
     private static final int[] EXALT_STEPS = {5, 15, 30, 50, 75};

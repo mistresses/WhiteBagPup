@@ -45,6 +45,7 @@ public class WhiteBagNotifier {
     private volatile Set<BagType> watchedBags = EnumSet.of(BagType.WHITE, BagType.BOOSTED_WHITE);
     private final Account.Host host = new Account.Host() {
         @Override public void bag(Account a, BagDrop drop) { onBag(a, drop); }
+        @Override public void badgesMaybe(Account a) { checkBadges(a); }
         @Override public void chat(Account a, ChatLog.Line line) { onChat(a, line); }
         @Override public void event(Account a, EventTracker.Entry e) { onEvent(a, e); }
         @Override public void log(String text) { WhiteBagNotifier.this.log(text); }
@@ -94,6 +95,12 @@ public class WhiteBagNotifier {
         app.loadAssets();
         SwingUtilities.invokeLater(app::checkForUpdate); // after the window (and settings) are ready
         SwingUtilities.invokeLater(app::startRecapTimer);
+        BookPage.share = app::shareCollection;
+        BadgesPage.posting = () -> !"false".equals(app.settings.getProperty("badges.post"));
+        BadgesPage.setPosting = on -> {
+            app.settings.setProperty("badges.post", String.valueOf(on));
+            app.saveSettings();
+        };
     }
 
     // ---------------------------------------------------------------- recaps
@@ -210,6 +217,52 @@ public class WhiteBagNotifier {
         section(home, nowRow, 10);
     }
 
+    /** Unlocks any badges this account has just earned: a note in the log, a Discord post, and the Badges tab redrawn. */
+    private void checkBadges(Account a) {
+        String key = a.key();
+        if (key == null) return;
+        java.util.List<Badges.Badge> fresh;
+        try {
+            fresh = Badges.check(key, a::isMine);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return;
+        }
+        if (fresh.isEmpty()) return;
+        String who = History.nameOf(key);
+        String url = settings.getProperty("webhook.url", "");
+        for (Badges.Badge b : fresh) {
+            log((accounts.size() > 1 ? a.prefix() : "") + "*happy howl* badge unlocked: " + b.name + "! (" + b.desc + ")");
+            if (BadgesPage.posting.getAsBoolean() && DiscordWebhook.isValidUrl(url)) {
+                byte[] medal = BadgesPage.medalPng(b);
+                String json = "{\"username\":\"White Bag Pup\",\"allowed_mentions\":{\"parse\":[]},\"embeds\":[{\"title\":"
+                        + DiscordWebhook.str("\uD83C\uDFC5 Badge unlocked: " + b.name)
+                        + ",\"description\":" + DiscordWebhook.str(b.desc + (who.isEmpty() ? "" : "\n*good pup, " + who + "!* \uD83D\uDC3E"))
+                        + ",\"color\":" + (b.tier.color.getRGB() & 0xFFFFFF)
+                        + (medal != null ? ",\"thumbnail\":{\"url\":\"attachment://medal.png\"}" : "") + "}]}";
+                webhook.sendJson(url, json, medal != null ? java.util.Collections.singletonMap("medal.png", medal) : java.util.Collections.emptyMap(), "badge");
+            }
+        }
+        SwingUtilities.invokeLater(() -> {
+            if (header != null) header.celebrate();
+            if (a.badgesPage != null) a.badgesPage.changed();
+        });
+    }
+
+    /** Posts the Collection tab's picture to the bag webhook. */
+    private void shareCollection(byte[] png, String who) {
+        String url = settings.getProperty("webhook.url", "");
+        if (!DiscordWebhook.isValidUrl(url)) {
+            log("*tilts head* paste your webhook URL on the Home tab first, then I can share your collection.");
+            return;
+        }
+        String title = "\uD83D\uDCD6 " + (who.isEmpty() ? "My" : who + "'s") + " collection";
+        String json = "{\"username\":\"White Bag Pup\",\"allowed_mentions\":{\"parse\":[]},\"embeds\":[{\"title\":"
+                + DiscordWebhook.str(title) + ",\"color\":" + 0xFF9EBB + ",\"image\":{\"url\":\"attachment://collection.png\"}}]}";
+        webhook.sendJson(url, json, java.util.Collections.singletonMap("collection.png", png), "collection");
+        log("*proudly trots off* sharing your collection on Discord~");
+    }
+
     /** Checks every minute whether a recap is due. */
     private void startRecapTimer() {
         java.util.concurrent.ScheduledExecutorService t = java.util.concurrent.Executors.newSingleThreadScheduledExecutor(r -> {
@@ -220,6 +273,7 @@ public class WhiteBagNotifier {
         t.scheduleWithFixedDelay(() -> {
             try {
                 String u = settings.getProperty("recap.url", "");
+                for (Account a : accounts) checkBadges(a);
                 if (Recap.isDue(settings)) for (Account a : accounts) a.me.checkpointPlay();
                 boolean changed = Recap.tick(settings, (json, files, what) -> webhook.sendJson(u, json, files, what), this::log);
                 if (changed) SwingUtilities.invokeLater(this::saveSettings);
@@ -281,9 +335,11 @@ public class WhiteBagNotifier {
             ItemXml.reset();
             LootBook.reset();
             for (Account a : accounts) a.refreshPages();
+            Badges.ready = true;
             if (!LootImage.gameSpritesReady) log("*tilts head* found item names but no sprite sheets, so posts will be text only.");
             log("*sniffs the game files* ...got all the item names and pictures!");
         } catch (Throwable e) {
+            Badges.ready = true;
             log("*whimper* couldn't read the game files (" + e.getClass().getSimpleName() + "), so posts will show item numbers instead of names and pictures. "
                     + "If the game is installed somewhere unusual, start with: java -jar WhiteBagPup.jar --path \"<path to resources.assets>\"");
         }
@@ -377,7 +433,7 @@ public class WhiteBagNotifier {
         pages = new CardLayout();
         sheet = new Pixel.Sheet(pages);
         sheet.setAlignmentX(Component.LEFT_ALIGNMENT);
-        tabNames = new String[]{"home", "bag log", "chat", "dps", "boss kills", "about me", "fame", "vault", "loot", "collection", "puzzle", "trades", "events"};
+        tabNames = new String[]{"home", "bag log", "chat", "dps", "boss kills", "about me", "fame", "vault", "loot", "collection", "badges", "puzzle", "trades", "events"};
         tabs = new Pixel.Tabs(tabNames, i -> showPage());
         // account switcher (only shown once a second game account turns up)
         accountBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -711,7 +767,8 @@ public class WhiteBagNotifier {
         SwingUtilities.invokeLater(() -> header.setLastWhite(lastDrop("white")));
         String items = String.join(", ", drop.itemNames());
         log((accounts.size() > 1 ? account.prefix() : "") + "*BARK BARK!* " + drop.bagName + " bag in " + (drop.mapName.isEmpty() ? "?" : drop.mapName) + "!!" + (items.isEmpty() ? "" : " " + items)
-                + (drop.note == null ? "" : "\n    " + drop.note));
+                + (drop.note == null ? "" : "\n    " + drop.note)
+                + (drop.newToCollection.isEmpty() ? "" : "\n    *gasp* new for your collection: " + String.join(", ", drop.newToCollection) + "!"));
         SwingUtilities.invokeLater(() -> {
             bagsToday++;
             if (processor != null) status.set(foundText(), true);
@@ -738,6 +795,7 @@ public class WhiteBagNotifier {
             webhook.sendBag(url, settings.getProperty("ping.userId", ""), drop);
         }
         Squeak.play(drop.type);
+        checkBadges(account);
     }
 
     private int minRarity() {
@@ -774,7 +832,7 @@ public class WhiteBagNotifier {
         Account a = new Account(accounts.size(), host);
         Runnable ui = () -> {
             a.buildPanels();
-            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.killsPage, a.puzzlePage, a.eventsPage, a.famePage, a.tradesPage}) {
+            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.killsPage, a.puzzlePage, a.badgesPage, a.eventsPage, a.famePage, a.tradesPage}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
             }
             sheet.add(a.bagLog, "bag log@" + a.index);
@@ -786,6 +844,7 @@ public class WhiteBagNotifier {
             sheet.add(a.bookPage, "collection@" + a.index);
             sheet.add(a.killsPage, "boss kills@" + a.index);
             sheet.add(a.puzzlePage, "puzzle@" + a.index);
+            sheet.add(a.badgesPage, "badges@" + a.index);
             sheet.add(a.eventsPage, "events@" + a.index);
             sheet.add(a.famePage, "fame@" + a.index);
             sheet.add(a.tradesPage, "trades@" + a.index);

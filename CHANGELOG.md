@@ -3,6 +3,19 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.1
+
+- **New to your collection!** When a UT or ST you've never looted before drops, its Discord post says so, and recaps
+  list the new items for your collection.
+- **Share on Discord** on the Collection tab posts a picture of your collection: the total and each dungeon's progress
+  with the items you've found.
+- **Badges** tab: 29 pup badges to unlock (white bags, Legendary and Divine items, runs, dry streaks, boss kills, fame,
+  play time, your collection, trades and the Shatters puzzle). New ones get announced in the app and on Discord (you
+  can turn that off). Badges you'd already earned unlock quietly, so your history doesn't flood Discord.
+- **Exalt tracker** on the About Me tab: every class you've loaded, how many of its 40 exaltation levels it has, the
+  stat closest to its next level, and about how many dungeon runs that is at your pace.
+- Fixed pages jumping to the bottom when they open.
+
 ## 2.0
 
 - **Puzzle** tab: a solver for The Shatters' Puzzle Room (nine towers, make them all green). Set the towers to match

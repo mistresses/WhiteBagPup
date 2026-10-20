@@ -360,8 +360,10 @@ public class MeTracker {
     private void onExalt(Packet packet) {
         packets.incoming.ExaltationUpdatePacket p = (packets.incoming.ExaltationUpdatePacket) packet;
         synchronized (this) {
-            exalts.put((int) p.objType, new int[]{p.healthProgress, p.manaProgress, p.attackProgress, p.defenseProgress,
-                    p.speedProgress, p.dexterityProgress, p.vitalityProgress, p.wisdomProgress});
+            int[] v = {p.healthProgress, p.manaProgress, p.attackProgress, p.defenseProgress,
+                    p.speedProgress, p.dexterityProgress, p.vitalityProgress, p.wisdomProgress};
+            exalts.put((int) p.objType, v);
+            History.addExalt(accountId, (int) p.objType, v);
         }
         fire();
     }

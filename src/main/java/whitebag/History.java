@@ -136,6 +136,67 @@ final class History {
         append(PLAY_FILE, x.line());
     }
 
+    // ---------------------------------------------------------------- exaltations
+
+    /** A class's exaltation progress at a moment (exalt-log.txt: at|account|class type|8 stats). */
+    static final class Exalt {
+        long at;
+        String account = "";
+        int cls;
+        final int[] v = new int[8];
+
+        int total() {
+            int t = 0;
+            for (int x : v) t += Math.min(75, Math.max(0, x));
+            return t;
+        }
+    }
+
+    private static final String EXALT_FILE = "exalt-log.txt";
+    private static List<Exalt> exalts;
+
+    static synchronized List<Exalt> exalts() {
+        if (exalts == null) {
+            exalts = new ArrayList<>();
+            for (String l : read(EXALT_FILE)) {
+                String[] f = l.split("\\|", -1);
+                if (f.length < 11) continue;
+                try {
+                    Exalt e = new Exalt();
+                    e.at = Long.parseLong(f[0]);
+                    e.account = f[1];
+                    e.cls = Integer.parseInt(f[2]);
+                    for (int k = 0; k < 8; k++) e.v[k] = Integer.parseInt(f[3 + k]);
+                    exalts.add(e);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+        return Collections.unmodifiableList(new ArrayList<>(exalts));
+    }
+
+    /** Saves a class's exaltation progress if it changed since last time. */
+    static synchronized void addExalt(String account, int cls, int[] v) {
+        if (account == null || account.isEmpty() || v == null || v.length < 8) return;
+        exalts();
+        for (int i = exalts.size() - 1; i >= 0; i--) {
+            Exalt e = exalts.get(i);
+            if (e.account.equals(account) && e.cls == cls) {
+                if (java.util.Arrays.equals(e.v, java.util.Arrays.copyOf(v, 8))) return;
+                break;
+            }
+        }
+        Exalt e = new Exalt();
+        e.at = System.currentTimeMillis() / 1000;
+        e.account = account;
+        e.cls = cls;
+        System.arraycopy(v, 0, e.v, 0, 8);
+        exalts.add(e);
+        StringBuilder sb = new StringBuilder().append(e.at).append('|').append(clean(account)).append('|').append(cls);
+        for (int x : e.v) sb.append('|').append(x);
+        append(EXALT_FILE, sb.toString());
+    }
+
     // ---------------------------------------------------------------- names
 
     /** Each account's in-game name (names.txt: account|name), so recaps can say who played. */
