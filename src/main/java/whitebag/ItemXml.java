@@ -44,6 +44,11 @@ final class ItemXml {
     private static volatile Map<Integer, Info> table;
     private static final Set<Integer> logged = new HashSet<>();
 
+    /** Forgets what was read, so the next look reads the game files again (after they've been extracted). */
+    static synchronized void reset() {
+        table = null;
+    }
+
     /** Every item id in the game files (empty if they aren't there yet). */
     static java.util.Set<Integer> ids() {
         Map<Integer, Info> t = table;

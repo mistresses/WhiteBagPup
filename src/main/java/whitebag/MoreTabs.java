@@ -75,15 +75,21 @@ final class MoreTabs {
 
         /** A simple table of labels; the first row is bold. */
         JComponent table(List<String[]> rows) {
-            int cols = rows.isEmpty() ? 1 : rows.get(0).length;
-            JPanel grid = new JPanel(new GridLayout(rows.size(), cols, 24, 4));
+            // each column only as wide as it needs, so wide tables still fit the page
+            JPanel grid = new JPanel(new GridBagLayout());
             grid.setOpaque(false);
+            GridBagConstraints c = new GridBagConstraints();
+            c.anchor = GridBagConstraints.WEST;
             for (int r = 0; r < rows.size(); r++) {
-                for (String cell : rows.get(r)) {
-                    JLabel l = new JLabel(cell);
+                String[] cells = rows.get(r);
+                for (int k = 0; k < cells.length; k++) {
+                    JLabel l = new JLabel(cells[k]);
                     l.setFont(Cute.font(r == 0 ? Font.BOLD : Font.PLAIN, 13));
                     l.setForeground(Pixel.INK);
-                    grid.add(l);
+                    c.gridx = k;
+                    c.gridy = r;
+                    c.insets = new Insets(0, 0, 4, k == cells.length - 1 ? 0 : 20);
+                    grid.add(l, c);
                 }
             }
             JPanel wrapPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -255,10 +261,10 @@ final class MoreTabs {
             gap(8);
             DryStreak.Streak overall = streaks.get("");
             if (overall.runs == 0) {
-                list.add(note("Counts the runs since your last white bag, in each dungeon and overall, from your next run on."));
+                list.add(note("Counts the dungeon runs since your last white bag, in each dungeon and overall, from your next run on (the realm isn't counted)."));
             } else {
-                String big = overall.current == 0 ? "Your last run had a white bag! Streak: 0 runs"
-                        : overall.current + (overall.current == 1 ? " run" : " runs") + " since your last white bag"
+                String big = overall.current == 0 ? "Your last dungeon run had a white bag! Streak: 0 runs"
+                        : overall.current + (overall.current == 1 ? " dungeon run" : " dungeon runs") + " since your last white bag"
                         + (overall.lastWhite > 0 ? " (" + when(overall.lastWhite * 1000L) + ")" : "");
                 JLabel head = new JLabel(big);
                 head.setFont(Cute.font(Font.BOLD, 16));
@@ -334,8 +340,9 @@ final class MoreTabs {
                 for (int i = 0; i < Math.min(15, rs.size()); i++) {
                     long[] n = rs.get(i).getValue();
                     String per = n[1] == 0 ? "-" : String.format(Locale.ROOT, "%.1f runs", n[0] / (double) n[1]);
-                    rr.add(new String[]{rs.get(i).getKey(), String.valueOf(n[0]), String.valueOf(n[1]), per,
-                            n[1] == 0 ? n[3] + " (none yet)" : String.valueOf(n[3])});
+                    String sinceLast = !streaks.containsKey(rs.get(i).getKey()) ? "-" // the realm: no dry streak
+                            : n[1] == 0 ? n[3] + " (none yet)" : String.valueOf(n[3]);
+                    rr.add(new String[]{rs.get(i).getKey(), String.valueOf(n[0]), String.valueOf(n[1]), per, sinceLast});
                 }
                 list.add(table(rr));
                 gap(4);

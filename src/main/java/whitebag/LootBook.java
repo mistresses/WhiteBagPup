@@ -91,6 +91,11 @@ final class LootBook {
         }
     }
 
+    /** Matches item names to the game's again (after the game files have been read). */
+    static synchronized void reset() {
+        idsMatched = false;
+    }
+
     /** Finds each item's game id by name, once the game files are read. */
     private static void matchIds() {
         if (idsMatched || !LootImage.gameSpritesReady) return;

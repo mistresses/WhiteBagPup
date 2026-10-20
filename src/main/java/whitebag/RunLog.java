@@ -54,6 +54,12 @@ final class RunLog {
     private static final String FILE = "runs-log.txt";
     private static List<Run> runs;
 
+    /** The realm itself (not a dungeon), which dry streaks leave out. */
+    static boolean isRealm(String map) {
+        String m = map == null ? "" : map.trim().toLowerCase(java.util.Locale.ROOT);
+        return m.contains("realm of the mad god") || m.equals("realm") || m.equals("the realm") || m.equals("rotmg");
+    }
+
     static boolean isRun(String map) {
         String m = map == null ? "" : map.trim().toLowerCase(java.util.Locale.ROOT);
         return !HUBS.contains(m) && !m.contains("guild hall");

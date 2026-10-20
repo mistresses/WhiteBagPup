@@ -9,6 +9,7 @@ import java.util.Map;
 /**
  * Dry streaks: how many runs in a row went by without a white bag, per dungeon and overall, from the run log and
  * the loot log. A white bag counts for the run it dropped in (it dropped between entering and leaving).
+ * Only dungeons count: time in the realm (and white bags from realm events) are left out.
  */
 final class DryStreak {
     private DryStreak() {
@@ -41,12 +42,13 @@ final class DryStreak {
 
     /** Per dungeon, plus "" for all runs together. Runs and bags should already be one account's (or everyone's). */
     static Map<String, Streak> compute(List<RunLog.Run> runs, List<LootStats.Entry> bags) {
-        List<RunLog.Run> rs = new ArrayList<>(runs);
+        List<RunLog.Run> rs = new ArrayList<>();
+        for (RunLog.Run r : runs) if (!RunLog.isRealm(r.map)) rs.add(r);
         rs.sort((a, b) -> Long.compare(a.at, b.at));
         List<long[]> whites = new ArrayList<>(); // {at, index of map in names}
         List<String> whiteMaps = new ArrayList<>();
         for (LootStats.Entry e : bags) {
-            if (LootStats.colour(e.type) != BagType.WHITE) continue;
+            if (LootStats.colour(e.type) != BagType.WHITE || RunLog.isRealm(e.map)) continue;
             whites.add(new long[]{e.at});
             whiteMaps.add(e.map);
         }

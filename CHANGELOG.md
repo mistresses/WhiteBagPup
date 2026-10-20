@@ -3,6 +3,23 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.0
+
+- **Puzzle** tab: a solver for The Shatters' Puzzle Room (nine towers, make them all green). Set the towers to match
+  the game and the ones to shoot get a pink target, with the fewest shots. "Click to shoot" lets you follow along,
+  and "Random practice" gives you a puzzle to try. In the Puzzle Room the pup also tries to read the towers from the
+  game by itself (anything it notices goes in `puzzle-debug.txt`). The towers use the game's own pictures once the
+  pup knows which objects they are (from the game files, or from seeing them in the Puzzle Room).
+- Tabs squeeze a little when that saves a whole row.
+
+## 1.9
+
+- The Collection tab now ticks off items from every bag the pup has ever logged. It used to miss them when the tab
+  was drawn before the game's item names had loaded. Dungeons where you've had bags now show under **My dungeons**,
+  even without a logged run.
+- Dry streaks only count dungeons: time in the realm (and realm event whites) no longer counts as a run.
+- Wide tables on the Loot tab fit the page (no more cut-off columns).
+
 ## 1.8
 
 - **Boss Kills** tab: every boss you help kill, with totals for this session, today and the last 7 days, and

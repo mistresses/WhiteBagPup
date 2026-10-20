@@ -31,6 +31,10 @@ final class BookPage extends MoreTabs.Page {
     BookPage(Predicate<LootStats.Entry> mine, Predicate<RunLog.Run> myRuns) {
         this.mine = mine;
         this.myRuns = myRuns;
+        // catch up each time the tab is opened (item names may have loaded since it was last drawn)
+        addHierarchyListener(e -> {
+            if ((e.getChangeFlags() & java.awt.event.HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing()) changed();
+        });
         search.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             public void insertUpdate(javax.swing.event.DocumentEvent e) { searching = true; changed(); }
             public void removeUpdate(javax.swing.event.DocumentEvent e) { searching = true; changed(); }
@@ -50,6 +54,8 @@ final class BookPage extends MoreTabs.Page {
             }
             if (mine == null || everyAccount || mine.test(e)) bags.add(e);
         }
+        Map<String, Integer> bagsBy = new HashMap<>();
+        for (LootStats.Entry e : bags) if (!e.map.isEmpty()) bagsBy.merge(e.map, 1, Integer::sum);
         Map<String, Integer> runsBy = new HashMap<>();
         for (RunLog.Run r : RunLog.all()) {
             if (myRuns == null || everyAccount || myRuns.test(r)) runsBy.merge(r.map, 1, Integer::sum);
@@ -74,7 +80,7 @@ final class BookPage extends MoreTabs.Page {
             changed();
         }));
         controls.add(Box.createHorizontalStrut(12));
-        controls.add(new LogTabs.Segments(new String[]{"Dungeons I've run", "Every dungeon"}, allPlaces ? 1 : 0, i -> {
+        controls.add(new LogTabs.Segments(new String[]{"My dungeons", "Every dungeon"}, allPlaces ? 1 : 0, i -> {
             allPlaces = i == 1;
             changed();
         }));
@@ -103,10 +109,10 @@ final class BookPage extends MoreTabs.Page {
         for (LootBook.Place p : places) {
             int n = 0;
             for (Map.Entry<String, Integer> e : runsBy.entrySet()) if (LootBook.samePlace(e.getKey(), p.name)) n += e.getValue();
-            boolean anyFound = false;
-            for (LootBook.Item it : p.items) anyFound |= found.containsKey(it);
+            int bagsHere = 0;
+            for (Map.Entry<String, Integer> e : bagsBy.entrySet()) if (LootBook.samePlace(e.getKey(), p.name)) bagsHere += e.getValue();
             runs.put(p, n);
-            if (allPlaces || n > 0) order.add(p);
+            if (allPlaces || n > 0 || bagsHere > 0) order.add(p);
         }
         order.sort((a, b) -> {
             int c = runs.get(b) - runs.get(a);
@@ -237,7 +243,7 @@ final class BookPage extends MoreTabs.Page {
                 }
             }
             BufferedImage[] out = {c, grey};
-            if (c != null || !LootImage.gameSpritesReady) ICONS.put(id, out);
+            if (c != null || LootImage.gameSpritesReady) ICONS.put(id, out); // keep trying until the game's pictures are in
             return out;
         }
 

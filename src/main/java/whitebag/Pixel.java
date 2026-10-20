@@ -615,15 +615,20 @@ final class Pixel {
             int avail = getWidth() > 0 ? getWidth() : 560;
             pad = 18;
             gap = 4;
-            if (totalWidth() > avail) {
-                // squeeze onto one row if that's enough, otherwise wrap at the normal size
-                pad = 10;
-                gap = 2;
-                if (totalWidth() > avail) {
-                    pad = 18;
-                    gap = 4;
-                }
-            }
+            java.util.List<java.util.List<Integer>> normal = layout(avail);
+            if (normal.size() == 1) return normal;
+            // squeezed a little if that saves a row (one row instead of two, two instead of three)
+            pad = 10;
+            gap = 2;
+            java.util.List<java.util.List<Integer>> squeezed = layout(avail);
+            if (squeezed.size() < normal.size()) return squeezed;
+            pad = 18;
+            gap = 4;
+            return normal;
+        }
+
+        /** Rows at the current padding, evened out. */
+        private java.util.List<java.util.List<Integer>> layout(int avail) {
             java.util.List<java.util.List<Integer>> rows = new java.util.ArrayList<>();
             java.util.List<Integer> row = new java.util.ArrayList<>();
             int x = 0;

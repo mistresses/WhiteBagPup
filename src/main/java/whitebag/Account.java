@@ -55,6 +55,8 @@ final class Account {
     MoreTabs.LootPage lootPage;
     BookPage bookPage;
     KillsPage killsPage;
+    PuzzlePage puzzlePage;
+    final ShattersPuzzle puzzle;
     MoreTabs.EventsPage eventsPage;
     MoreTabs.FamePage famePage;
     MoreTabs.TradesPage tradesPage;
@@ -95,6 +97,10 @@ final class Account {
             if (lootPage != null) lootPage.changed();
             if (bookPage != null) bookPage.changed();
         });
+        puzzle = new ShattersPuzzle(green -> {
+            if (puzzlePage != null) puzzlePage.boardSeen(green);
+        });
+        puzzle.register(bus);
         dps.onRunEnd = (run, boards) -> {
             History.addRun(run, boards, key);
             if (killsPage != null) killsPage.changed();
@@ -118,11 +124,18 @@ final class Account {
         eventsPage = new MoreTabs.EventsPage(events);
         famePage = new MoreTabs.FamePage(me);
         tradesPage = new MoreTabs.TradesPage(t -> key != null && (key.equals(t.account) || (t.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        puzzlePage = new PuzzlePage();
         killsPage = new KillsPage(d -> key != null && (key.equals(d.account) || (d.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         bookPage = new BookPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
                 r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
         lootPage = new MoreTabs.LootPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
                 r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+    }
+
+    /** Redraws the pages that show items (after the game files are read). */
+    void refreshPages() {
+        for (MoreTabs.Page p : new MoreTabs.Page[]{lootPage, bookPage, killsPage, tradesPage, vaultPage}) if (p != null) p.changed();
+        if (aboutPanel != null) aboutPanel.changed();
     }
 
     String key() {

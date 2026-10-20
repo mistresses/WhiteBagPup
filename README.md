@@ -19,19 +19,19 @@ See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 ## Setup (Windows)
 
 1. Install **Java** (https://www.java.com/download) and **Npcap** (https://npcap.com/#download).
-   If you already use Tomato or RealmShark, you have both.
-2. Make a folder somewhere plain, like `C:\WhiteBagPup` (not inside a zip, OneDrive, Program Files or a protected
-   Desktop folder), and put `WhiteBagPup.jar` in it. The app saves its settings and logs next to itself.
+If you already use Tomato or RealmShark, you have both.
+2. Make a folder somewhere plain, like `C:\\WhiteBagPup` (not inside a zip, OneDrive, Program Files or a protected
+Desktop folder), and put `WhiteBagPup.jar` in it. The app saves its settings and logs next to itself.
 3. Make a Discord webhook: in your server, **Server Settings > Integrations > Webhooks > New Webhook**, pick the
-   channel, then **Copy Webhook URL**.
+channel, then **Copy Webhook URL**.
 4. Double-click `WhiteBagPup.jar`, paste the URL and press **Send test post**.
 5. Optional: to get pinged, turn on **Discord Settings > Advanced > Developer Mode**, right-click your name,
-   **Copy User ID**, and paste it into **Ping me**.
+**Copy User ID**, and paste it into **Ping me**.
 6. Press **Start watching**. If you're already in game, change area once (go to the Nexus) so it can sync.
 
 The first time, it reads item names and pictures from your game install. That can take a minute and happens again
 whenever the game updates. If your game is installed somewhere unusual, run
-`java -jar WhiteBagPup.jar --path "C:\path\to\resources.assets"`.
+`java -jar WhiteBagPup.jar --path "C:\\path\\to\\resources.assets"`.
 
 ### Recaps (optional)
 
@@ -53,27 +53,28 @@ in your webhook's settings.
 
 ## What it does
 
-- **Bag posts**: the bag, every item with its tier (UT, ST, T12...) and rarity (Uncommon to Divine), the dungeon,
-  your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity.
-  Optionally add a picture of your game window (**Game pictures: On**). Overflow bags are merged into one post.
-- **Bag Log**: every bag it barked about this session.
-- **Chat**: all in-game chat, colour-coded, with filters and search.
-- **DPS**: a leaderboard for each boss in each run, with damage taken and Oryx 3 guarded hits.
-- **Boss Kills**: every boss you've helped kill, per boss, with your best % of the damage and fastest kill.
-- **About Me**: your character, play time and stats (with max and exaltations), gear with enchantments, your pet with a
-  feeding planner, and the Tinkerer's quests (click to cross things off).
-- **Fame**: fame this session, per hour, a chart, and fame by dungeon.
-- **Vault**: your vault, potion storage and gift chest, with stat potion counts.
-- **Loot**: every bag seen (all colours), by dungeon, dry streaks ("23 Shatters runs since your last white"),
-  drop rates ("1 white per 12 Shatters runs") and best drops.
-- **Collection**: every UT and ST item that can drop, by dungeon, greyed out until you've looted it.
-- **Trades**: every trade you finish, who with, and what you gave and got.
-- **Events**: realm events, dungeon key pops and closing realms on every server from RealmStock's event notifier,
-  with tick boxes for what you care about, a search box, a region filter and a sound you can turn off.
-- **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: your name and
-  classes, bags, runs, luckiest dungeon, fame and time played, with all the loot as pictures you
-  flip through with arrows. Set it up under **Recaps** on the Home tab.
-- **Two accounts at once**: each game client gets its own tabs; switch with the Account buttons.
+* **Bag posts**: the bag, every item with its tier (UT, ST, T12...) and rarity (Uncommon to Divine), the dungeon,
+your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity.
+Optionally add a picture of your game window (**Game pictures: On**). Overflow bags are merged into one post.
+* **Bag Log**: every bag it barked about this session.
+* **Chat**: all in-game chat, colour-coded, with filters and search.
+* **DPS**: a leaderboard for each boss in each run, with damage taken and Oryx 3 guarded hits.
+* **Boss Kills**: every boss you've helped kill, per boss, with your best % of the damage and fastest kill.
+* **About Me**: your character, play time and stats (with max and exaltations), gear with enchantments, your pet with a
+feeding planner, and the Tinkerer's quests (click to cross things off).
+* **Fame**: fame this session, per hour, a chart, and fame by dungeon.
+* **Vault**: your vault, potion storage and gift chest, with stat potion counts.
+* **Loot**: every bag seen (all colours), by dungeon, dry streaks ("23 Shatters runs since your last white"),
+drop rates ("1 white per 12 Shatters runs") and best drops.
+* **Collection**: every UT and ST item that can drop, by dungeon, greyed out until you've looted it.
+* **Puzzle**: a solver for The Shatters' Puzzle Room: the towers to shoot to turn them all green.
+* **Trades**: every trade you finish, who with, and what you gave and got.
+* **Events**: realm events, dungeon key pops and closing realms on every server from RealmStock's event notifier,
+with tick boxes for what you care about, a search box, a region filter and a sound you can turn off.
+* **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: your name and
+classes, bags, runs, luckiest dungeon, fame and time played, with all the loot as pictures you
+flip through with arrows. Set it up under **Recaps** on the Home tab.
+* **Two accounts at once**: each game client gets its own tabs; switch with the Account buttons.
 
 <p align="center"><img src="images/fame.png" alt="Fame tab" width="420"></p>
 <p align="center"><img src="images/loot-and-trades.png" alt="Loot and Trades tabs" width="700"></p>
@@ -82,36 +83,36 @@ in your webhook's settings.
 
 Put `.wav` files in the `sounds` folder next to the app (MP3 doesn't work, convert it first):
 
-- Bags: `white.wav`, `red.wav`, `orange.wav`, `gold.wav`, `egg.wav`, `blue.wav` (and `boosted-white.wav` and so on).
-- Events: `event.wav`, `key-pop.wav`, `realm-closed.wav`, or one named after a single event, like `cube-god.wav`.
+* Bags: `white.wav`, `red.wav`, `orange.wav`, `gold.wav`, `egg.wav`, `blue.wav` (and `boosted-white.wav` and so on).
+* Events: `event.wav`, `key-pop.wav`, `realm-closed.wav`, or one named after a single event, like `cube-god.wav`.
 
 ## Files it saves
 
 Everything stays in the app's folder on your PC:
 
-| File | What's in it |
-| --- | --- |
-| `whitebag-notifier.properties` | Your settings and webhook URLs (keep this private) |
-| `events.properties` | Your Events tick boxes |
-| `loot-log.txt`, `runs-log.txt` | Bags seen and dungeons run (for Loot and drop rates) |
-| `fame-log.txt`, `dps-log.txt` | Fame and DPS history (for recaps) |
-| `trade-log.txt` | Your trades |
-| `play-log.txt` | Your time in game (for About Me and recaps) |
-| `boss-filter.txt` | Bosses you've hidden on the Boss Kills tab |
-| `names.txt` | Each account's in-game name (for recaps) |
-| `assets/` | Item names and pictures read from the game |
-| `sounds/` | Your custom sounds |
-| `puppy.properties`, `vault*.txt`, `pet-cache.txt` | Small caches the app keeps for itself |
+|File|What's in it|
+|-|-|
+|`whitebag-notifier.properties`|Your settings and webhook URLs (keep this private)|
+|`events.properties`|Your Events tick boxes|
+|`loot-log.txt`, `runs-log.txt`|Bags seen and dungeons run (for Loot and drop rates)|
+|`fame-log.txt`, `dps-log.txt`|Fame and DPS history (for recaps)|
+|`trade-log.txt`|Your trades|
+|`play-log.txt`|Your time in game (for About Me and recaps)|
+|`boss-filter.txt`|Bosses you've hidden on the Boss Kills tab|
+|`puzzle-debug.txt`|What the pup noticed about Shatters puzzle towers (only if it saw any)|
+|`names.txt`|Each account's in-game name (for recaps)|
+|`assets/`|Item names and pictures read from the game|
+|`sounds/`|Your custom sounds|
+|`puppy.properties`, `vault\*.txt`, `pet-cache.txt`|Small caches the app keeps for itself|
 
 To move to a new PC, copy the whole folder. To start fresh, delete the log files.
 
 ## Good to know
 
-- **Keep your webhook URL private.** It's saved in `whitebag-notifier.properties`, which only lives on your PC.
-- **"Extraction access denied"** means Windows blocked the app from saving the game files. Move the folder somewhere
-  plain like `C:\WhiteBagPup`, or allow Java under **Windows Security > Ransomware protection > Controlled folder access**.
-- **Don't run other packet sniffers at the same time** if you see sniffer errors.
-- Use it at your own risk. It's an unofficial fan tool and isn't affiliated with DECA.
+* **Keep your webhook URL private.** It's saved in `whitebag-notifier.properties`, which only lives on your PC.
+* **"Extraction access denied"** means Windows blocked the app from saving the game files. Move the folder somewhere
+plain like `C:\\WhiteBagPup`, or allow Java under **Windows Security > Ransomware protection > Controlled folder access**.
+* **Don't run other packet sniffers at the same time** if you see sniffer errors.
 
 ## Building from source
 
@@ -126,12 +127,13 @@ and publish. Add the new version to the top of `CHANGELOG.md` too.
 
 ## Credits and licences
 
-- The packet library is based on [RealmShark](https://github.com/X-com/RealmShark) by X-com (MIT licence).
-- The item rarity (enchantment) format follows [DaAwesomePwner's RealmShark fork](https://github.com/DaAwesomePwner/RealmShark) (MIT).
-- Where each UT and ST item drops (the Collection tab) comes from the [RealmEye wiki](https://www.realmeye.com/wiki).
-  `tools/build_collection.py` rebuilds the list from the Femcore bot's `ut_items.json`.
-- The all-servers event feed comes from [RealmStock's event notifier](https://realmstock.com/pages/event-notifier).
-- pcap (MIT/Apache-2.0), JNA (Apache-2.0/LGPL), Gson and FlatBuffers (Apache-2.0).
+* The packet library is based on [RealmShark](https://github.com/X-com/RealmShark) by X-com (MIT licence).
+* The item rarity (enchantment) format follows [DaAwesomePwner's RealmShark fork](https://github.com/DaAwesomePwner/RealmShark) (MIT).
+* Where each UT and ST item drops (the Collection tab) comes from the [RealmEye wiki](https://www.realmeye.com/wiki).
+`tools/build\_collection.py` rebuilds the list from the Femcore bot's `ut\_items.json`.
+* The all-servers event feed comes from [RealmStock's event notifier](https://realmstock.com/pages/event-notifier).
+* pcap (MIT/Apache-2.0), JNA (Apache-2.0/LGPL), Gson and FlatBuffers (Apache-2.0).
 
 Their licence texts are in the [`licenses`](licenses) folder and inside the jar.
 Game assets © DECA Live Operations GmbH.
+
