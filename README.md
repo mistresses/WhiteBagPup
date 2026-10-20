@@ -137,6 +137,7 @@ and publish. Add the new version to the top of `CHANGELOG.md` too.
 - Where each UT and ST item drops (the Collection tab) comes from the [RealmEye wiki](https://www.realmeye.com/wiki).
   `tools/build_collection.py` rebuilds the list from the Femcore bot's `ut_items.json`.
 - The all-servers event feed comes from [RealmStock's event notifier](https://realmstock.com/pages/event-notifier).
+- The font is [Nunito](https://github.com/googlefonts/nunito) (SIL Open Font License 1.1).
 - pcap (MIT/Apache-2.0), JNA (Apache-2.0/LGPL), Gson and FlatBuffers (Apache-2.0).
 
 Their licence texts are in the [`licenses`](licenses) folder and inside the jar.

@@ -15,6 +15,15 @@ REALM = {"The Realm", "Beach", "Low Forest", "Mid Forest", "High Forest", "Low P
          "Mid Desert", "High Desert", "Highlands", "Midlands", "Mountains", "Adept Biomes", "Veteran Biomes"}
 ELSEWHERE = {"Dungeons", "Various Dungeons", "Lava Fissure setpiece)"}
 SAME = {"Spectral Penetentiary": "Spectral Penitentiary"}
+# Drops the wiki doesn't give a place for: the boss names that tell us where (old "Retro" items, seasonal versions)
+BOSS_PLACES = [
+    ("septavius", "Undead Lair"), ("arachna", "Spider Den"), ("malphas", "Abyss of Demons"),
+    ("pyyr", "Lair of Draconis"), ("limoz", "Lair of Draconis"), ("feargus", "Lair of Draconis"),
+    ("nikao", "Lair of Draconis"), ("bilgewater", "Pirate Cave"), ("shaitan", "Lair of Shaitan"),
+    ("megamoth", "Woodland Labyrinth"), ("killer bee queen", "Plagued Nest"), ("twilight archmage", "The Shatters"),
+    ("forgotten king", "The Shatters"), ("limon", "Sprite World"),
+]
+EVENTS = "Events and seasonal"
 
 
 def place(name):
@@ -23,7 +32,7 @@ def place(name):
     if name in REALM:
         return "The Realm"
     if name in ELSEWHERE:
-        return "Elsewhere"
+        return "Elsewhere"  # dropped again below if the item has a real place
     return name
 
 
@@ -38,7 +47,14 @@ def main(src, out):
         for enemy in item["drops"]:
             for loc in where.get(item.get("links", {}).get(enemy), []):
                 places.add(place(loc["name"]))
-        for p in places or {"Elsewhere"}:
+        many = "Elsewhere" in places   # the wiki only says "various dungeons"
+        places.discard("Elsewhere")
+        if not places:
+            for enemy in item["drops"]:
+                for key, p in BOSS_PLACES:
+                    if key in enemy.lower():
+                        places.add(p)
+        for p in places or {"Many dungeons" if many else EVENTS}:
             lines.add(f"{p}|{item['tier']}|{item['name'].strip()}")
     with open(out, "w", encoding="utf-8") as f:
         f.write(f"# White Bag Pup collection book: place|tier|item (from the RealmEye wiki, {data.get('generated', '?')})\n")

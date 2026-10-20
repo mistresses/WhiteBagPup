@@ -66,6 +66,7 @@ Abyss of Demons|ST|Scorchium Stone
 Abyss of Demons|ST|Staff of Eruption
 Abyss of Demons|UT|Berserker's Breastplate
 Abyss of Demons|UT|Demon Blade
+Abyss of Demons|UT|Demon Blade (Retro)
 Abyss of Demons|UT|Faded Heart Scarab
 Abyss of Demons|UT|Fractured Hannya
 Abyss of Demons|UT|Heavy Syndicate Attire
@@ -321,99 +322,6 @@ Deadwater Docks|UT|Wavecrest Concertina
 Deep Sea Abyss|UT|Cloak of the Deep
 Deep Sea Abyss|UT|Crystallised Fang's Venom
 Deep Sea Abyss|UT|Rectangular Prism
-Elsewhere|ST|Cane of the Void
-Elsewhere|ST|Chrysanthemum Corsage
-Elsewhere|ST|Darkness Overcoat
-Elsewhere|ST|Executioner's Garb
-Elsewhere|ST|Gravekeeper's Scythe
-Elsewhere|ST|Hollyhock Hide
-Elsewhere|ST|Hooded Skull
-Elsewhere|ST|Immortal Mantle
-Elsewhere|ST|Ring of the Inferno
-Elsewhere|ST|Spectral Spell
-Elsewhere|ST|Supernatural Staff
-Elsewhere|ST|Void Leeches
-Elsewhere|UT|Ashen Talon
-Elsewhere|UT|Barely Attuned Magic Thingy
-Elsewhere|UT|Blade of Eternal Rebirth
-Elsewhere|UT|Bloom-Fire Scepter
-Elsewhere|UT|Carrotroot Vestments
-Elsewhere|UT|Cloak of the Planewalker (Retro)
-Elsewhere|UT|Crest of the Rising Sun
-Elsewhere|UT|Demon Blade (Retro)
-Elsewhere|UT|Doku No Ken (Retro)
-Elsewhere|UT|Doom Bow (Retro)
-Elsewhere|UT|Doom's Emblem
-Elsewhere|UT|Dragon Mace
-Elsewhere|UT|Dragon Slayer
-Elsewhere|UT|Eggshell Carapace
-Elsewhere|UT|Elegant Parasol
-Elsewhere|UT|Enchanted Ice Blade
-Elsewhere|UT|Esoteric Buckler
-Elsewhere|UT|Ethereal Happi
-Elsewhere|UT|Fire Dragon Battle Armor (Retro)
-Elsewhere|UT|Flowering Kimono
-Elsewhere|UT|Frost Citadel Armor
-Elsewhere|UT|Frost Drake Hide Armor
-Elsewhere|UT|Frost Elementalist Robe
-Elsewhere|UT|Frost Lich's Finger
-Elsewhere|UT|Frost Storm Bow
-Elsewhere|UT|Frosty's Walking Stick
-Elsewhere|UT|Frozen Wand
-Elsewhere|UT|Fudgeclad Armor
-Elsewhere|UT|Green Beehemoth Quiver
-Elsewhere|UT|Hookblade Tachi
-Elsewhere|UT|Huntsman's Volley
-Elsewhere|UT|Icicle Launcher
-Elsewhere|UT|Joker Timbrel
-Elsewhere|UT|Kagenohikari
-Elsewhere|UT|Krathana
-Elsewhere|UT|Leaf Bow (Retro)
-Elsewhere|UT|Leaf Dragon Hide Armor (Retro)
-Elsewhere|UT|Lethargic Sentience
-Elsewhere|UT|Makakoyumi
-Elsewhere|UT|Mimicry Trap
-Elsewhere|UT|Pirate King's Cutlass (Retro)
-Elsewhere|UT|Poison Fang Dagger (Retro)
-Elsewhere|UT|Precisely Calibrated Stringstick
-Elsewhere|UT|Prismimic
-Elsewhere|UT|Rain Maker
-Elsewhere|UT|Random Spell Extraction Device
-Elsewhere|UT|Sage's Wakibiki
-Elsewhere|UT|Saint Nicolas' Blade
-Elsewhere|UT|Silex's Hammer
-Elsewhere|UT|Skull of Endless Torment (Retro)
-Elsewhere|UT|Snow Branch
-Elsewhere|UT|Snowflake Blade
-Elsewhere|UT|Solar Flare Igniter
-Elsewhere|UT|Sovereign Cinder-Blade
-Elsewhere|UT|Staff of Extreme Prejudice (Retro)
-Elsewhere|UT|Sullen Blade (Retro)
-Elsewhere|UT|Sweettreats Bow
-Elsewhere|UT|Sweettreats Dagger
-Elsewhere|UT|Sweettreats Katana
-Elsewhere|UT|Sweettreats Staff
-Elsewhere|UT|Sweettreats Sword
-Elsewhere|UT|Sweettreats Wand
-Elsewhere|UT|Taiko Drums
-Elsewhere|UT|Tezutsu Hanabi
-Elsewhere|UT|The Heart of the Dragon
-Elsewhere|UT|Tome of the Dragon
-Elsewhere|UT|Toy Knife
-Elsewhere|UT|Trap of the Blood Spirit
-Elsewhere|UT|Unstable Anomaly
-Elsewhere|UT|Venerable Ancient Stone Sword
-Elsewhere|UT|Venerable Coral Silk Armor
-Elsewhere|UT|Venerable Crystal Wand
-Elsewhere|UT|Venerable Doku No Ken
-Elsewhere|UT|Venerable Doom Bow
-Elsewhere|UT|Venerable Resurrected Warrior's Armor
-Elsewhere|UT|Venerable Robe of the Mad Scientist
-Elsewhere|UT|Venerable Spirit Dagger
-Elsewhere|UT|Venerable Staff of the Crystal Serpent
-Elsewhere|UT|Water Dragon Silk Robe (Retro)
-Elsewhere|UT|Winter's Breath Wand
-Elsewhere|UT|Yuki
 Eternal Frost|UT|Advent Seal
 Eternal Frost|UT|Brass Chamberstick
 Eternal Frost|UT|Candy Katana
@@ -436,6 +344,70 @@ Eternal Frost|UT|Staff of Iceblast
 Eternal Frost|UT|Tome of Frigid Protection
 Eternal Frost|UT|Winter's Breath Wand
 Eternal Frost|UT|Yuki
+Events and seasonal|ST|Cane of the Void
+Events and seasonal|ST|Chrysanthemum Corsage
+Events and seasonal|ST|Darkness Overcoat
+Events and seasonal|ST|Executioner's Garb
+Events and seasonal|ST|Gravekeeper's Scythe
+Events and seasonal|ST|Hollyhock Hide
+Events and seasonal|ST|Hooded Skull
+Events and seasonal|ST|Void Leeches
+Events and seasonal|UT|Ashen Talon
+Events and seasonal|UT|Barely Attuned Magic Thingy
+Events and seasonal|UT|Blade of Eternal Rebirth
+Events and seasonal|UT|Bloom-Fire Scepter
+Events and seasonal|UT|Carrotroot Vestments
+Events and seasonal|UT|Crest of the Rising Sun
+Events and seasonal|UT|Dragon Mace
+Events and seasonal|UT|Dragon Slayer
+Events and seasonal|UT|Eggshell Carapace
+Events and seasonal|UT|Elegant Parasol
+Events and seasonal|UT|Enchanted Ice Blade
+Events and seasonal|UT|Esoteric Buckler
+Events and seasonal|UT|Ethereal Happi
+Events and seasonal|UT|Flowering Kimono
+Events and seasonal|UT|Frost Storm Bow
+Events and seasonal|UT|Frozen Wand
+Events and seasonal|UT|Fudgeclad Armor
+Events and seasonal|UT|Hookblade Tachi
+Events and seasonal|UT|Joker Timbrel
+Events and seasonal|UT|Kagenohikari
+Events and seasonal|UT|Krathana
+Events and seasonal|UT|Lethargic Sentience
+Events and seasonal|UT|Makakoyumi
+Events and seasonal|UT|Mimicry Trap
+Events and seasonal|UT|Precisely Calibrated Stringstick
+Events and seasonal|UT|Prismimic
+Events and seasonal|UT|Rain Maker
+Events and seasonal|UT|Random Spell Extraction Device
+Events and seasonal|UT|Sage's Wakibiki
+Events and seasonal|UT|Silex's Hammer
+Events and seasonal|UT|Snow Branch
+Events and seasonal|UT|Snowflake Blade
+Events and seasonal|UT|Solar Flare Igniter
+Events and seasonal|UT|Sovereign Cinder-Blade
+Events and seasonal|UT|Sweettreats Bow
+Events and seasonal|UT|Sweettreats Dagger
+Events and seasonal|UT|Sweettreats Katana
+Events and seasonal|UT|Sweettreats Staff
+Events and seasonal|UT|Sweettreats Sword
+Events and seasonal|UT|Sweettreats Wand
+Events and seasonal|UT|Taiko Drums
+Events and seasonal|UT|Tezutsu Hanabi
+Events and seasonal|UT|The Heart of the Dragon
+Events and seasonal|UT|Tome of the Dragon
+Events and seasonal|UT|Toy Knife
+Events and seasonal|UT|Trap of the Blood Spirit
+Events and seasonal|UT|Unstable Anomaly
+Events and seasonal|UT|Venerable Ancient Stone Sword
+Events and seasonal|UT|Venerable Coral Silk Armor
+Events and seasonal|UT|Venerable Crystal Wand
+Events and seasonal|UT|Venerable Doku No Ken
+Events and seasonal|UT|Venerable Doom Bow
+Events and seasonal|UT|Venerable Resurrected Warrior's Armor
+Events and seasonal|UT|Venerable Robe of the Mad Scientist
+Events and seasonal|UT|Venerable Spirit Dagger
+Events and seasonal|UT|Venerable Staff of the Crystal Serpent
 Fishing|UT|Barnacle Basher
 Floral Escape|ST|Heavenly Halo
 Floral Escape|UT|An Icicle
@@ -723,16 +695,20 @@ Lair of Draconis|UT|Celestial Blade
 Lair of Draconis|UT|Draconic Insignia
 Lair of Draconis|UT|Faded Heart Scarab
 Lair of Draconis|UT|Fire Dragon Battle Armor
+Lair of Draconis|UT|Fire Dragon Battle Armor (Retro)
 Lair of Draconis|UT|Forbidden Artifact
 Lair of Draconis|UT|Fractured Hannya
 Lair of Draconis|UT|Heavy Syndicate Attire
 Lair of Draconis|UT|Leaf Dragon Hide Armor
+Lair of Draconis|UT|Leaf Dragon Hide Armor (Retro)
 Lair of Draconis|UT|Light Syndicate Attire
 Lair of Draconis|UT|Midnight Star
 Lair of Draconis|UT|Mystic Syndicate Attire
+Lair of Draconis|UT|Sullen Blade (Retro)
 Lair of Draconis|UT|Sunken Fire Opal Ring
 Lair of Draconis|UT|Vision of Draconis
 Lair of Draconis|UT|Water Dragon Silk Robe
+Lair of Draconis|UT|Water Dragon Silk Robe (Retro)
 Lair of Shaitan|ST|Fiery Katana
 Lair of Shaitan|ST|Firelight Necklace
 Lair of Shaitan|ST|Flame Guard
@@ -747,6 +723,7 @@ Lair of Shaitan|UT|Igneous Starblossom
 Lair of Shaitan|UT|Present Dispensing Wand
 Lair of Shaitan|UT|Salju
 Lair of Shaitan|UT|Skull of Endless Torment
+Lair of Shaitan|UT|Skull of Endless Torment (Retro)
 Lair of Shaitan|UT|Skull-splitter Sword
 Lair of Shaitan|UT|Staff of Horrific Knowledge
 Lair of Shaitan|UT|Staff of Yuletide Carols
@@ -1051,6 +1028,7 @@ Parasite Chambers|UT|Sunken Fire Opal Ring
 Parasite Chambers|UT|Tome of Pain
 Parasite Chambers|UT|Wand of Ancient Terror
 Pirate Cave|UT|Corsair Ring
+Pirate Cave|UT|Pirate King's Cutlass (Retro)
 Plagued Nest|ST|Apiary Armor
 Plagued Nest|ST|Honey Circlet
 Plagued Nest|ST|Honeytomb Snare
@@ -1061,6 +1039,7 @@ Plagued Nest|UT|Combcutter Kunai
 Plagued Nest|UT|Faded Heart Scarab
 Plagued Nest|UT|Fractured Hannya
 Plagued Nest|UT|Green Beehemoth Armor
+Plagued Nest|UT|Green Beehemoth Quiver
 Plagued Nest|UT|Heavy Syndicate Attire
 Plagued Nest|UT|Hivemaster Helm
 Plagued Nest|UT|Hivemind Mace
@@ -1320,7 +1299,9 @@ Spectral Penitentiary|UT|Sunken Fire Opal Ring
 Spectral Penitentiary|UT|Tools of the Tarnished
 Spectral Penitentiary|UT|Wand of Ancient Terror
 Spectral Penitentiary|UT|Wretched Rags
+Spider Den|UT|Doku No Ken (Retro)
 Spider Den|UT|Poison Fang Dagger
+Spider Den|UT|Poison Fang Dagger (Retro)
 Spider Den|UT|Spider Shuriken
 Spider Den|UT|Spider's Eye Ring
 Sprite Forest|UT|Advent Seal
@@ -1368,6 +1349,7 @@ Sprite Forest|UT|Wand of Ancient Terror
 Sprite Forest|UT|Wand of Budding Romance
 Sprite Forest|UT|Wrathful Conduit
 Sprite World|UT|Cloak of the Planewalker
+Sprite World|UT|Cloak of the Planewalker (Retro)
 Sprite World|UT|Corsair's Crown Jewel
 Sprite World|UT|Faded Heart Scarab
 Sprite World|UT|Fractured Hannya
@@ -1378,6 +1360,7 @@ Sprite World|UT|Mystic Syndicate Attire
 Sprite World|UT|Rusted Barrel
 Sprite World|UT|Sprite Wand
 Sprite World|UT|Staff of Extreme Prejudice
+Sprite World|UT|Staff of Extreme Prejudice (Retro)
 Sprite World|UT|Sunken Fire Opal Ring
 Stromwell's Rift III|ST|Autarch Amulet
 Stromwell's Rift III|ST|Mayhem Medallion
@@ -1762,7 +1745,10 @@ The Shatters|ST|Defiled Equilibrium
 The Shatters|ST|Eye of the Void
 The Shatters|ST|Fallen One's Blade
 The Shatters|ST|Flames of Genesis
+The Shatters|ST|Immortal Mantle
 The Shatters|ST|Seraphim's Guard
+The Shatters|ST|Spectral Spell
+The Shatters|ST|Supernatural Staff
 The Shatters|ST|Twilight Shroud
 The Shatters|ST|Vortex Plating
 The Shatters|UT|Bracer of the Guardian
@@ -1943,6 +1929,7 @@ Undead Forest|UT|Adventurer's Scarf
 Undead Lair|ST|Edictum Praetoris
 Undead Lair|ST|Toga Picta
 Undead Lair|UT|Doom Bow
+Undead Lair|UT|Doom Bow (Retro)
 Undead Lair|UT|Faded Heart Scarab
 Undead Lair|UT|Fractured Hannya
 Undead Lair|UT|Heavy Syndicate Attire
@@ -2006,6 +1993,7 @@ Woodland Labyrinth|UT|Frostbite
 Woodland Labyrinth|UT|Heavy Syndicate Attire
 Woodland Labyrinth|UT|Labyrinth Dweller's Sheath
 Woodland Labyrinth|UT|Leaf Bow
+Woodland Labyrinth|UT|Leaf Bow (Retro)
 Woodland Labyrinth|UT|Light Syndicate Attire
 Woodland Labyrinth|UT|Mystic Syndicate Attire
 Woodland Labyrinth|UT|Present Dispensing Wand

@@ -34,12 +34,45 @@ final class Cute {
     static final Color FIELD = new Color(0xFFF9FB);
     static final Color BLUSH = new Color(0xFFB3C7);
 
-    static final String FONT = pickFont("Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", "SansSerif");
+    /**
+     * The app's own font, bundled in the jar (fonts/), so text looks the same on every PC. Windows' own Segoe UI is
+     * drawn unevenly by Java on Windows 11 (some letters, like W, come out in another weight). Falls back to the
+     * system fonts if the bundled ones can't be read. The font is Nunito (SIL Open Font License, see licenses/).
+     */
+    private static final Font[] BUNDLED = loadBundled();
+
+    static final String FONT = BUNDLED != null ? BUNDLED[0].getFamily() : pickFont("Segoe UI", "Segoe UI Variable Text", "Helvetica Neue", "SansSerif");
 
     /** A heavier face for everyday text, so it reads easily over a background picture. */
-    static final String SEMIBOLD = pickFont("Segoe UI Variable Text Semibold", "Segoe UI Semibold", "Helvetica Neue Medium", "");
+    static final String SEMIBOLD = BUNDLED != null ? BUNDLED[0].getFamily()
+            : pickFont("Segoe UI Semibold", "Segoe UI Variable Text Semibold", "Helvetica Neue Medium", "");
+
+    /** {semibold, bold, extra bold} from the jar, or null. */
+    private static Font[] loadBundled() {
+        String base = "Nunito";
+        String[] files = {base + "_600SemiBold.ttf", base + "_700Bold.ttf", base + "_800ExtraBold.ttf"};
+        Font[] out = new Font[3];
+        try {
+            for (int i = 0; i < 3; i++) {
+                try (java.io.InputStream in = Cute.class.getResourceAsStream("fonts/" + files[i])) {
+                    if (in == null) return null;
+                    out[i] = Font.createFont(Font.TRUETYPE_FONT, in);
+                    GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(out[i]);
+                }
+            }
+            return out;
+        } catch (Exception e) {
+            System.out.println("Couldn't load the app's font, using the system's: " + e);
+            return null;
+        }
+    }
 
     static Font font(int style, float size) {
+        if (BUNDLED != null) {
+            // plain text is semibold, bold is bold (headings and titles use the extra bold at bigger sizes)
+            Font f = style == Font.PLAIN ? BUNDLED[0] : size >= 18 ? BUNDLED[2] : BUNDLED[1];
+            return f.deriveFont(Font.PLAIN, (float) Math.round(size));
+        }
         if (style == Font.PLAIN) {
             // plain text is drawn semibold (or bold where there's no semibold font)
             return SEMIBOLD.isEmpty() || SEMIBOLD.equals("SansSerif")

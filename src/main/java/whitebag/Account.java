@@ -134,7 +134,7 @@ final class Account {
         vaultPage = new MoreTabs.VaultPage(vault);
         eventsPage = new MoreTabs.EventsPage(events);
         famePage = new MoreTabs.FamePage(me);
-        tradesPage = new MoreTabs.TradesPage(t -> key != null && (key.equals(t.account) || (t.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        tradesPage = new MoreTabs.TradesPage(t -> isMine(t.account));
         puzzlePage = new PuzzlePage();
         puzzlePage.account = () -> key;
         puzzlePage.onEvent = ev -> {
@@ -142,17 +142,19 @@ final class Account {
             host.badgesMaybe(this);
         };
         badgesPage = new BadgesPage(() -> key, this::isMine);
-        killsPage = new KillsPage(d -> key != null && (key.equals(d.account) || (d.account.isEmpty() && key.equals(host.legacyOwner(null)))));
-        bookPage = new BookPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
-                r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        killsPage = new KillsPage(d -> isMine(d.account));
+        bookPage = new BookPage(e -> isMine(e.account),
+                r -> isMine(r.account));
         bookPage.who = () -> key == null ? "" : History.nameOf(key);
-        lootPage = new MoreTabs.LootPage(e -> key != null && (key.equals(e.account) || (e.account.isEmpty() && key.equals(host.legacyOwner(null)))),
-                r -> key != null && (key.equals(r.account) || (r.account.isEmpty() && key.equals(host.legacyOwner(null)))));
+        lootPage = new MoreTabs.LootPage(e -> isMine(e.account),
+                r -> isMine(r.account));
     }
 
     /** True for a log line that belongs to this account (lines from before accounts were tracked go to the first one). */
     boolean isMine(String account) {
-        return key != null && (key.equals(account) || (account.isEmpty() && key.equals(host.legacyOwner(null))));
+        // before the game has said which account this is, the first one shows everything you've logged
+        if (key == null) return index == 0;
+        return key.equals(account) || (account.isEmpty() && key.equals(host.legacyOwner(null)));
     }
 
     /** Redraws the pages that show items (after the game files are read). */

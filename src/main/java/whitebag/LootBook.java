@@ -54,15 +54,27 @@ final class LootBook {
     private static boolean idsMatched;
 
     /** Places in file order (alphabetical), each with its items. */
+    /** Places with their items; once the game files are read, items the game doesn't have are left out. */
     static synchronized List<Place> places() {
         load();
         matchIds();
-        return new ArrayList<>(places.values());
+        if (!idsMatched) return new ArrayList<>(places.values());
+        List<Place> out = new ArrayList<>();
+        for (Place p : places.values()) {
+            Place q = new Place(p.name);
+            for (Item it : p.items) if (it.id >= 0) q.items.add(it);
+            if (!q.items.isEmpty()) out.add(q);
+        }
+        return out;
     }
 
     static synchronized int itemCount() {
         load();
-        return items.size();
+        matchIds();
+        if (!idsMatched) return items.size();
+        int n = 0;
+        for (Item it : items.values()) if (it.id >= 0) n++;
+        return n;
     }
 
     private static void load() {
@@ -103,13 +115,27 @@ final class LootBook {
         for (int id : ItemXml.ids()) {
             String n = ItemInfo.of(id).name;
             if (n != null && !n.isEmpty()) byName.putIfAbsent(norm(n), id);
+            try {
+                // the game's internal name too (some items show a different name in game than on the wiki)
+                String inner = assets.IdToAsset.getObjectIdName(id);
+                if (inner != null && !inner.isEmpty()) byName.putIfAbsent(norm(inner), id);
+            } catch (Throwable ignored) {
+            }
         }
         if (byName.isEmpty()) return;
+        List<String> missing = new ArrayList<>();
         for (Item it : items.values()) {
             Integer id = byName.get(norm(it.name));
             if (id != null) it.id = id;
+            else missing.add(it.tier + " " + it.name + "  (" + String.join(", ", it.places) + ")");
         }
         idsMatched = true;
+        // items the game files don't have (removed, or named differently): left out of the book, and listed here
+        try {
+            java.nio.file.Files.write(java.nio.file.Paths.get("collection-debug.txt"), missing, StandardCharsets.UTF_8);
+        } catch (Exception ignored) {
+        }
+        System.out.println("Collection book: " + (items.size() - missing.size()) + " items matched the game, " + missing.size() + " not (collection-debug.txt)");
     }
 
     /** Which collection items appear in these bags, by item. */

@@ -51,6 +51,7 @@ cp "$DL/pcap/LICENSE" "$CLS/META-INF/licenses/pcap-LICENSE"
 cp "$DL/jna/LICENSE" "$CLS/META-INF/licenses/jna-LICENSE"
 cp "$DL/gson/LICENSE" "$CLS/META-INF/licenses/gson-LICENSE"
 cp "$DL/fb/LICENSE" "$CLS/META-INF/licenses/flatbuffers-LICENSE" 2>/dev/null || true
+cp "$HERE/licenses/Nunito-OFL.txt" "$CLS/META-INF/licenses/Nunito-OFL.txt"
 
 printf "Main-Class: whitebag.WhiteBagNotifier\n" > "$OUT/manifest.txt"
 jar cfm "$OUT/WhiteBagPup.jar" "$OUT/manifest.txt" -C "$CLS" .

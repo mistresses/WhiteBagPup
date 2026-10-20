@@ -22,7 +22,8 @@ import static whitebag.AboutMe.note;
 final class BookPage extends MoreTabs.Page {
     private final Predicate<LootStats.Entry> mine;
     private final Predicate<RunLog.Run> myRuns;
-    private boolean everyAccount = false;
+    /** Your collection counts what all your accounts have looted, unless you pick one. */
+    private boolean everyAccount = true;
     private int show = 0;           // 0 all, 1 missing, 2 found
     private boolean allPlaces = false;
     private final JTextField search = Pixel.field("", 18, "Find an item or dungeon");
@@ -89,14 +90,17 @@ final class BookPage extends MoreTabs.Page {
             allPlaces = i == 1;
             changed();
         }));
+        list.add(fit(controls));
         if (mine != null && several) {
-            controls.add(Box.createHorizontalStrut(12));
-            controls.add(new LogTabs.Segments(new String[]{"This account", "All accounts"}, everyAccount ? 1 : 0, i -> {
-                everyAccount = i == 1;
+            gap(8);
+            JPanel who = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            who.setOpaque(false);
+            who.add(new LogTabs.Segments(new String[]{"All accounts", "This account"}, everyAccount ? 0 : 1, i -> {
+                everyAccount = i == 0;
                 changed();
             }));
+            list.add(fit(who));
         }
-        list.add(fit(controls));
         gap(8);
         JPanel find = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         find.setOpaque(false);
@@ -329,13 +333,17 @@ final class BookPage extends MoreTabs.Page {
             if (i < 0) return null;
             LootBook.Item it = items.get(i);
             LootBook.Found f = found.get(it);
-            StringBuilder sb = new StringBuilder("<html><b>").append(esc(it.name)).append("</b> (").append(it.tier).append(")<br>");
-            sb.append("Drops in: ").append(esc(String.join(", ", it.places))).append("<br>");
+            // a narrow box, and at most a few places (some items drop almost everywhere)
+            StringBuilder sb = new StringBuilder("<html><div style='width:260px'><b>").append(esc(it.name)).append("</b> (").append(it.tier).append(")<br>");
+            List<String> where = it.places.size() > 6 ? it.places.subList(0, 5) : it.places;
+            sb.append("Drops in: ").append(esc(String.join(", ", where)));
+            if (it.places.size() > 6) sb.append(" and ").append(it.places.size() - 5).append(" more places");
+            sb.append("<br>");
             if (f == null) sb.append("<i>Not found yet</i>");
             else sb.append("Found ").append(f.times == 1 ? "once" : f.times + " times").append(", first on ")
                     .append(new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(f.first * 1000L)))
                     .append(f.where.isEmpty() ? "" : " in " + esc(f.where));
-            return sb.append("</html>").toString();
+            return sb.append("</div></html>").toString();
         }
 
         private static String esc(String s) {

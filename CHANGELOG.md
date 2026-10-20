@@ -3,6 +3,16 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.2
+
+- The Collection tab counts everything you've looted again: before the pup had seen which account you're playing,
+  it showed nothing. It now counts all your accounts unless you pick one.
+- The Collection is sorted properly: the "Elsewhere" group is gone. Old (Retro) and seasonal versions of dungeon
+  items go with their dungeon, and event-only items are in **Events and seasonal**.
+- Items the game files don't have (removed, or named differently on the wiki) are left out of the book instead of
+  showing a blank "UT" box. They're listed in `collection-debug.txt`.
+- Collection tooltips stay small: items that drop almost everywhere list a few places and "and 53 more places".
+
 ## 2.1
 
 - **New to your collection!** When a UT or ST you've never looted before drops, its Discord post says so, and recaps
@@ -15,6 +25,8 @@ Download the latest from [Releases](../../releases/latest).
 - **Exalt tracker** on the About Me tab: every class you've loaded, how many of its 40 exaltation levels it has, the
   stat closest to its next level, and about how many dungeon runs that is at your pace.
 - Fixed pages jumping to the bottom when they open.
+- The app now has its own font, Nunito, built in, so text looks the same on every PC and every letter matches
+  (Windows 11's font made some letters, like W, look out of place).
 
 ## 2.0
 
