@@ -433,7 +433,7 @@ public class WhiteBagNotifier {
         pages = new CardLayout();
         sheet = new Pixel.Sheet(pages);
         sheet.setAlignmentX(Component.LEFT_ALIGNMENT);
-        tabNames = new String[]{"home", "bag log", "chat", "dps", "boss kills", "about me", "fame", "vault", "loot", "collection", "badges", "puzzle", "trades", "events"};
+        tabNames = new String[]{"home", "loot", "fights", "me", "chat", "events", "puzzle"};
         tabs = new Pixel.Tabs(tabNames, i -> showPage());
         // account switcher (only shown once a second game account turns up)
         accountBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -775,7 +775,7 @@ public class WhiteBagNotifier {
             if (header != null) header.celebrate();
             if (account.bagLog != null) {
                 account.bagLog.add(drop);
-                bumpTab(account, 1);
+                bumpTab(account, java.util.Arrays.asList(tabNames).indexOf("loot"));
             }
         });
         String url = settings.getProperty("webhook.url", "");
@@ -811,7 +811,7 @@ public class WhiteBagNotifier {
         SwingUtilities.invokeLater(() -> {
             if (account.chatPanel == null) return;
             account.chatPanel.added(line);
-            if (line.kind != ChatLog.Kind.SYSTEM) bumpTab(account, 2);
+            if (line.kind != ChatLog.Kind.SYSTEM) bumpTab(account, java.util.Arrays.asList(tabNames).indexOf("chat"));
         });
     }
 
@@ -835,19 +835,20 @@ public class WhiteBagNotifier {
             for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.killsPage, a.puzzlePage, a.badgesPage, a.eventsPage, a.famePage, a.tradesPage}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
             }
-            sheet.add(a.bagLog, "bag log@" + a.index);
-            sheet.add(a.chatPanel, "chat@" + a.index);
-            sheet.add(a.dpsPanel, "dps@" + a.index);
-            sheet.add(a.aboutPanel, "about me@" + a.index);
-            sheet.add(a.vaultPage, "vault@" + a.index);
-            sheet.add(a.lootPage, "loot@" + a.index);
-            sheet.add(a.bookPage, "collection@" + a.index);
-            sheet.add(a.killsPage, "boss kills@" + a.index);
-            sheet.add(a.puzzlePage, "puzzle@" + a.index);
-            sheet.add(a.badgesPage, "badges@" + a.index);
+            // related pages share a tab, with a switch along the top
+            a.lootGroup = new GroupPage(new String[]{"Bag Log", "Stats", "Collection"}, a.bagLog, a.lootPage, a.bookPage);
+            a.fightsGroup = new GroupPage(new String[]{"DPS", "Boss Kills"}, a.dpsPanel, a.killsPage);
+            a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage);
+            a.chatGroup = new GroupPage(new String[]{"Chat", "Trades"}, a.chatPanel, a.tradesPage);
+            for (JComponent page : new JComponent[]{a.lootGroup, a.fightsGroup, a.meGroup, a.chatGroup}) {
+                page.putClientProperty("pixel.ownScroll", Boolean.TRUE);
+            }
+            sheet.add(a.lootGroup, "loot@" + a.index);
+            sheet.add(a.fightsGroup, "fights@" + a.index);
+            sheet.add(a.meGroup, "me@" + a.index);
+            sheet.add(a.chatGroup, "chat@" + a.index);
             sheet.add(a.eventsPage, "events@" + a.index);
-            sheet.add(a.famePage, "fame@" + a.index);
-            sheet.add(a.tradesPage, "trades@" + a.index);
+            sheet.add(a.puzzlePage, "puzzle@" + a.index);
         };
         if (SwingUtilities.isEventDispatchThread()) ui.run();
         else {

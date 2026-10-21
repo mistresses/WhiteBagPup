@@ -60,6 +60,8 @@ final class Account {
     KillsPage killsPage;
     PuzzlePage puzzlePage;
     BadgesPage badgesPage;
+    /** The grouped tabs (Loot, Fights, Me, Chat), made by the main window. */
+    GroupPage lootGroup, fightsGroup, meGroup, chatGroup;
     final ShattersPuzzle puzzle;
     MoreTabs.EventsPage eventsPage;
     MoreTabs.FamePage famePage;

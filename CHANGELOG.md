@@ -3,6 +3,15 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.5
+
+- **Tidier tabs:** 14 tabs are now 7, on one row. Related pages share a tab, with a switch along the top:
+  - **Loot**: Bag Log, Stats (the old Loot tab) and Collection
+  - **Fights**: DPS and Boss Kills
+  - **Me**: About Me, Fame, Vault and Badges
+  - **Chat**: Chat and Trades
+  - **Events** and **Puzzle** stay as they were.
+
 ## 2.4
 
 - **Game pictures only ever show the game.** The picture now comes from the RotMG window itself, so a chat or

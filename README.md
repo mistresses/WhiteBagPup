@@ -53,6 +53,9 @@ in your webhook's settings.
 
 ## What it does
 
+The tabs are **Home**, **Loot** (Bag Log, Stats, Collection), **Fights** (DPS, Boss Kills), **Me** (About Me, Fame,
+Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
+
 - **Bag posts**: the bag, every item with its tier (UT, ST, T12...) and rarity (Uncommon to Divine), the dungeon,
   your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity.
   Optionally add a picture of your game window (**Game pictures: On**); only the game itself is pictured,
