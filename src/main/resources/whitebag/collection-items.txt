@@ -66,7 +66,6 @@ Abyss of Demons|ST|Scorchium Stone
 Abyss of Demons|ST|Staff of Eruption
 Abyss of Demons|UT|Berserker's Breastplate
 Abyss of Demons|UT|Demon Blade
-Abyss of Demons|UT|Demon Blade (Retro)
 Abyss of Demons|UT|Faded Heart Scarab
 Abyss of Demons|UT|Fractured Hannya
 Abyss of Demons|UT|Heavy Syndicate Attire
@@ -658,20 +657,16 @@ Lair of Draconis|UT|Celestial Blade
 Lair of Draconis|UT|Draconic Insignia
 Lair of Draconis|UT|Faded Heart Scarab
 Lair of Draconis|UT|Fire Dragon Battle Armor
-Lair of Draconis|UT|Fire Dragon Battle Armor (Retro)
 Lair of Draconis|UT|Forbidden Artifact
 Lair of Draconis|UT|Fractured Hannya
 Lair of Draconis|UT|Heavy Syndicate Attire
 Lair of Draconis|UT|Leaf Dragon Hide Armor
-Lair of Draconis|UT|Leaf Dragon Hide Armor (Retro)
 Lair of Draconis|UT|Light Syndicate Attire
 Lair of Draconis|UT|Midnight Star
 Lair of Draconis|UT|Mystic Syndicate Attire
-Lair of Draconis|UT|Sullen Blade (Retro)
 Lair of Draconis|UT|Sunken Fire Opal Ring
 Lair of Draconis|UT|Vision of Draconis
 Lair of Draconis|UT|Water Dragon Silk Robe
-Lair of Draconis|UT|Water Dragon Silk Robe (Retro)
 Lair of Shaitan|ST|Fiery Katana
 Lair of Shaitan|ST|Firelight Necklace
 Lair of Shaitan|ST|Flame Guard
@@ -686,7 +681,6 @@ Lair of Shaitan|UT|Igneous Starblossom
 Lair of Shaitan|UT|Present Dispensing Wand
 Lair of Shaitan|UT|Salju
 Lair of Shaitan|UT|Skull of Endless Torment
-Lair of Shaitan|UT|Skull of Endless Torment (Retro)
 Lair of Shaitan|UT|Skull-splitter Sword
 Lair of Shaitan|UT|Staff of Horrific Knowledge
 Lair of Shaitan|UT|Staff of Yuletide Carols
@@ -933,7 +927,6 @@ Parasite Chambers|UT|Sunken Fire Opal Ring
 Parasite Chambers|UT|Tome of Pain
 Parasite Chambers|UT|Wand of Ancient Terror
 Pirate Cave|UT|Corsair Ring
-Pirate Cave|UT|Pirate King's Cutlass (Retro)
 Plagued Nest|ST|Apiary Armor
 Plagued Nest|ST|Honey Circlet
 Plagued Nest|ST|Honeytomb Snare
@@ -1210,9 +1203,7 @@ Spectral Penitentiary|UT|Sunken Fire Opal Ring
 Spectral Penitentiary|UT|Tools of the Tarnished
 Spectral Penitentiary|UT|Wand of Ancient Terror
 Spectral Penitentiary|UT|Wretched Rags
-Spider Den|UT|Doku No Ken (Retro)
 Spider Den|UT|Poison Fang Dagger
-Spider Den|UT|Poison Fang Dagger (Retro)
 Spider Den|UT|Spider Shuriken
 Spider Den|UT|Spider's Eye Ring
 Sprite Forest|UT|Advent Seal
@@ -1260,7 +1251,6 @@ Sprite Forest|UT|Wand of Ancient Terror
 Sprite Forest|UT|Wand of Budding Romance
 Sprite Forest|UT|Wrathful Conduit
 Sprite World|UT|Cloak of the Planewalker
-Sprite World|UT|Cloak of the Planewalker (Retro)
 Sprite World|UT|Corsair's Crown Jewel
 Sprite World|UT|Faded Heart Scarab
 Sprite World|UT|Fractured Hannya
@@ -1271,7 +1261,6 @@ Sprite World|UT|Mystic Syndicate Attire
 Sprite World|UT|Rusted Barrel
 Sprite World|UT|Sprite Wand
 Sprite World|UT|Staff of Extreme Prejudice
-Sprite World|UT|Staff of Extreme Prejudice (Retro)
 Sprite World|UT|Sunken Fire Opal Ring
 Stromwell's Rift III|ST|Autarch Amulet
 Stromwell's Rift III|ST|Mayhem Medallion
@@ -1644,7 +1633,6 @@ Toxic Sewers|UT|Void Blade
 Undead Lair|ST|Edictum Praetoris
 Undead Lair|ST|Toga Picta
 Undead Lair|UT|Doom Bow
-Undead Lair|UT|Doom Bow (Retro)
 Undead Lair|UT|Faded Heart Scarab
 Undead Lair|UT|Fractured Hannya
 Undead Lair|UT|Heavy Syndicate Attire
@@ -1708,7 +1696,6 @@ Woodland Labyrinth|UT|Frostbite
 Woodland Labyrinth|UT|Heavy Syndicate Attire
 Woodland Labyrinth|UT|Labyrinth Dweller's Sheath
 Woodland Labyrinth|UT|Leaf Bow
-Woodland Labyrinth|UT|Leaf Bow (Retro)
 Woodland Labyrinth|UT|Light Syndicate Attire
 Woodland Labyrinth|UT|Mystic Syndicate Attire
 Woodland Labyrinth|UT|Present Dispensing Wand

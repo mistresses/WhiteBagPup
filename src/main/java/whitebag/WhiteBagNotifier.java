@@ -424,7 +424,14 @@ public class WhiteBagNotifier {
 
         header = new Cute.Header();
         header.setAlignmentX(Component.LEFT_ALIGNMENT);
-        header.setOnPet(Squeak::boop);
+        header.setOnPet(() -> {
+            Squeak.boop();
+            // pets count towards the puppy badges
+            Account a = selected;
+            Badges.note(a == null ? null : a.key(), "pet");
+            long pets = Badges.count(a == null ? null : a.key(), "pet");
+            if (a != null && (pets == 25 || pets == 500)) checkBadges(a); // only when a pet badge could unlock
+        });
         header.setLastWhite(lastDrop("white"));
         root.add(header);
         root.add(Box.createVerticalStrut(6));
@@ -867,6 +874,7 @@ public class WhiteBagNotifier {
             // related pages share a tab, with a switch along the top
             a.lootGroup = new GroupPage(new String[]{"Bag Log", "Stats", "Collection", "Dungeons"}, a.bagLog, a.lootPage, a.bookPage, a.dungeonPage);
             a.fightsGroup = new GroupPage(new String[]{"DPS", "Boss Kills"}, a.dpsPanel, a.killsPage);
+            a.badgesPage.checkNow = () -> checkBadges(a); // opening Badges unlocks anything newly earned
             a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage);
             a.chatGroup = new GroupPage(new String[]{"Chat", "Trades"}, a.chatPanel, a.tradesPage);
             for (JComponent page : new JComponent[]{a.lootGroup, a.fightsGroup, a.meGroup, a.chatGroup}) {

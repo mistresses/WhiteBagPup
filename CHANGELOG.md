@@ -5,9 +5,19 @@ Download the latest from [Releases](../../releases/latest).
 
 ## 2.6
 
+- **Puzzle log** on the Puzzle tab: how many practice puzzles you've solved (and how many perfectly), and how many
+  in game.
+- **15 puppy badges**, with paw and bone medals: Good Pup, Very Good Pup, Best in Show (practice puzzles), Belly Rubs
+  and Spoiled Rotten (pet the pup at the top of the app), Fetch! and Fetch Champion (bags of any colour), Sniffer Dog
+  and Bone Collector (shiny items), Zoomies (10 runs in a day), Midnight Walkies, Walkies and Long Walkies (different
+  dungeons), Pack Leader and Loyal Companion (30 days played).
+- Opening the Badges page unlocks anything you've earned straight away. Badges you'd already earned before they
+  existed unlock quietly instead of all posting to Discord at once.
 - **Dungeons** page under Loot: every dungeon side by side (scroll sideways), with its difficulty, what drops the
   portal, and the UT and ST items you can get there. Items you've collected are in colour with a heart; hover over
-  one to see if it's in your collection and when you first found it. Search by dungeon, enemy or item.
+  one to see if it's in your collection and when you first found it. Search by dungeon, enemy or item. A Shiny items
+  row at the bottom shows the shiny versions of each dungeon's items.
+- Retro items are gone from Collection and Dungeons: they came from past events and don't drop any more.
 - **Shiny only** in the Discord filter on the Home tab: only bags with a shiny item get posted, from every bag
   colour (even ones not ticked under Bags to Watch).
 - Shiny items are marked "✨ Shiny" in bag posts.

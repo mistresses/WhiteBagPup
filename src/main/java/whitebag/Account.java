@@ -167,6 +167,7 @@ final class Account {
     void refreshPages() {
         for (MoreTabs.Page p : new MoreTabs.Page[]{lootPage, bookPage, killsPage, tradesPage, vaultPage, badgesPage}) if (p != null) p.changed();
         if (dungeonPage != null) dungeonPage.changed();
+        if (puzzlePage != null) puzzlePage.changed();
         if (aboutPanel != null) aboutPanel.changed();
     }
 
@@ -185,6 +186,7 @@ final class Account {
         String owner = host.legacyOwner(accountKey);
         vault.useFile(accountKey.equals(owner) ? "vault.txt" : "vault-" + Integer.toHexString(accountKey.hashCode()) + ".txt");
         if (lootPage != null) lootPage.changed();
+        if (puzzlePage != null) puzzlePage.changed(); // its puzzle log counts this account's solves
         host.accountsChanged();
     }
 

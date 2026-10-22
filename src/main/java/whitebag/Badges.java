@@ -37,7 +37,8 @@ final class Badges {
         long whites, legendaries, divines, runs, mostRunsOneDungeon, brokeStreak, luckyRuns;
         long bossKills, topDamage, soloKills, eventKills;
         long fame, playSeconds, collection, completedDungeons, trades;
-        long puzzleSolved, puzzlePerfect, practicePerfect;
+        long puzzleSolved, puzzlePerfect, practicePerfect, practiceSolved;
+        long pets, bags, shinies, busiestDay, nightRuns, dungeonsVisited, playDays;
         String mostRunDungeon = "";
     }
 
@@ -91,7 +92,23 @@ final class Badges {
             new Badge("trades10", "Wheeler Dealer", "Finish 10 trades", "$", Tier.BRONZE, 10, s -> s.trades),
             new Badge("puzzle", "Puzzle Solved", "Solve the Shatters puzzle in game", "P", Tier.SILVER, 1, s -> s.puzzleSolved),
             new Badge("bigbrain", "Big Brain", "Solve the Shatters puzzle in the fewest shots", "P", Tier.PINK, 1, s -> s.puzzlePerfect),
-            new Badge("practice", "Puzzle Pup", "Solve a practice puzzle perfectly", "P", Tier.BRONZE, 1, s -> s.practicePerfect)));
+            new Badge("practice", "Puzzle Pup", "Solve a practice puzzle perfectly", "P", Tier.BRONZE, 1, s -> s.practicePerfect),
+            // ---- puppy badges ("paw" and "bone" are drawn as little pictures)
+            new Badge("goodpup", "Good Pup", "Solve 10 practice puzzles", "paw", Tier.BRONZE, 10, s -> s.practiceSolved),
+            new Badge("verygoodpup", "Very Good Pup", "Solve 50 practice puzzles", "paw", Tier.SILVER, 50, s -> s.practiceSolved),
+            new Badge("bestinshow", "Best in Show", "Solve 25 practice puzzles perfectly", "paw", Tier.GOLD, 25, s -> s.practicePerfect),
+            new Badge("bellyrubs", "Belly Rubs", "Pet the pup 25 times", "♥", Tier.BRONZE, 25, s -> s.pets),
+            new Badge("spoiled", "Spoiled Rotten", "Pet the pup 500 times", "♥", Tier.PINK, 500, s -> s.pets),
+            new Badge("fetch", "Fetch!", "Loot 100 bags of any colour", "bone", Tier.BRONZE, 100, s -> s.bags),
+            new Badge("fetchchamp", "Fetch Champion", "Loot 1,000 bags of any colour", "bone", Tier.GOLD, 1000, s -> s.bags),
+            new Badge("sniffer", "Sniffer Dog", "Sniff out a shiny item", "★", Tier.SILVER, 1, s -> s.shinies),
+            new Badge("bonecollector", "Bone Collector", "Find 10 shiny items", "bone", Tier.PINK, 10, s -> s.shinies),
+            new Badge("zoomies", "Zoomies", "Finish 10 dungeon runs in one day", "Z", Tier.SILVER, 10, s -> s.busiestDay),
+            new Badge("midnight", "Midnight Walkies", "Start a dungeon run between midnight and 4 am", "M", Tier.BRONZE, 1, s -> s.nightRuns),
+            new Badge("walkies", "Walkies", "Run 10 different dungeons", "paw", Tier.SILVER, 10, s -> s.dungeonsVisited),
+            new Badge("longwalkies", "Long Walkies", "Run 30 different dungeons", "paw", Tier.GOLD, 30, s -> s.dungeonsVisited),
+            new Badge("packleader", "Pack Leader", "Do the most damage in a group 100 times", "1", Tier.PINK, 100, s -> s.topDamage),
+            new Badge("loyal", "Loyal Companion", "Play on 30 different days", "♥", Tier.GOLD, 30, s -> s.playDays)));
 
     // ---------------------------------------------------------------- unlocked badges
 
@@ -155,6 +172,19 @@ final class Badges {
     }
 
     /**
+     * How many times this happened: for this account, plus any noted before the game said which account it was.
+     * Before the game has said which account this is (after a restart), every account's count is included.
+     */
+    static synchronized long count(String account, String event) {
+        if (account == null || account.isEmpty()) {
+            long n = 0;
+            for (Map<String, Long> m : events().values()) n += m.getOrDefault(event, 0L);
+            return n;
+        }
+        return event("", event) + event(account, event);
+    }
+
+    /**
      * Works out which badges this account has now, saves new ones and returns them (the ones to announce).
      * The very first check for an account saves what it already earned quietly, so old history doesn't flood Discord.
      */
@@ -172,11 +202,19 @@ final class Badges {
         List<Badge> fresh = new ArrayList<>();
         long now = System.currentTimeMillis() / 1000;
         for (Badge b : ALL) {
+            // a badge this account hasn't been checked for yet (new in this version): if it's already earned, it was
+            // earned before the badge existed, so it unlocks quietly instead of being announced
+            boolean seen = have.contains("~" + b.id);
+            if (!seen) {
+                unlocks.add(new Unlock(account, "~" + b.id, now, true));
+                append(FILE, account + "|~" + b.id + "|" + now + "|1");
+            }
             if (have.contains(b.id) || b.count.of(s) < b.need) continue;
-            Unlock u = new Unlock(account, b.id, now, first);
+            boolean quiet = first || !seen;
+            Unlock u = new Unlock(account, b.id, now, quiet);
             unlocks.add(u);
-            append(FILE, account + "|" + b.id + "|" + now + "|" + (first ? 1 : 0));
-            if (!first) fresh.add(b);
+            append(FILE, account + "|" + b.id + "|" + now + "|" + (quiet ? 1 : 0));
+            if (!quiet) fresh.add(b);
         }
         if (first && fresh.isEmpty() && have.isEmpty()) {
             // remember that this account has been checked, even with nothing earned yet
@@ -189,7 +227,7 @@ final class Badges {
     /** When this account unlocked each badge (badge id -> unlock). */
     static synchronized Map<String, Unlock> unlocked(String account) {
         Map<String, Unlock> out = new LinkedHashMap<>();
-        for (Unlock u : unlocks()) if (u.account.equals(account) && !u.id.equals("-")) out.putIfAbsent(u.id, u);
+        for (Unlock u : unlocks()) if (u.account.equals(account) && !u.id.equals("-") && !u.id.startsWith("~")) out.putIfAbsent(u.id, u);
         return out;
     }
 
@@ -252,7 +290,23 @@ final class Badges {
         for (TradeLog.Trade t : TradeLog.all()) if (mine.test(t.account)) s.trades++;
         s.puzzleSolved = event(account, "puzzle");
         s.puzzlePerfect = event(account, "puzzle-perfect");
-        s.practicePerfect = event(account, "practice-perfect");
+        s.practicePerfect = count(account, "practice-perfect");
+        s.practiceSolved = count(account, "practice");
+        s.pets = count(account, "pet");
+        s.bags = bags.size();
+        s.shinies = LootBook.foundShinies(bags).size();
+        s.dungeonsVisited = byMap.size();
+        java.time.ZoneId zone = java.time.ZoneId.systemDefault();
+        Map<java.time.LocalDate, Integer> perDay = new HashMap<>();
+        for (RunLog.Run r : runs) {
+            if (RunLog.isRealm(r.map)) continue;
+            java.time.ZonedDateTime t = java.time.Instant.ofEpochSecond(r.at).atZone(zone);
+            s.busiestDay = Math.max(s.busiestDay, perDay.merge(t.toLocalDate(), 1, Integer::sum));
+            if (t.getHour() < 4) s.nightRuns++;
+        }
+        java.util.Set<java.time.LocalDate> days = new java.util.HashSet<>();
+        for (History.Play p : History.play()) if (mine.test(p.account)) days.add(java.time.Instant.ofEpochSecond(p.start).atZone(zone).toLocalDate());
+        s.playDays = days.size();
         return s;
     }
 

@@ -23,12 +23,17 @@ final class BadgesPage extends MoreTabs.Page {
     /** Whether new badges get posted to Discord (setting badges.post), and a way to change it. */
     static volatile java.util.function.BooleanSupplier posting = () -> true;
     static volatile java.util.function.Consumer<Boolean> setPosting = b -> { };
+    /** Checks for newly earned badges (set by the main window), run when the page is opened. */
+    Runnable checkNow = () -> { };
 
     BadgesPage(Supplier<String> account, Predicate<String> mine) {
         this.account = account;
         this.mine = mine;
         addHierarchyListener(e -> {
-            if ((e.getChangeFlags() & java.awt.event.HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing()) changed();
+            if ((e.getChangeFlags() & java.awt.event.HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing()) {
+                checkNow.run();
+                changed();
+            }
         });
     }
 
@@ -66,8 +71,8 @@ final class BadgesPage extends MoreTabs.Page {
         grid.setMaximumSize(new Dimension(Integer.MAX_VALUE, grid.getPreferredSize().height));
         list.add(left(grid));
         gap(10);
-        list.add(note("Badges are worked out from what the pup has logged (bags, runs, kills, fame, play time, your collection "
-                + "and trades). Ones you'd already earned before badges existed are unlocked quietly."));
+        list.add(note("Badges are worked out from what the pup has logged (bags, runs, kills, fame, play time, your collection, "
+                + "trades, puzzles and pets). Ones you'd already earned before badges existed are unlocked quietly."));
     }
 
     /** One badge: a medal, its name and what it's for, and the date or how close you are. */
@@ -108,6 +113,11 @@ final class BadgesPage extends MoreTabs.Page {
                 g.setFont(Cute.font(Font.BOLD, 11));
                 g.setColor(Cute.mix(b.tier.color, Color.BLACK, 0.25));
                 g.drawString(u.quiet ? "Unlocked (earned before badges)" : "Unlocked " + new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(u.at * 1000L)), tx, 60);
+            } else if (have >= b.need) {
+                // earned, but not checked yet (the pup checks while it's watching the game)
+                g.setFont(Cute.font(Font.BOLD, 11));
+                g.setColor(Pixel.PINK_INK);
+                g.drawString("Ready! Unlocks when you next play", tx, 60);
             } else {
                 int bw = Math.max(40, w - tx - 70);
                 g.setColor(new Color(0xEEE8F3));
@@ -151,12 +161,39 @@ final class BadgesPage extends MoreTabs.Page {
             g.setStroke(new BasicStroke(2f));
             g.draw(new Ellipse2D.Double(cx - r + 4, cy - r + 4, r * 2 - 8, r * 2 - 8));
             g.setColor(on ? Color.WHITE : new Color(0xF4F1F8));
+            if (b.glyph.equals("paw")) {
+                paw(g, cx, cy, s * 0.30);
+                return;
+            }
+            if (b.glyph.equals("bone")) {
+                bone(g, cx, cy, s * 0.34);
+                return;
+            }
             Font f = Cute.font(Font.BOLD, (int) (s * 0.36));
             if (f.canDisplayUpTo(b.glyph) != -1) f = new Font("Dialog", Font.BOLD, (int) (s * 0.36)); // ♥ and ★ aren't in Nunito
             g.setFont(f);
             FontMetrics fm = g.getFontMetrics();
             g.drawString(b.glyph, (float) (cx - fm.stringWidth(b.glyph) / 2.0), (float) (cy + fm.getAscent() / 2.0 - 3));
         }
+    }
+
+    /** A paw print: a big pad and four toes. */
+    static void paw(Graphics2D g, double cx, double cy, double r) {
+        g.fill(new Ellipse2D.Double(cx - r * 0.55, cy - r * 0.05, r * 1.1, r * 0.85));
+        double[][] toes = {{-0.72, -0.35}, {-0.27, -0.72}, {0.27, -0.72}, {0.72, -0.35}};
+        for (double[] t : toes) g.fill(new Ellipse2D.Double(cx + t[0] * r - r * 0.21, cy + t[1] * r - r * 0.24, r * 0.42, r * 0.48));
+    }
+
+    /** A dog bone, at a slant. */
+    static void bone(Graphics2D g, double cx, double cy, double r) {
+        Graphics2D b = (Graphics2D) g.create();
+        b.rotate(-Math.PI / 4, cx, cy);
+        b.fill(new RoundRectangle2D.Double(cx - r * 0.75, cy - r * 0.17, r * 1.5, r * 0.34, r * 0.2, r * 0.2));
+        double k = r * 0.24;
+        for (int sx = -1; sx <= 1; sx += 2) {
+            for (int sy = -1; sy <= 1; sy += 2) b.fill(new Ellipse2D.Double(cx + sx * r * 0.78 - k, cy + sy * r * 0.15 - k, k * 2, k * 2));
+        }
+        b.dispose();
     }
 
     /** A medal picture for the Discord post. */

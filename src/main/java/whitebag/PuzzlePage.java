@@ -107,6 +107,8 @@ final class PuzzlePage extends MoreTabs.Page {
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
         list.add(left(row));
         gap(14);
+        puzzleLog();
+        gap(14);
         if (fromGame) {
             list.add(note("The pup read this board from the game at " + new java.text.SimpleDateFormat("h:mm:ss a", java.util.Locale.ROOT)
                     .format(new java.util.Date(seenAt)) + ". It follows along as you shoot. Click a tower to correct it if it's wrong."));
@@ -115,6 +117,22 @@ final class PuzzlePage extends MoreTabs.Page {
                     + "doesn't fill in, set it by hand. Anything it noticed is written to puzzle-debug.txt next to the app; send "
                     + "that file over and it can be taught to read it."));
         }
+    }
+
+    /** How many puzzles you've solved, practice and in game. */
+    private void puzzleLog() {
+        String key = account.get();
+        long practice = Badges.count(key, "practice"), practicePerfect = Badges.count(key, "practice-perfect");
+        long game = Badges.count(key, "puzzle"), gamePerfect = Badges.count(key, "puzzle-perfect");
+        list.add(heading("puzzle log", null));
+        gap(8);
+        list.add(new AboutMe.AbilityBar("Practice puzzles solved", practice + " solved, " + practicePerfect + " perfect",
+                practice == 0 ? 0 : practicePerfect / (double) practice));
+        gap(8);
+        list.add(new AboutMe.AbilityBar("Solved in game", game + " solved, " + gamePerfect + " perfect",
+                game == 0 ? 0 : gamePerfect / (double) game));
+        gap(6);
+        list.add(note("A perfect solve uses the fewest shots possible. The bars show how many of your solves were perfect."));
     }
 
     private JComponent answer(int shots) {
@@ -187,6 +205,7 @@ final class PuzzlePage extends MoreTabs.Page {
                     } else if (practiceMin >= 0) {
                         practiceShots++;
                         if (board == 0x1FF) {
+                            onEvent.accept("practice");
                             if (practiceShots <= practiceMin) onEvent.accept("practice-perfect");
                             practiceMin = -1;
                         }

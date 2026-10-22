@@ -84,7 +84,7 @@ final class DungeonPage extends JPanel {
     private static final int LABEL_W = 132, COL_W = 214, HEAD_H = 74, LINE = 24, PAD = 10, CHIP = 24, DIFF_H = 38;
     private static final Color UT = new Color(0xA35BFF), ST = new Color(0xE0A100);
     private static final Color GREY = new Color(0x9C92AC), SOFT = new Color(0xF8F4FC), MARK = new Color(0xFFE28A);
-    private static final String[] ROWS = {"Difficulty", "Portal drops from", "UT items", "ST items"};
+    private static final String[] ROWS = {"Difficulty", "Portal drops from", "UT items", "ST items", "Shiny items"};
 
     private final Predicate<LootStats.Entry> mine;
     private boolean easiestFirst = false;
@@ -94,6 +94,10 @@ final class DungeonPage extends JPanel {
     private List<Dungeon> shown = new ArrayList<>();
     private Map<LootBook.Item, LootBook.Found> found = new HashMap<>();
     private final Map<String, LootBook.Item> book = new HashMap<>();
+    /** Shiny versions: which you've found, and each dungeon's (the shiny versions of its UTs and STs). */
+    private Map<LootBook.Item, LootBook.Found> foundShiny = new HashMap<>();
+    private final Map<Dungeon, List<LootBook.Item>> shinyOf = new HashMap<>();
+    private boolean shinyReady;
     private final int[] rowH = new int[ROWS.length];
     private String q = "";
 
@@ -188,6 +192,21 @@ final class DungeonPage extends JPanel {
         List<LootStats.Entry> bags = new ArrayList<>();
         bags.addAll(LootStats.all()); // every account's loot counts
         found = LootBook.found(bags);
+        foundShiny = LootBook.foundShinies(bags);
+        Map<String, LootBook.Item> byBase = new HashMap<>();
+        for (LootBook.Item sh : LootBook.shinies()) byBase.put(LootBook.norm(sh.name.replace(" (Shiny)", "")), sh);
+        shinyReady = !byBase.isEmpty();
+        shinyOf.clear();
+        for (Dungeon d : dungeons()) {
+            List<LootBook.Item> l = new ArrayList<>();
+            for (List<String> src : java.util.Arrays.asList(d.ut, d.st)) {
+                for (String n : src) {
+                    LootBook.Item sh = byBase.get(LootBook.norm(n));
+                    if (sh != null) l.add(sh);
+                }
+            }
+            shinyOf.put(d, l);
+        }
         List<Dungeon> list = new ArrayList<>();
         for (Dungeon d : dungeons()) if (matches(d)) list.add(d);
         java.util.Comparator<Dungeon> byDiff = (a, b) -> a.difficulty != b.difficulty ? Double.compare(a.difficulty, b.difficulty) : a.name.compareToIgnoreCase(b.name);
@@ -197,16 +216,18 @@ final class DungeonPage extends JPanel {
             return ta != tb ? Integer.compare(ta, tb) : byDiff.compare(a, b);
         });
         shown = list;
-        int drops = 0, ut = 0, st = 0;
+        int drops = 0, ut = 0, st = 0, shiny = 0;
         for (Dungeon d : list) {
             drops = Math.max(drops, d.drops.size());
             ut = Math.max(ut, d.ut.size());
             st = Math.max(st, d.st.size());
+            shiny = Math.max(shiny, shinyOf.get(d).size());
         }
         rowH[0] = DIFF_H;
         rowH[1] = PAD * 2 + Math.max(1, drops) * LINE;
         rowH[2] = PAD * 2 + CHIP + Math.max(1, ut) * LINE;
         rowH[3] = PAD * 2 + CHIP + Math.max(1, st) * LINE;
+        rowH[4] = shinyReady ? PAD * 2 + CHIP + Math.max(1, shiny) * LINE : PAD * 2 + 44;
         count.setText(list.size() + (list.size() == 1 ? " dungeon" : " dungeons"));
         for (JComponent c : new JComponent[]{body, header, labels}) {
             c.revalidate();
@@ -413,6 +434,8 @@ final class DungeonPage extends JPanel {
                 items(g, d.ut, "UT", UT, x, y);
                 y += rowH[2];
                 items(g, d.st, "ST", ST, x, y);
+                y += rowH[3];
+                shinies(g, d, x, y);
                 g.setColor(Pixel.LINE);
                 g.fillRect(x + COL_W - 1, 0, 1, getHeight());
             }
@@ -481,6 +504,63 @@ final class DungeonPage extends JPanel {
             }
         }
 
+        /** The shiny versions of this dungeon's items. */
+        private void shinies(Graphics2D g, Dungeon d, int x, int y) {
+            if (!shinyReady) {
+                g.setFont(Cute.font(Font.PLAIN, 12));
+                g.setColor(GREY);
+                g.drawString("Shows up once the pup has", x + 12, y + PAD + 16);
+                g.drawString("read the game files", x + 12, y + PAD + 32);
+                return;
+            }
+            List<LootBook.Item> list = shinyOf.get(d);
+            if (list == null || list.isEmpty()) {
+                muted(g, "None", x + 12, y + PAD + 16);
+                return;
+            }
+            int have = 0;
+            for (LootBook.Item it : list) if (foundShiny.containsKey(it)) have++;
+            String chip = list.size() + " shiny  ·  " + have + " collected";
+            g.setFont(Cute.font(Font.BOLD, 11));
+            FontMetrics cf = g.getFontMetrics();
+            Color gold = new Color(0xF0B10A);
+            g.setColor(Cute.mix(Color.WHITE, gold, 0.18));
+            g.fill(new RoundRectangle2D.Double(x + 12, y + PAD, cf.stringWidth(chip) + 12, 18, 8, 8));
+            g.setColor(Cute.mix(gold, Color.BLACK, 0.35));
+            g.drawString(chip, x + 18, y + PAD + 13);
+            for (int k = 0; k < list.size(); k++) {
+                LootBook.Item it = list.get(k);
+                boolean got = foundShiny.containsKey(it);
+                Color accent = it.tier.equals("ST") ? ST : UT;
+                int top = y + PAD + CHIP + k * LINE;
+                g.setColor(got ? accent : Pixel.LINE);
+                g.fillRect(x + 12, top + 3, 3, LINE - 6);
+                BufferedImage[] pics = icons(it.id);
+                BufferedImage pic = got ? pics[0] : pics[1];
+                int tx = x + 20;
+                if (pic != null) {
+                    g.drawImage(pic, tx, top + (LINE - pic.getHeight()) / 2, null);
+                    tx += pic.getWidth() + 5;
+                }
+                g.setFont(Cute.font(got ? Font.BOLD : Font.PLAIN, 13));
+                String name = it.name.replace(" (Shiny)", "");
+                String s = fit(g.getFontMetrics(), name, x + COL_W - tx - 22);
+                text(g, s, tx, top + 17, got ? Pixel.INK : GREY);
+                if (got) Cute.drawHeart(g, x + COL_W - 20, top + 7, 10, Pixel.PINK);
+            }
+        }
+
+        /** The shiny item under the mouse, or null. */
+        private LootBook.Item shinyAt(Point p) {
+            int i = p.x / COL_W;
+            if (i < 0 || i >= shown.size() || !shinyReady) return null;
+            List<LootBook.Item> list = shinyOf.get(shown.get(i));
+            int y = rowH[0] + rowH[1] + rowH[2] + rowH[3];
+            int k = (p.y - y - PAD - CHIP) / LINE;
+            if (list == null || p.y < y + PAD + CHIP || k < 0 || k >= list.size()) return null;
+            return list.get(k);
+        }
+
         /** The item under the mouse, or null. */
         private String itemAt(Point p) {
             int i = p.x / COL_W;
@@ -498,6 +578,18 @@ final class DungeonPage extends JPanel {
 
         @Override
         public String getToolTipText(MouseEvent e) {
+            LootBook.Item sh = shinyAt(e.getPoint());
+            if (sh != null) {
+                LootBook.Found f = foundShiny.get(sh);
+                StringBuilder sb = new StringBuilder("<html><div style='width:240px'><b>").append(esc(sh.name.replace(" (Shiny)", "")))
+                        .append("</b> (shiny ").append(sh.tier).append(")<br>");
+                if (f == null) sb.append("<span style='color:#B0305F'><b>Not in your collection yet</b></span>");
+                else sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>Found ")
+                        .append(f.times == 1 ? "once" : f.times + " times").append(", first on ")
+                        .append(new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(f.first * 1000L)))
+                        .append(f.where.isEmpty() ? "" : " in " + esc(f.where));
+                return sb.append("</div></html>").toString();
+            }
             String name = itemAt(e.getPoint());
             if (name == null) return null;
             LootBook.Item it = item(name);

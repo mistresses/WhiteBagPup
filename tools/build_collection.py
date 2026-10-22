@@ -5,7 +5,8 @@ per item and place it drops:  place|tier|item name
 
     python tools/build_collection.py path/to/ut_items.json
 
-Only items that can drop in a bag are kept (shop, mystery box and event-chest-only items are left out).
+Only items that can drop in a bag are kept (shop, mystery box and event-chest-only items, and Retro items that no
+longer drop, are left out).
 """
 import json
 import os
@@ -46,6 +47,8 @@ def main(src, out):
     for item in items.values():
         if not item.get("drops"):
             continue
+        if "(Retro)" in item["name"]:
+            continue  # old versions from past events: they don't drop any more
         places = set()
         for enemy in item["drops"]:
             for loc in where.get(item.get("links", {}).get(enemy), []):

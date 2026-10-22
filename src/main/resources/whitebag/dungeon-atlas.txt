@@ -1,4 +1,4 @@
-# White Bag Pup dungeon atlas: D|name|type|difficulty, then P|portal drop|1 if always, U|UT item, S|ST item (from the RealmEye wiki, 2026-10-09)
+# White Bag Pup dungeon atlas: D|name|type|difficulty, then P|portal drop|1 if always, U|UT item, S|ST item (Retro items are left out: they no longer drop) (from the RealmEye wiki, 2026-10-09)
 D|Pirate Cave|Realm Dungeons|1
 P|Pirate|0
 P|Piratess|0
@@ -11,7 +11,6 @@ P|Goblin Warrior|0
 P|X Treasure Chest|1
 P|Beached Buccaneer|1
 U|Corsair Ring
-U|Pirate King's Cutlass (Retro)
 D|Forest Maze|Realm Dungeons|1
 P|Forest Nymph|0
 P|Goblin Mage|0
@@ -32,9 +31,7 @@ P|Big Ladybug|0
 P|Shambling Sludge|0
 P|Swarm|0
 P|Desert Werewolf|0
-U|Doku No Ken (Retro)
 U|Poison Fang Dagger
-U|Poison Fang Dagger (Retro)
 U|Spider Shuriken
 U|Spider's Eye Ring
 D|Forbidden Jungle|Realm Dungeons|1.5
@@ -95,7 +92,6 @@ P|Sprite Child|0
 P|Celestial Sprite|1
 P|Cosmic Sprite|1
 U|Cloak of the Planewalker
-U|Cloak of the Planewalker (Retro)
 U|Corsair's Crown Jewel
 U|Faded Heart Scarab
 U|Fractured Hannya
@@ -106,7 +102,6 @@ U|Mystic Syndicate Attire
 U|Rusted Barrel
 U|Sprite Wand
 U|Staff of Extreme Prejudice
-U|Staff of Extreme Prejudice (Retro)
 U|Sunken Fire Opal Ring
 D|Cave of a Thousand Treasures|Realm Dungeons|2.5
 P|Sunken Soul|0
@@ -178,7 +173,6 @@ P|Burning Bones|0
 P|Ghost God|0
 P|Flesh Golem|0
 U|Doom Bow
-U|Doom Bow (Retro)
 U|Faded Heart Scarab
 U|Fractured Hannya
 U|Heavy Syndicate Attire
@@ -311,7 +305,6 @@ P|Vagabond Satyr|0
 P|Legion Guard Captain|1
 U|Berserker's Breastplate
 U|Demon Blade
-U|Demon Blade (Retro)
 U|Faded Heart Scarab
 U|Fractured Hannya
 U|Heavy Syndicate Attire
@@ -518,7 +511,6 @@ U|Frostbite
 U|Heavy Syndicate Attire
 U|Labyrinth Dweller's Sheath
 U|Leaf Bow
-U|Leaf Bow (Retro)
 U|Light Syndicate Attire
 U|Mystic Syndicate Attire
 U|Present Dispensing Wand
@@ -726,20 +718,16 @@ U|Celestial Blade
 U|Draconic Insignia
 U|Faded Heart Scarab
 U|Fire Dragon Battle Armor
-U|Fire Dragon Battle Armor (Retro)
 U|Forbidden Artifact
 U|Fractured Hannya
 U|Heavy Syndicate Attire
 U|Leaf Dragon Hide Armor
-U|Leaf Dragon Hide Armor (Retro)
 U|Light Syndicate Attire
 U|Midnight Star
 U|Mystic Syndicate Attire
-U|Sullen Blade (Retro)
 U|Sunken Fire Opal Ring
 U|Vision of Draconis
 U|Water Dragon Silk Robe
-U|Water Dragon Silk Robe (Retro)
 S|Alexander's Band
 S|Amulet of Drakefyre
 S|Augur of the Tempest
@@ -830,7 +818,6 @@ U|Igneous Starblossom
 U|Present Dispensing Wand
 U|Salju
 U|Skull of Endless Torment
-U|Skull of Endless Torment (Retro)
 U|Skull-splitter Sword
 U|Staff of Horrific Knowledge
 U|Staff of Yuletide Carols
