@@ -20,7 +20,7 @@ import static whitebag.AboutMe.note;
 /** The Boss Kills tab: every boss you helped kill, with totals per boss (from dps-log.txt). */
 final class KillsPage extends MoreTabs.Page {
     private final Predicate<History.Dps> mine;
-    private boolean everyAccount = false;
+    private static final boolean everyAccount = false;
     private int show = 0; // 0 bosses, 1 minibosses, 2 realm events, 3 everything
     private final JTextField search = Pixel.field("", 18, "Find a boss or dungeon");
     private boolean searching = false;
@@ -177,13 +177,6 @@ final class KillsPage extends MoreTabs.Page {
             show = i;
             changed();
         }));
-        if (mine != null && several) {
-            controls.add(Box.createHorizontalStrut(12));
-            controls.add(new LogTabs.Segments(new String[]{"This account", "All accounts"}, everyAccount ? 1 : 0, i -> {
-                everyAccount = i == 1;
-                changed();
-            }));
-        }
         list.add(fit(controls));
         gap(10);
 

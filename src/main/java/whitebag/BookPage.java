@@ -22,8 +22,8 @@ import static whitebag.AboutMe.note;
 final class BookPage extends MoreTabs.Page {
     private final Predicate<LootStats.Entry> mine;
     private final Predicate<RunLog.Run> myRuns;
-    /** Your collection counts what all your accounts have looted, unless you pick one. */
-    private boolean everyAccount = true;
+    /** Your collection counts what all your accounts have looted. */
+    private static final boolean everyAccount = true;
     private int show = 0;           // 0 all, 1 missing, 2 found
     private int book = 0;           // 0 UT and ST items, 1 their shiny versions
     private boolean allPlaces = false;
@@ -103,16 +103,6 @@ final class BookPage extends MoreTabs.Page {
             changed();
         }));
         list.add(fit(controls));
-        if (mine != null && several) {
-            gap(8);
-            JPanel who = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            who.setOpaque(false);
-            who.add(new LogTabs.Segments(new String[]{"All accounts", "This account"}, everyAccount ? 0 : 1, i -> {
-                everyAccount = i == 0;
-                changed();
-            }));
-            list.add(fit(who));
-        }
         gap(8);
         JPanel find = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         find.setOpaque(false);

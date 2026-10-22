@@ -87,7 +87,6 @@ final class DungeonPage extends JPanel {
     private static final String[] ROWS = {"Difficulty", "Portal drops from", "UT items", "ST items"};
 
     private final Predicate<LootStats.Entry> mine;
-    private boolean everyAccount = true;
     private boolean easiestFirst = false;
     private final JTextField search = Pixel.field("", 18, "Find a dungeon, enemy or item");
     private final JLabel count = new JLabel();
@@ -117,11 +116,6 @@ final class DungeonPage extends JPanel {
         bar.add(Box.createHorizontalStrut(12));
         bar.add(new LogTabs.Segments(new String[]{"Group by type", "Easiest first"}, 0, i -> {
             easiestFirst = i == 1;
-            rebuild();
-        }));
-        bar.add(Box.createHorizontalStrut(8));
-        bar.add(new LogTabs.Segments(new String[]{"All accounts", "This account"}, 0, i -> {
-            everyAccount = i == 0;
             rebuild();
         }));
         bar.add(Box.createHorizontalStrut(12));
@@ -192,7 +186,7 @@ final class DungeonPage extends JPanel {
     private void rebuild() {
         q = LootBook.norm(search.getText());
         List<LootStats.Entry> bags = new ArrayList<>();
-        for (LootStats.Entry e : LootStats.all()) if (everyAccount || mine == null || mine.test(e)) bags.add(e);
+        bags.addAll(LootStats.all()); // every account's loot counts
         found = LootBook.found(bags);
         List<Dungeon> list = new ArrayList<>();
         for (Dungeon d : dungeons()) if (matches(d)) list.add(d);
@@ -521,7 +515,6 @@ final class DungeonPage extends JPanel {
                         .append(new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(f.first * 1000L)))
                         .append(f.where.isEmpty() ? "" : " in " + esc(f.where));
             }
-            if (!everyAccount) sb.append("<br><span style='color:#7A6E8C'>Counting this account only</span>");
             return sb.append("</div></html>").toString();
         }
 

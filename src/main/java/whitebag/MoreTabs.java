@@ -185,7 +185,7 @@ final class MoreTabs {
         /** Which bags belong to this page's account (null = every bag). */
         private final java.util.function.Predicate<LootStats.Entry> mine;
         private final java.util.function.Predicate<RunLog.Run> myRuns;
-        private boolean everyAccount = false;
+        private static final boolean everyAccount = false;
 
         LootPage() {
             this(null, null);
@@ -214,16 +214,6 @@ final class MoreTabs {
             for (LootStats.Entry e : every) if (mine == null || everyAccount || mine.test(e)) all.add(e);
             list.add(heading("loot", null));
             gap(10);
-            if (mine != null && severalAccounts) {
-                LogTabs.Segments which = new LogTabs.Segments(new String[]{"This account", "All accounts"}, everyAccount ? 1 : 0, i -> {
-                    everyAccount = i == 1;
-                    changed();
-                });
-                which.setAlignmentX(Component.LEFT_ALIGNMENT);
-                which.setMaximumSize(new Dimension(Integer.MAX_VALUE, which.getPreferredSize().height));
-                list.add(which);
-                gap(12);
-            }
             if (all.isEmpty()) {
                 list.add(note("Every coloured bag the pup sees is counted here (all colours, not just the ones you get pinged for), "
                         + "this session and all time."));
