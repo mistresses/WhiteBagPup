@@ -297,7 +297,7 @@ final class History {
     static synchronized void addRun(DpsTracker.Run run, List<DpsTracker.Board> boards, String account) {
         dps();
         for (DpsTracker.Board b : boards) {
-            if (b.kind == DpsTracker.Kind.WHOLE_RUN) continue;
+            if (b.kind == DpsTracker.Kind.WHOLE_RUN || b.savedEarly) continue;
             for (int i = 0; i < b.rows.size(); i++) {
                 DpsTracker.Row r = b.rows.get(i);
                 if (!r.you) continue;

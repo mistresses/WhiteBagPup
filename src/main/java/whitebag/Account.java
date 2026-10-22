@@ -121,6 +121,11 @@ final class Account {
             History.addRun(run, boards, key);
             if (killsPage != null) killsPage.changed();
         };
+        // realm bosses and events count as soon as they die
+        dps.onKill = (run, board) -> {
+            History.addRun(run, java.util.Collections.singletonList(board), key);
+            if (killsPage != null) killsPage.changed();
+        };
         bags.setWatched(host.watched());
         bags.register(bus);
         chat.register(bus);

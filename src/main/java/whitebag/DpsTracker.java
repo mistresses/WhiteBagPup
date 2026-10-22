@@ -64,6 +64,8 @@ public class DpsTracker {
         long firstHitMs, lastHitMs;
         int myHits;
         boolean killed;
+        /** Saved to the kill log as soon as it died (realm bosses and events), so not again when the run ends. */
+        boolean savedEarly;
         /** Damage reported by the server's DamagePackets, by player. */
         final Map<String, Long> fromPackets = new LinkedHashMap<>();
         /** Guarded hits by player: {hits, damage}. */
@@ -188,6 +190,8 @@ public class DpsTracker {
         public final boolean killed;
         public final long total;
         public final List<Row> rows;
+        /** Already saved to the kill log when the boss died. */
+        public boolean savedEarly;
 
         Board(String title, int maxHp, double seconds, boolean killed, long total, List<Row> rows) {
             this.title = title;
@@ -237,6 +241,24 @@ public class DpsTracker {
             return false;
         }
 
+        /** One fight's leaderboard, or null if it isn't a boss (or nobody hit it). */
+        Board boardOf(Fight f) {
+            long t = f.total();
+            if (t <= 0) return null;
+            Kind kind = kindOf(f.enemyType);
+            if (kind == Kind.OTHER && f.maxHp < BOSS_HP) return null;
+            Map<String, Long> by = f.byName();
+            Map<String, long[]> guard = f.guardedByName();
+            Board b = new Board(f.enemyName, f.maxHp, f.seconds(), f.killed, t, rows(by, t, f.seconds(), guard, f.firstHitMs, f.lastHitMs));
+            b.kind = kind;
+            b.hasGuard = !guard.isEmpty();
+            long[] tk = takenBetween(f.firstHitMs, f.lastHitMs);
+            b.takenDmg = tk[0];
+            b.takenHits = tk[1];
+            b.savedEarly = f.savedEarly;
+            return b;
+        }
+
         /** Boss leaderboards (big enemies) in the order they were fought, then the whole-run total. */
         public List<Board> boards() {
             List<Board> out = new ArrayList<>();
@@ -260,16 +282,8 @@ public class DpsTracker {
                 allTotal += t;
                 first = Math.min(first, f.firstHitMs);
                 last = Math.max(last, f.lastHitMs);
-                Kind kind = kindOf(f.enemyType);
-                if (kind != Kind.OTHER || f.maxHp >= BOSS_HP) {
-                    Board b = new Board(f.enemyName, f.maxHp, f.seconds(), f.killed, t, rows(by, t, f.seconds(), guard, f.firstHitMs, f.lastHitMs));
-                    b.kind = kind;
-                    b.hasGuard = !guard.isEmpty();
-                    long[] tk = takenBetween(f.firstHitMs, f.lastHitMs);
-                    b.takenDmg = tk[0];
-                    b.takenHits = tk[1];
-                    out.add(b);
-                }
+                Board b = boardOf(f);
+                if (b != null) out.add(b);
             }
             if (allTotal > 0) {
                 double secs = Math.max(1, (last - first) / 1000.0);
@@ -463,6 +477,7 @@ public class DpsTracker {
                         if (f.hp > 0) f.hpLost += f.hp;
                         f.hp = 0;
                         f.touch(now);
+                        saveKillNow(f);
                     }
                     changed = true;
                 }
@@ -669,6 +684,24 @@ public class DpsTracker {
 
     /** Gets each finished run that had damage (to save it for the recaps). */
     volatile java.util.function.BiConsumer<Run, List<Board>> onRunEnd;
+    /**
+     * A boss died in the realm: its board, saved straight away. A realm visit can last hours (and the game may be
+     * closed without leaving), so realm kills don't wait for the run to end.
+     */
+    volatile java.util.function.BiConsumer<Run, Board> onKill;
+
+    private void saveKillNow(Fight f) {
+        java.util.function.BiConsumer<Run, Board> c = onKill;
+        if (c == null || current == null || f.savedEarly || !RunLog.isRealm(current.mapName)) return;
+        Board b = current.boardOf(f);
+        if (b == null) return;
+        f.savedEarly = true;
+        try {
+            c.accept(current, b);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /** Ends the run in progress (when the app closes). */
     public synchronized void flush() {

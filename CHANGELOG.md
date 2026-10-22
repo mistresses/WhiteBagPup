@@ -5,6 +5,9 @@ Download the latest from [Releases](../../releases/latest).
 
 ## 2.6
 
+- Realm event and realm boss kills count on Boss Kills as soon as they die, instead of when you leave the realm
+  (closing the game while still in the realm used to lose them). Events from the RealmStock list are recognised even
+  if it loaded after the app started.
 - **Puzzle log** on the Puzzle tab: how many practice puzzles you've solved (and how many perfectly), and how many
   in game.
 - **15 puppy badges**, with paw and bone medals: Good Pup, Very Good Pup, Best in Show (practice puzzles), Belly Rubs

@@ -85,15 +85,21 @@ final class KillsPage extends MoreTabs.Page {
     // ---- realm events, by RealmStock's event list (the Events tab's) plus the usual event bosses
 
     private static volatile Set<String> eventNames;
+    private static volatile boolean eventsFromFeed;
+    private static volatile long builtAt;
     private static final Map<String, Boolean> eventCache = new java.util.concurrent.ConcurrentHashMap<>();
 
     private static Set<String> eventNames() {
         Set<String> e = eventNames;
-        if (e != null && !e.isEmpty()) return e;
+        // RealmStock's list arrives a little after start: until then only the usual events are known, so look again
+        if (e != null && !e.isEmpty() && (eventsFromFeed || System.currentTimeMillis() - builtAt < 60_000)) return e;
         Set<String> out = new java.util.HashSet<>();
         List<String> names = new ArrayList<>();
+        boolean fromFeed = false;
         try {
-            names.addAll(RealmStockFeed.eventNames());
+            List<String> feed = new ArrayList<>(RealmStockFeed.eventNames());
+            fromFeed = !feed.isEmpty();
+            names.addAll(feed);
         } catch (Throwable ignored) {
         }
         names.addAll(EventTracker.DEFAULT_EVENTS);
@@ -103,6 +109,8 @@ final class KillsPage extends MoreTabs.Page {
         }
         eventCache.clear();
         eventNames = out;
+        eventsFromFeed = fromFeed;
+        builtAt = System.currentTimeMillis();
         return out;
     }
 
