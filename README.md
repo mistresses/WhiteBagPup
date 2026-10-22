@@ -12,7 +12,9 @@ never sends anything to the game, and never plays for you.
 
 Get **WhiteBagPup.jar** from the [latest release](../../releases/latest).
 
-When there's a new version, a pink **A new version is out!** button appears at the top of the Home tab.
+When there's a new version, a pink **Update now** button appears at the top of the Home tab. Press it and the pup
+backs up your files, downloads the new version from GitHub, and restarts on it (the old one is kept as
+`WhiteBagPup.jar.old`).
 Download the new jar and put it in the same folder in place of the old one. Your settings and logs stay.
 See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 
@@ -24,7 +26,8 @@ See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
    Desktop folder), and put `WhiteBagPup.jar` in it. The app saves its settings and logs next to itself.
 3. Make a Discord webhook: in your server, **Server Settings > Integrations > Webhooks > New Webhook**, pick the
    channel, then **Copy Webhook URL**.
-4. Double-click `WhiteBagPup.jar`, paste the URL and press **Send test post**.
+4. Double-click `WhiteBagPup.jar`, open the **Webhooks** tab, paste the URL under **Bag posts** and press
+   **Send test post**.
 5. Optional: to get pinged, turn on **Discord Settings > Advanced > Developer Mode**, right-click your name,
    **Copy User ID**, and paste it into **Ping me**.
 6. Press **Start watching**. If you're already in game, change area once (go to the Nexus) so it can sync.
@@ -33,10 +36,28 @@ The first time, it reads item names and pictures from your game install. That ca
 whenever the game updates. If your game is installed somewhere unusual, run
 `java -jar WhiteBagPup.jar --path "C:\path\to\resources.assets"`.
 
+### Friends leaderboard (optional)
+
+If your recap link is a Femcore bot link (`https://.../recap?key=...`), tick **Join the friends leaderboard** under
+Recaps on the Webhooks tab. Every few minutes the pup sends your in-game name and totals (white bags, bags, runs,
+kills, fame, play time, badge and collection counts) to the bot, which keeps a weekly leaderboard in Discord.
+Nothing else is sent.
+
+### Backups
+
+The **Backups** section on Home zips your logs, badges, settings and sounds into the `backups` folder: press
+**Back up now**, or leave **Back up every week by itself** on. The last 8 are kept. **Restore...** puts one back
+(what's there now is backed up first) and closes the pup so it opens fresh. The pup also backs up before updating.
+
+### Badge posts (optional)
+
+New badges post to your bag webhook. To send them somewhere else, make another webhook and paste it under
+**Badges** on the Webhooks tab. **Send test post** shows what one looks like.
+
 ### Recaps (optional)
 
 1. Make a second webhook for the channel the recaps should go to (the same way as step 3).
-2. On the Home tab under **Recaps**, paste it into **Recap webhook URL** and press **Save**.
+2. On the **Webhooks** tab under **Recaps**, paste it into **Recap webhook URL** and press **Save**.
 3. Pick **Daily**, **Weekly** or **Daily and weekly**, and the day and time to post.
 4. Tick the **Bags in recap** you want counted and pictured (White, Red and Orange to start with).
 5. Press **Post daily recap now** to see what one looks like.
@@ -74,6 +95,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
   looted it. Share it on Discord,
   and bag posts say when an item is new to your collection.
 - **Dungeons**: every dungeon side by side, with its difficulty, what drops the portal and the UT/ST items there. Hover over an item to see if it's in your collection.
+- **Wardrobe** (under Me): hats and outfits for the pup, unlocked by badges.
 - **Badges**: pup achievements that unlock as you play, announced on Discord.
 - **Puzzle**: a solver for The Shatters' Puzzle Room: the towers to shoot to turn them all green.
 - **Trades**: every trade you finish, who with, and what you gave and got.
@@ -81,7 +103,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
   with tick boxes for what you care about, a search box, a region filter and a sound you can turn off.
 - **Recaps**: a daily and/or weekly summary for each account posted to its own Discord channel: your name and
   classes, bags, runs, luckiest dungeon, fame and time played, with all the loot as pictures you
-  flip through with arrows. Set it up under **Recaps** on the Home tab.
+  flip through with arrows. Set it up under **Recaps** on the Webhooks tab.
 - **Two accounts at once**: each game client gets its own tabs; switch with the Account buttons.
 
 <p align="center"><img src="images/fame.png" alt="Fame tab" width="420"></p>

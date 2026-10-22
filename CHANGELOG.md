@@ -5,6 +5,23 @@ Download the latest from [Releases](../../releases/latest).
 
 ## 2.6
 
+- **Updates in the app:** the update button downloads the new version from GitHub, backs up your files and restarts
+  the pup on it (the old version is kept as WhiteBagPup.jar.old). If that can't work, it opens the download page.
+- **Backups** (Home): back up now, restore, and a weekly backup by itself. The last 8 are kept in the backups folder.
+- **Friends leaderboard:** with a Femcore bot recap link, tick "Join the friends leaderboard" (Webhooks tab). The bot
+  keeps a weekly board of white bags, runs, boss kills, realm events, fame and play time, and posts the winners.
+- **Wardrobe** (Me tab): dress up the pup with 10 hats (party hat, pink bow, flower crown, top hat, Viking helmet,
+  halo, crown, plus the witch and Santa hats any time) and 7 outfits (bow tie, red bandana, cosy scarf, hero cape,
+  gold collar, royal cape). Most unlock with badges; badge posts say what they unlock.
+- **21 harder badges** (pink), like Avalanche and Ice Age (250 / 500 whites), Jackpot (3 whites in one run),
+  Blessed (10 Divines), Unbreakable (end a 100-run dry streak), Dungeon Master (1,000 runs), Obsessed, World
+  Traveller (60 dungeons), Boss Exterminator, One Pup Army, Storm Chaser, Mythic (1,000,000 fame), Realm Resident,
+  Best Friends Forever, Museum, Master Completionist, Shiny Hunter, Puzzle Master, Puzzle Addict, Turbo Zoomies and
+  Most Loved Pup.
+- **Webhooks tab:** every Discord webhook in one place: bag posts (with ping, test post and game pictures), recaps
+  and badges. Home keeps the bags to watch and the start button.
+- **Badge webhook:** badges can post to their own channel, with a test post. Leave it empty to keep posting them
+  with your bags.
 - Realm event and realm boss kills count on Boss Kills as soon as they die, instead of when you leave the realm
   (closing the game while still in the realm used to lose them). Events from the RealmStock list are recognised even
   if it loaded after the app started.

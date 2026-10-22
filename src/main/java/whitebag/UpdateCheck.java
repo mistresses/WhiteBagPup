@@ -29,8 +29,13 @@ final class UpdateCheck {
     /** The GitHub repository releases come from, as "owner/name". Can be changed in the settings file (update.repo). */
     static final String DEFAULT_REPO = "mistresses/WhiteBagPup";
 
-    /** Calls back (on a background thread) with {tag, page link} when a newer release exists. */
-    static void check(String repo, BiConsumer<String, String> newer, java.util.function.Consumer<String> problem) {
+    /** A newer release: its tag, its page, and the address of its WhiteBagPup.jar (for updating in the app). */
+    interface Found {
+        void found(String tag, String page, String jarUrl);
+    }
+
+    /** Calls back (on a background thread) with the newer release, if there is one. */
+    static void check(String repo, Found newer, java.util.function.Consumer<String> problem) {
         if (repo == null || !repo.trim().matches("[\\w.-]+/[\\w.-]+")) return;
         Thread t = new Thread(() -> {
             try {
@@ -45,7 +50,8 @@ final class UpdateCheck {
                     // e.g. GitHub's hourly limit: the release page itself redirects to the latest tag
                     String tag = latestFromRedirect(repo.trim());
                     if (tag == null) throw new Exception("GitHub answered HTTP " + code);
-                    if (isNewer(tag, VERSION)) newer.accept(tag, "https://github.com/" + repo.trim() + "/releases/tag/" + tag);
+                    if (isNewer(tag, VERSION)) newer.found(tag, "https://github.com/" + repo.trim() + "/releases/tag/" + tag,
+                            "https://github.com/" + repo.trim() + "/releases/download/" + tag + "/WhiteBagPup.jar");
                     return;
                 }
                 String body;
@@ -59,7 +65,18 @@ final class UpdateCheck {
                 JsonObject o = JsonParser.parseString(body).getAsJsonObject();
                 String tag = o.has("tag_name") ? o.get("tag_name").getAsString() : "";
                 String page = o.has("html_url") ? o.get("html_url").getAsString() : "https://github.com/" + repo.trim() + "/releases";
-                if (isNewer(tag, VERSION)) newer.accept(tag, page);
+                String jar = null;
+                if (o.has("assets") && o.get("assets").isJsonArray()) {
+                    for (com.google.gson.JsonElement a : o.getAsJsonArray("assets")) {
+                        JsonObject ao = a.getAsJsonObject();
+                        String n = ao.has("name") ? ao.get("name").getAsString() : "";
+                        if (n.toLowerCase(java.util.Locale.ROOT).endsWith(".jar") && ao.has("browser_download_url")) {
+                            jar = ao.get("browser_download_url").getAsString();
+                            if (n.equalsIgnoreCase("WhiteBagPup.jar")) break;
+                        }
+                    }
+                }
+                if (isNewer(tag, VERSION)) newer.found(tag, page, jar);
             } catch (Exception e) {
                 problem.accept(e.getMessage());
             }

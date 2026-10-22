@@ -38,7 +38,7 @@ final class Badges {
         long bossKills, topDamage, soloKills, eventKills;
         long fame, playSeconds, collection, completedDungeons, trades;
         long puzzleSolved, puzzlePerfect, practicePerfect, practiceSolved;
-        long pets, bags, shinies, busiestDay, nightRuns, dungeonsVisited, playDays;
+        long pets, bags, shinies, busiestDay, nightRuns, dungeonsVisited, playDays, mostWhitesOneRun;
         String mostRunDungeon = "";
     }
 
@@ -108,7 +108,29 @@ final class Badges {
             new Badge("walkies", "Walkies", "Run 10 different dungeons", "paw", Tier.SILVER, 10, s -> s.dungeonsVisited),
             new Badge("longwalkies", "Long Walkies", "Run 30 different dungeons", "paw", Tier.GOLD, 30, s -> s.dungeonsVisited),
             new Badge("packleader", "Pack Leader", "Do the most damage in a group 100 times", "1", Tier.PINK, 100, s -> s.topDamage),
-            new Badge("loyal", "Loyal Companion", "Play on 30 different days", "♥", Tier.GOLD, 30, s -> s.playDays)));
+            new Badge("loyal", "Loyal Companion", "Play on 30 different days", "♥", Tier.GOLD, 30, s -> s.playDays),
+            // ---- the hard ones
+            new Badge("white250", "Avalanche", "Loot 250 white bags", "W", Tier.PINK, 250, s -> s.whites),
+            new Badge("white500", "Ice Age", "Loot 500 white bags", "W", Tier.PINK, 500, s -> s.whites),
+            new Badge("jackpot", "Jackpot", "Get three white bags in one run", "3", Tier.PINK, 3, s -> s.mostWhitesOneRun),
+            new Badge("blessed", "Blessed", "Loot 10 Divine items", "D", Tier.PINK, 10, s -> s.divines),
+            new Badge("unbreakable", "Unbreakable", "End a 100-run dry streak with a white", "S", Tier.PINK, 100, s -> s.brokeStreak),
+            new Badge("dungeonmaster", "Dungeon Master", "Finish 1,000 dungeon runs", "R", Tier.PINK, 1000, s -> s.runs),
+            new Badge("obsessed", "Obsessed", "Run the same dungeon 500 times", "♥", Tier.PINK, 500, s -> s.mostRunsOneDungeon),
+            new Badge("traveller", "World Traveller", "Run 60 different dungeons", "paw", Tier.PINK, 60, s -> s.dungeonsVisited),
+            new Badge("boss2000", "Boss Exterminator", "Help kill 2,000 bosses", "B", Tier.PINK, 2000, s -> s.bossKills),
+            new Badge("onepuparmy", "One Pup Army", "Kill 10 bosses doing all the damage", "!", Tier.PINK, 10, s -> s.soloKills),
+            new Badge("events250", "Storm Chaser", "Help kill 250 realm events", "E", Tier.PINK, 250, s -> s.eventKills),
+            new Badge("mythic", "Mythic", "Gain 1,000,000 fame", "F", Tier.PINK, 1_000_000, s -> s.fame),
+            new Badge("time500", "Realm Resident", "Play for 500 hours", "T", Tier.PINK, 500, s -> s.playSeconds / 3600),
+            new Badge("bestfriend", "Best Friends Forever", "Play on 100 different days", "♥", Tier.PINK, 100, s -> s.playDays),
+            new Badge("museum", "Museum", "Find 300 items for your collection", "C", Tier.PINK, 300, s -> s.collection),
+            new Badge("completionist5", "Master Completionist", "Find every item from 5 dungeons", "★", Tier.PINK, 5, s -> s.completedDungeons),
+            new Badge("shinyhunter", "Shiny Hunter", "Find 25 shiny items", "★", Tier.PINK, 25, s -> s.shinies),
+            new Badge("puzzlemaster", "Puzzle Master", "Solve the Shatters puzzle in the fewest shots 10 times", "P", Tier.PINK, 10, s -> s.puzzlePerfect),
+            new Badge("puzzleaddict", "Puzzle Addict", "Solve 500 practice puzzles", "paw", Tier.PINK, 500, s -> s.practiceSolved),
+            new Badge("turbozoomies", "Turbo Zoomies", "Finish 25 dungeon runs in one day", "Z", Tier.PINK, 25, s -> s.busiestDay),
+            new Badge("mostloved", "Most Loved Pup", "Pet the pup 2,000 times", "♥", Tier.PINK, 2000, s -> s.pets)));
 
     // ---------------------------------------------------------------- unlocked badges
 
@@ -224,6 +246,17 @@ final class Badges {
         return fresh;
     }
 
+    /** True if any account has unlocked this badge (the pup's wardrobe is shared). */
+    static synchronized boolean anyUnlocked(String id) {
+        for (Unlock u : unlocks()) if (u.id.equals(id)) return true;
+        return false;
+    }
+
+    static Badge byId(String id) {
+        for (Badge b : ALL) if (b.id.equals(id)) return b;
+        return null;
+    }
+
     /** When this account unlocked each badge (badge id -> unlock). */
     static synchronized Map<String, Unlock> unlocked(String account) {
         Map<String, Unlock> out = new LinkedHashMap<>();
@@ -264,6 +297,7 @@ final class Badges {
             int whites = 0;
             for (long at : whitesAt.getOrDefault(r.map, Collections.emptyList())) if (at >= r.at && at <= r.at + r.seconds + 10) whites++;
             if (whites >= 2) s.luckyRuns++;
+            s.mostWhitesOneRun = Math.max(s.mostWhitesOneRun, whites);
         }
         for (DryStreak.Streak st : DryStreak.compute(runs, bags).values()) {
             if (st.map.isEmpty()) continue;

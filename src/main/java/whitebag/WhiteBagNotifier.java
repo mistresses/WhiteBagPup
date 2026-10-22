@@ -71,6 +71,7 @@ public class WhiteBagNotifier {
     private Pixel.Check shotBox;
     private Pixel.Button updateButton;
     private volatile String updateLink = "";
+    private volatile String updateJar = null, updateTag = "";
     private Pixel.Button startButton;
     private Pixel.Status status;
     private JLabel watchingLabel;
@@ -82,6 +83,7 @@ public class WhiteBagNotifier {
     public static void main(String[] args) {
         System.out.println("Java " + System.getProperty("java.version") + " (" + System.getProperty("sun.arch.data.model") + "-bit)");
         Util.setSaveLogs(false);
+        Updater.launchArgs = args.clone();
         for (int i = 0; i < args.length - 1; i++) {
             if (args[i].equals("--path")) AssetExtractor.setRealmResPath(args[i + 1]);
         }
@@ -108,7 +110,7 @@ public class WhiteBagNotifier {
     /** The Recaps section on Home: their own webhook, how often, when, and post-now buttons. */
     private void buildRecaps(JPanel home) {
         section(home, new Pixel.Heading("recaps", 2), 22);
-        JLabel intro = new JLabel("<html><div style='width:470px'>A daily or weekly summary for each account (your name and classes, bags, runs, fame "
+        JLabel intro = new JLabel("<html><div style='width:370px'>A daily or weekly summary for each account (your name and classes, bags, runs, fame "
                 + "and time played), posted to its own channel, with pictures of the loot in one post. Only what happened while the app was running counts; "
                 + "if it's closed when one is due, it's posted next time you open it.</div></html>");
         intro.setFont(Cute.font(Font.PLAIN, 12));
@@ -118,7 +120,7 @@ public class WhiteBagNotifier {
         JPanel urlRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         urlRow.setOpaque(false);
         JLabel ul = Pixel.label("Recap webhook URL  ");
-        JTextField recapUrl = Pixel.field(settings.getProperty("recap.url", ""), 26, "a webhook or bot recap link");
+        JTextField recapUrl = Pixel.field(settings.getProperty("recap.url", ""), 22, "a webhook or bot recap link");
         Pixel.Button saveUrl = new Pixel.Button("Save", false);
         saveUrl.addActionListener(e -> {
             String u = recapUrl.getText().trim();
@@ -179,7 +181,7 @@ public class WhiteBagNotifier {
         // which bags go in the recap (counted and pictured)
         JPanel bagRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         bagRow.setOpaque(false);
-        bagRow.add(Pixel.label("Bags in recap  "));
+        section(home, Pixel.label("Bags in recap"), 8);
         java.util.Set<BagType> recapBags = Recap.bagFilter(settings);
         for (BagType c : Recap.COLOURS) {
             String label = c == BagType.EGG ? "Egg" : c.displayName;
@@ -194,7 +196,7 @@ public class WhiteBagNotifier {
             bagRow.add(box);
             bagRow.add(Box.createHorizontalStrut(4));
         }
-        section(home, bagRow, 8);
+        section(home, bagRow, 4);
 
         JPanel nowRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         nowRow.setOpaque(false);
@@ -215,6 +217,99 @@ public class WhiteBagNotifier {
             nowRow.add(Box.createHorizontalStrut(8));
         }
         section(home, nowRow, 10);
+
+        // friends leaderboard (through the same bot as the recaps)
+        Pixel.Check join = new Pixel.Check("Join the friends leaderboard", "true".equals(settings.getProperty("leaderboard.join")));
+        join.addActionListener(e -> {
+            String u = settings.getProperty("recap.url", "");
+            if (join.isSelected() && !Recap.isBotUrl(u)) {
+                join.setSelected(false);
+                log("*tilts head* the friends leaderboard needs a bot recap link (https://.../recap?key=...) above first.");
+                return;
+            }
+            settings.setProperty("leaderboard.join", String.valueOf(join.isSelected()));
+            saveSettings();
+            if (join.isSelected()) {
+                log("*bounces* joined the friends leaderboard! Your in-game name and totals go to the bot every few minutes.");
+                new Thread(() -> sendLeaderboard(true), "leaderboard").start();
+            } else {
+                log("*boop* left the friends leaderboard. (Your last totals stay on the board until the week ends.)");
+            }
+        });
+        section(home, join, 12);
+        JLabel joinNote = Pixel.note("Needs a bot recap link. Shares your in-game name and totals with the bot.");
+        joinNote.setForeground(Color.BLACK);
+        section(home, joinNote, 2);
+    }
+
+    /** The Badges section of the Webhooks tab: its own webhook (or the bag one), on/off, and a test post. */
+    private void buildBadgeHook(JPanel hooks) {
+        section(hooks, new Pixel.Heading("badges", 2), 26);
+        JLabel intro = Pixel.note("New badges are posted here. Leave it empty to post them to the bag webhook.");
+        intro.setForeground(Color.BLACK);
+        section(hooks, intro, 6);
+        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        row.setOpaque(false);
+        JTextField field = Pixel.field(settings.getProperty("badges.url", ""), 24, "https://discord.com/api/webhooks/...");
+        Pixel.Button save = new Pixel.Button("Save", false);
+        save.addActionListener(e -> {
+            String u = field.getText().trim();
+            if (!u.isEmpty() && !DiscordWebhook.isValidUrl(u)) {
+                log("*tilts head* that doesn't look like a Discord webhook URL (https://discord.com/api/webhooks/...).");
+                return;
+            }
+            settings.setProperty("badges.url", u);
+            saveSettings();
+            log(u.isEmpty() ? "*boop* badge webhook cleared: badges go to the bag webhook." : "*boop* badge webhook saved!");
+        });
+        Pixel.Button test = new Pixel.Button("Send test post", false);
+        test.addActionListener(e -> {
+            String u = field.getText().trim();
+            if (!u.isEmpty() && !DiscordWebhook.isValidUrl(u)) {
+                log("*tilts head* that doesn't look like a Discord webhook URL (https://discord.com/api/webhooks/...).");
+                return;
+            }
+            settings.setProperty("badges.url", u);
+            saveSettings();
+            String url = badgeUrl();
+            if (!DiscordWebhook.isValidUrl(url)) {
+                log("*tilts head* paste a badge webhook (or a bag webhook) first.");
+                return;
+            }
+            log("*runs off to Discord with a test badge*");
+            String who = selected != null && selected.key() != null ? History.nameOf(selected.key()) : "";
+            postBadge(url, Badges.ALL.get(0), who, true);
+        });
+        row.add(Pixel.label("Badge webhook URL  "));
+        row.add(field);
+        section(hooks, row, 10);
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        buttons.setOpaque(false);
+        buttons.add(save);
+        buttons.add(Box.createHorizontalStrut(8));
+        buttons.add(test);
+        section(hooks, buttons, 8);
+        Pixel.Check post = new Pixel.Check("Post new badges to Discord", BadgesPage.posting.getAsBoolean());
+        post.addActionListener(e -> BadgesPage.setPosting.accept(post.isSelected()));
+        section(hooks, post, 8);
+    }
+
+    /** Where badges go: their own webhook, or the bag one. */
+    private String badgeUrl() {
+        String u = settings.getProperty("badges.url", "").trim();
+        return DiscordWebhook.isValidUrl(u) ? u : settings.getProperty("webhook.url", "");
+    }
+
+    private void postBadge(String url, Badges.Badge b, String who, boolean test) {
+        byte[] medal = BadgesPage.medalPng(b);
+        String json = "{\"username\":\"White Bag Pup\",\"allowed_mentions\":{\"parse\":[]},\"embeds\":[{\"title\":"
+                + DiscordWebhook.str("\uD83C\uDFC5 Badge unlocked: " + b.name + (test ? " (test)" : ""))
+                + ",\"description\":" + DiscordWebhook.str((test ? "A test post: new badges will look like this.\n" : "") + b.desc
+                + (Wardrobe.unlockedBy(b.id) != null ? "\nUnlocks the pup's " + Wardrobe.unlockedBy(b.id) + "!" : "")
+                + (who.isEmpty() ? "" : "\n*good pup, " + who + "!* \uD83D\uDC3E"))
+                + ",\"color\":" + (b.tier.color.getRGB() & 0xFFFFFF)
+                + (medal != null ? ",\"thumbnail\":{\"url\":\"attachment://medal.png\"}" : "") + "}]}";
+        webhook.sendJson(url, json, medal != null ? java.util.Collections.singletonMap("medal.png", medal) : java.util.Collections.emptyMap(), "badge");
     }
 
     /** Unlocks any badges this account has just earned: a note in the log, a Discord post, and the Badges tab redrawn. */
@@ -230,18 +325,12 @@ public class WhiteBagNotifier {
         }
         if (fresh.isEmpty()) return;
         String who = History.nameOf(key);
-        String url = settings.getProperty("webhook.url", "");
+        String url = badgeUrl();
         for (Badges.Badge b : fresh) {
             log((accounts.size() > 1 ? a.prefix() : "") + "*happy howl* badge unlocked: " + b.name + "! (" + b.desc + ")");
-            if (BadgesPage.posting.getAsBoolean() && DiscordWebhook.isValidUrl(url)) {
-                byte[] medal = BadgesPage.medalPng(b);
-                String json = "{\"username\":\"White Bag Pup\",\"allowed_mentions\":{\"parse\":[]},\"embeds\":[{\"title\":"
-                        + DiscordWebhook.str("\uD83C\uDFC5 Badge unlocked: " + b.name)
-                        + ",\"description\":" + DiscordWebhook.str(b.desc + (who.isEmpty() ? "" : "\n*good pup, " + who + "!* \uD83D\uDC3E"))
-                        + ",\"color\":" + (b.tier.color.getRGB() & 0xFFFFFF)
-                        + (medal != null ? ",\"thumbnail\":{\"url\":\"attachment://medal.png\"}" : "") + "}]}";
-                webhook.sendJson(url, json, medal != null ? java.util.Collections.singletonMap("medal.png", medal) : java.util.Collections.emptyMap(), "badge");
-            }
+            String gift = Wardrobe.unlockedBy(b.id);
+            if (gift != null) log("*spins around* new in the Wardrobe (Me tab): the " + gift + "!");
+            if (BadgesPage.posting.getAsBoolean() && DiscordWebhook.isValidUrl(url)) postBadge(url, b, who, false);
         }
         SwingUtilities.invokeLater(() -> {
             if (header != null) header.celebrate();
@@ -249,11 +338,77 @@ public class WhiteBagNotifier {
         });
     }
 
+    /** The Backups section on Home: back up now, restore, open the folder, and the weekly backup switch. */
+    private void buildBackups(JPanel home) {
+        section(home, new Pixel.Heading("backups", 2), 26);
+        JLabel intro = Pixel.note("Your logs, badges, settings and sounds, zipped into the backups folder (the last " + Backup.KEEP + " are kept).");
+        intro.setForeground(Color.BLACK);
+        section(home, intro, 6);
+        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        row.setOpaque(false);
+        Pixel.Button now = new Pixel.Button("Back up now", false);
+        now.addActionListener(e -> {
+            saveSettings();
+            try {
+                java.io.File b = Backup.backupNow("");
+                log("*buries a bone* backup saved: backups\\" + b.getName());
+            } catch (Exception ex) {
+                log("*whimper* couldn't make a backup: " + ex.getMessage());
+            }
+        });
+        Pixel.Button restore = new Pixel.Button("Restore...", false);
+        restore.addActionListener(e -> restoreBackup());
+        Pixel.Button open = new Pixel.Button("Open folder", false);
+        open.addActionListener(e -> {
+            try {
+                if (!Backup.DIR.isDirectory()) Backup.DIR.mkdirs();
+                Desktop.getDesktop().open(Backup.DIR.getAbsoluteFile());
+            } catch (Exception ex) {
+                log("*tilts head* couldn't open the folder. It's at " + Backup.DIR.getAbsolutePath());
+            }
+        });
+        row.add(now);
+        row.add(Box.createHorizontalStrut(8));
+        row.add(restore);
+        row.add(Box.createHorizontalStrut(8));
+        row.add(open);
+        section(home, row, 10);
+        Pixel.Check weekly = new Pixel.Check("Back up every week by itself", !"false".equals(settings.getProperty("backup.weekly")));
+        weekly.addActionListener(e -> {
+            settings.setProperty("backup.weekly", String.valueOf(weekly.isSelected()));
+            saveSettings();
+        });
+        section(home, weekly, 6);
+    }
+
+    /** Picks a backup and puts it back (after backing up what's there now), then closes so it opens fresh. */
+    private void restoreBackup() {
+        JFileChooser pick = new JFileChooser(Backup.DIR.isDirectory() ? Backup.DIR.getAbsoluteFile() : new java.io.File(".").getAbsoluteFile());
+        pick.setDialogTitle("Pick a backup to restore");
+        pick.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("White Bag Pup backups (.zip)", "zip"));
+        if (pick.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION) return;
+        java.io.File zip = pick.getSelectedFile();
+        int ok = JOptionPane.showConfirmDialog(frame,
+                "Restore " + zip.getName() + "?\n\nWhat's there now is backed up first, so you can go back.\n"
+                        + "The pup closes afterwards: open it again to load the restored files.",
+                "Restore backup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (ok != JOptionPane.OK_OPTION) return;
+        stopSniffer();
+        try {
+            int n = Backup.restore(zip);
+            JOptionPane.showMessageDialog(frame, "Restored " + n + " files. The pup will close now: open it again.",
+                    "Restore backup", JOptionPane.INFORMATION_MESSAGE);
+            Runtime.getRuntime().halt(0); // skip the save-on-exit, so the restored logs stay as they were
+        } catch (Exception ex) {
+            log("*whimper* couldn't restore that backup: " + ex.getMessage() + ". Your files were backed up first (see the backups folder).");
+        }
+    }
+
     /** Posts the Collection tab's picture to the bag webhook. */
     private void shareCollection(byte[] png, String who) {
         String url = settings.getProperty("webhook.url", "");
         if (!DiscordWebhook.isValidUrl(url)) {
-            log("*tilts head* paste your webhook URL on the Home tab first, then I can share your collection.");
+            log("*tilts head* paste your webhook URL on the Webhooks tab first, then I can share your collection.");
             return;
         }
         String title = "\uD83D\uDCD6 " + (who.isEmpty() ? "My" : who + "'s") + " collection";
@@ -261,6 +416,22 @@ public class WhiteBagNotifier {
                 + DiscordWebhook.str(title) + ",\"color\":" + 0xFF9EBB + ",\"image\":{\"url\":\"attachment://collection.png\"}}]}";
         webhook.sendJson(url, json, java.util.Collections.singletonMap("collection.png", png), "collection");
         log("*proudly trots off* sharing your collection on Discord~");
+    }
+
+    private int leaderboardTick = 0;
+    private volatile String leaderboardProblem = null;
+
+    /** Sends each account's totals to the bot for the friends leaderboard (when joined and the recap link is a bot link). */
+    private void sendLeaderboard(boolean force) {
+        if (!"true".equals(settings.getProperty("leaderboard.join"))) return;
+        String u = settings.getProperty("recap.url", "");
+        for (Account a : accounts) {
+            if (a.key() == null) continue;
+            String problem = Leaderboard.send(u, a.key(), a::isMine, force);
+            if (problem != null && !problem.equals(leaderboardProblem)) log("*tilts head* friends leaderboard: " + problem + ".");
+            if (problem == null && force) log("*wags* sent your totals to the friends leaderboard!");
+            leaderboardProblem = problem;
+        }
     }
 
     /** Checks every minute whether a recap is due. */
@@ -276,6 +447,17 @@ public class WhiteBagNotifier {
                 for (Account a : accounts) checkBadges(a);
                 if (Recap.isDue(settings)) for (Account a : accounts) a.me.checkpointPlay();
                 boolean changed = Recap.tick(settings, (json, files, what) -> webhook.sendJson(u, json, files, what), this::log);
+                if (leaderboardTick++ % 10 == 0) sendLeaderboard(false);
+                if (Backup.weeklyDue(settings)) {
+                    try {
+                        java.io.File b = Backup.backupNow("weekly");
+                        log("*buries a bone* weekly backup saved: backups\\" + b.getName());
+                    } catch (Exception e) {
+                        // nothing to back up yet: try again next week
+                    }
+                    settings.setProperty("backup.last", String.valueOf(System.currentTimeMillis()));
+                    changed = true;
+                }
                 if (changed) SwingUtilities.invokeLater(this::saveSettings);
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -295,21 +477,73 @@ public class WhiteBagNotifier {
 
     // ---------------------------------------------------------------- startup
 
+    /** Backs up, downloads the new jar, and hands over to the script that swaps it in and restarts the pup. */
+    private void installUpdate() {
+        java.io.File jar = Updater.runningJar();
+        int ok = JOptionPane.showConfirmDialog(frame,
+                "Update to White Bag Pup " + updateTag + "?\n\nThe pup backs up your files, downloads the update from GitHub,\n"
+                        + "then closes and opens again on the new version (your old one is kept as " + jar.getName() + ".old).",
+                "Update", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (ok != JOptionPane.OK_OPTION) return;
+        updateButton.setEnabled(false);
+        updateButton.setText("Updating...");
+        log("*grabs the update* backing up and downloading " + updateTag + "...");
+        String url = updateJar;
+        Thread t = new Thread(() -> {
+            try {
+                saveSettingsLater();
+                try {
+                    Backup.backupNow("before-update");
+                } catch (java.io.IOException ignored) {
+                    // nothing to back up yet
+                }
+                java.io.File got = Updater.download(url, jar);
+                Updater.handOver(jar, got);
+                SwingUtilities.invokeLater(() -> {
+                    log("*wags* got it! Restarting on the new version...");
+                    stopSniffer();
+                    new Timer(800, ev -> System.exit(0)).start();
+                });
+            } catch (Exception ex) {
+                SwingUtilities.invokeLater(() -> {
+                    log("*whimper* the update didn't work: " + ex.getMessage() + ". Opening the download page instead.");
+                    updateButton.setEnabled(true);
+                    updateButton.setText("A new version is out! Get the update");
+                    updateJar = null;
+                    try {
+                        Desktop.getDesktop().browse(new java.net.URI(updateLink));
+                    } catch (Exception ignored) {
+                    }
+                });
+            }
+        }, "update");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private void saveSettingsLater() throws Exception {
+        SwingUtilities.invokeAndWait(this::saveSettings);
+    }
+
     /** Asks GitHub (once) whether there's a newer White Bag Pup, and shows a button if so. */
     private void checkForUpdate() {
         String repo = settings.getProperty("update.repo", UpdateCheck.DEFAULT_REPO);
         if (Boolean.parseBoolean(settings.getProperty("update.off", "false"))) return;
-        java.util.function.BiConsumer<String, String> found = (tag, page) -> SwingUtilities.invokeLater(() -> {
+        UpdateCheck.Found found = (tag, page, jar) -> SwingUtilities.invokeLater(() -> {
             updateLink = page;
-            log("*ears perk up* a new version of White Bag Pup is out! Press the button at the top of Home to get it.");
+            updateJar = jar;
+            updateTag = tag;
+            boolean auto = jar != null && Updater.runningJar() != null;
+            log("*ears perk up* White Bag Pup " + tag + " is out! Press the button at the top of Home to "
+                    + (auto ? "update (the pup backs up your files and restarts by itself)." : "get it."));
             if (updateButton != null) {
-                updateButton.setText("A new version is out! Get the update");
+                updateButton.setText(auto ? "White Bag Pup " + tag + " is out! Update now" : "A new version is out! Get the update");
                 updateButton.setVisible(true);
                 updateButton.revalidate();
             }
         });
         String fake = System.getProperty("whitebag.fakeUpdate"); // for testing the notice
-        if (fake != null) found.accept(fake, "https://github.com/");
+        if (fake != null) found.found(fake, "https://github.com/", System.getProperty("whitebag.fakeUpdateJar"));
         else UpdateCheck.check(repo, found, problem -> System.out.println("Update check: " + problem));
     }
 
@@ -422,6 +656,13 @@ public class WhiteBagNotifier {
         root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
         root.setBorder(new EmptyBorder(12, 20, 20, 20));
 
+        // what the pup is wearing (Wardrobe page)
+        Wardrobe.load(settings);
+        Wardrobe.save = (k, v) -> {
+            settings.setProperty(k, v);
+            saveSettings();
+            if (header != null) header.repaint();
+        };
         header = new Cute.Header();
         header.setAlignmentX(Component.LEFT_ALIGNMENT);
         header.setOnPet(() -> {
@@ -440,7 +681,7 @@ public class WhiteBagNotifier {
         pages = new CardLayout();
         sheet = new Pixel.Sheet(pages);
         sheet.setAlignmentX(Component.LEFT_ALIGNMENT);
-        tabNames = new String[]{"home", "loot", "fights", "me", "chat", "events", "puzzle"};
+        tabNames = new String[]{"home", "loot", "fights", "me", "chat", "events", "puzzle", "webhooks"};
         tabs = new Pixel.Tabs(tabNames, i -> showPage());
         // account switcher (only shown once a second game account turns up)
         accountBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -457,12 +698,21 @@ public class WhiteBagNotifier {
         home.setLayout(new BoxLayout(home, BoxLayout.Y_AXIS));
         home.setOpaque(false);
         sheet.add(home, "home");
+        // every Discord webhook in one place: bag posts, recaps and badges
+        JPanel hooks = new JPanel();
+        hooks.setLayout(new BoxLayout(hooks, BoxLayout.Y_AXIS));
+        hooks.setOpaque(false);
+        sheet.add(hooks, "webhooks");
         selected = addAccount(); // the first account's pages, ready before any game is seen
 
         // ---- update notice (hidden until GitHub has a newer release)
         updateButton = new Pixel.Button("", true);
         updateButton.setVisible(false);
         updateButton.addActionListener(e -> {
+            if (updateJar != null && Updater.runningJar() != null) {
+                installUpdate();
+                return;
+            }
             try {
                 Desktop.getDesktop().browse(new java.net.URI(updateLink));
             } catch (Exception ex) {
@@ -471,8 +721,14 @@ public class WhiteBagNotifier {
         });
         section(home, updateButton, 0);
 
+        // ---- pointer to the Webhooks tab
+        JLabel hookNote = Pixel.note("Discord webhooks (bag posts, recaps and badges) are on the Webhooks tab.");
+        hookNote.setForeground(Color.BLACK);
+        section(home, hookNote, 0);
+
         // ---- Discord
-        section(home, new Pixel.Heading("discord", 2), 0);
+        section(hooks, new Pixel.Heading("bag posts", 2), 0);
+        section(hooks, Pixel.note("Watched bags (and collections you share) are posted to this webhook."), 6);
         JPanel discord = new JPanel(new GridBagLayout());
         discord.setOpaque(false);
         GridBagConstraints c = new GridBagConstraints();
@@ -489,7 +745,7 @@ public class WhiteBagNotifier {
         pingRow.setOpaque(false);
         pingRow.add(pingField);
         pingRow.add(Box.createHorizontalStrut(10));
-        pingRow.add(Pixel.note("Your Discord user ID. Leave empty for no ping."));
+        pingRow.add(Pixel.note("Your Discord user ID (optional)."));
         c.gridx = 1; c.insets = new Insets(0, 0, 8, 0); discord.add(pingRow, c);
         JPanel discordButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         discordButtons.setOpaque(false);
@@ -517,8 +773,9 @@ public class WhiteBagNotifier {
         discordButtons.add(Box.createHorizontalStrut(8));
         discordButtons.add(pics);
         c.gridx = 1; c.gridy = 2; c.insets = new Insets(4, 0, 0, 0); discord.add(discordButtons, c);
-        section(home, discord, 12);
-        buildRecaps(home);
+        section(hooks, discord, 12);
+        buildRecaps(hooks);
+        buildBadgeHook(hooks);
 
         // ---- Bags to watch: an inventory grid of the real bag sprites
         section(home, new Pixel.Heading("bags to watch", 2), 26);
@@ -611,6 +868,8 @@ public class WhiteBagNotifier {
         controls.add(options);
         section(home, controls, 26);
 
+        buildBackups(home);
+
         // ---- Diary
         section(home, new Pixel.Heading("pup diary", 2), 26);
         logArea = new JTextArea(7, 50);
@@ -662,7 +921,7 @@ public class WhiteBagNotifier {
         } else {
             log("*tilts head* no background.png in " + new File("").getAbsolutePath() + ", so using the plain colour.");
         }
-        log("*wags tail* hi! paste your webhook URL, send a test post, then press Start watching.");
+        log("*wags tail* hi! paste your webhook URL on the Webhooks tab, send a test post, then press Start watching.");
         if (autoStartBox.isSelected()) startSniffer();
     }
 
@@ -868,14 +1127,14 @@ public class WhiteBagNotifier {
         Account a = new Account(accounts.size(), host);
         Runnable ui = () -> {
             a.buildPanels();
-            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.dungeonPage, a.killsPage, a.puzzlePage, a.badgesPage, a.eventsPage, a.famePage, a.tradesPage}) {
+            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.dungeonPage, a.killsPage, a.puzzlePage, a.badgesPage, a.wardrobePage, a.eventsPage, a.famePage, a.tradesPage}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
             }
             // related pages share a tab, with a switch along the top
             a.lootGroup = new GroupPage(new String[]{"Bag Log", "Stats", "Collection", "Dungeons"}, a.bagLog, a.lootPage, a.bookPage, a.dungeonPage);
             a.fightsGroup = new GroupPage(new String[]{"DPS", "Boss Kills"}, a.dpsPanel, a.killsPage);
             a.badgesPage.checkNow = () -> checkBadges(a); // opening Badges unlocks anything newly earned
-            a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage);
+            a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges", "Wardrobe"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage, a.wardrobePage);
             a.chatGroup = new GroupPage(new String[]{"Chat", "Trades"}, a.chatPanel, a.tradesPage);
             for (JComponent page : new JComponent[]{a.lootGroup, a.fightsGroup, a.meGroup, a.chatGroup}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE);
@@ -914,7 +1173,7 @@ public class WhiteBagNotifier {
     /** Shows the current tab for the selected account. */
     private void showPage() {
         String name = tabNames[tabs.selected()];
-        pages.show(sheet, name.equals("home") ? "home" : name + "@" + selected.index);
+        pages.show(sheet, name.equals("home") || name.equals("webhooks") ? name : name + "@" + selected.index);
         sheet.revalidate(); // the sheet is as tall as the page on show
         sheet.repaint();
     }

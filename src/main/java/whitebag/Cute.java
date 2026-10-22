@@ -409,19 +409,19 @@ final class Cute {
         /** Which sprite to show right now. */
         BufferedImage currentFrame() {
             long now = clock.getAsLong();
-            PixelPup.Hat hat = PixelPup.seasonalHat(java.time.Instant.ofEpochMilli(now).atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+            PixelPup.Hat hat = PixelPup.hatFor(java.time.Instant.ofEpochMilli(now).atZone(java.time.ZoneId.systemDefault()).toLocalDate());
             boolean wagFast = (now / 160) % 2 == 0, wagSlow = (now / 380) % 2 == 0;
             if (celebrateStart >= 0 && now - celebrateStart < CELEBRATE_MS)
-                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat);
+                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.wornOutfit);
             if (petStart >= 0 && now - petStart < PET_MS)
-                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat);
+                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.wornOutfit);
             if (!watching)
-                return PixelPup.frame(PixelPup.Face.CLOSED, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat);
+                return PixelPup.frame(PixelPup.Face.CLOSED, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat, PixelPup.wornOutfit);
             if (isSad())
-                return PixelPup.frame(PixelPup.Face.SAD, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat);
+                return PixelPup.frame(PixelPup.Face.SAD, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat, PixelPup.wornOutfit);
             boolean blink = now % 4300 < 140;
             return PixelPup.frame(blink ? PixelPup.Face.CLOSED : PixelPup.Face.OPEN, PixelPup.Ears.UP,
-                    wagSlow ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat);
+                    wagSlow ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.wornOutfit);
         }
 
         @Override

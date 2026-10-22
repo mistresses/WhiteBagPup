@@ -61,6 +61,7 @@ final class Account {
     KillsPage killsPage;
     PuzzlePage puzzlePage;
     BadgesPage badgesPage;
+    WardrobePage wardrobePage;
     /** The grouped tabs (Loot, Fights, Me, Chat), made by the main window. */
     GroupPage lootGroup, fightsGroup, meGroup, chatGroup;
     final ShattersPuzzle puzzle;
@@ -152,6 +153,7 @@ final class Account {
             host.badgesMaybe(this);
         };
         badgesPage = new BadgesPage(() -> key, this::isMine);
+        wardrobePage = new WardrobePage();
         killsPage = new KillsPage(d -> isMine(d.account));
         bookPage = new BookPage(e -> isMine(e.account),
                 r -> isMine(r.account));
