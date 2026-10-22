@@ -87,7 +87,7 @@ final class KillsPage extends MoreTabs.Page {
     private static volatile Set<String> eventNames;
     private static volatile boolean eventsFromFeed;
     private static volatile long builtAt;
-    private static final Map<String, Boolean> eventCache = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<String, String> eventCache = new java.util.concurrent.ConcurrentHashMap<>();
 
     private static Set<String> eventNames() {
         Set<String> e = eventNames;
@@ -116,24 +116,58 @@ final class KillsPage extends MoreTabs.Page {
 
     /** True if this fight was a realm event: the boss is on the event list (or its name contains one, in the realm). */
     static boolean isEvent(History.Dps d) {
+        return !eventOf(d).isEmpty();
+    }
+
+    /** The realm event this fight was part of (its name on the event list), or "" if it wasn't one. */
+    static String eventOf(History.Dps d) {
         String key = d.boss + "|" + d.map;
-        Boolean got = eventCache.get(key);
+        String got = eventCache.get(key);
         if (got != null) return got;
         Set<String> events = eventNames();
         String n = EventTracker.norm(d.boss);
         boolean realm = EventTracker.norm(d.map).contains("realm");
-        boolean yes = events.contains(n);
-        if (!yes && realm) {
+        String which = events.contains(n) ? n : "";
+        if (which.isEmpty() && realm) {
             for (String e : events) {
                 if (e.length() >= 6 && java.util.regex.Pattern.compile("(?<![\\p{L}\\p{N}])" + java.util.regex.Pattern.quote(e)
                         + "(?![\\p{L}\\p{N}])").matcher(n).find()) {
-                    yes = true;
+                    which = e;
                     break;
                 }
             }
         }
-        eventCache.put(key, yes);
-        return yes;
+        eventCache.put(key, which);
+        return which;
+    }
+
+    /**
+     * One entry per kill: a realm event made of several big enemies (a god and its tentacles, towers around a boss,
+     * or a boss that changes form) counts once. Parts of the same event within a few minutes are one kill, kept as
+     * the part named like the event itself.
+     */
+    static List<History.Dps> oneEach(List<History.Dps> kills) {
+        List<History.Dps> sorted = new ArrayList<>(kills);
+        sorted.sort((a, b) -> Long.compare(a.at, b.at));
+        List<History.Dps> out = new ArrayList<>();
+        Map<String, Integer> lastAt = new java.util.HashMap<>(); // account|event -> index in out
+        for (History.Dps d : sorted) {
+            String ev = eventOf(d);
+            if (ev.isEmpty()) {
+                out.add(d);
+                continue;
+            }
+            String k = d.account + "|" + ev;
+            Integer i = lastAt.get(k);
+            if (i != null && d.at - out.get(i).at <= 180) {
+                // another part of the same event: keep the main one (the part named like the event)
+                if (EventTracker.norm(d.boss).equals(ev) && !EventTracker.norm(out.get(i).boss).equals(ev)) out.set(i, d);
+                continue;
+            }
+            lastAt.put(k, out.size());
+            out.add(d);
+        }
+        return out;
     }
 
     @Override
@@ -149,6 +183,7 @@ final class KillsPage extends MoreTabs.Page {
             if (!d.killed) continue;
             if (mine == null || everyAccount || mine.test(d)) kills.add(d);
         }
+        kills = oneEach(kills);
         long now = System.currentTimeMillis() / 1000;
         long today = java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toEpochSecond();
         int total = 0, session = 0, day = 0, week = 0;

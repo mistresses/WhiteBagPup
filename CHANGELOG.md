@@ -8,6 +8,8 @@ Download the latest from [Releases](../../releases/latest).
 - Realm event and realm boss kills count on Boss Kills as soon as they die, instead of when you leave the realm
   (closing the game while still in the realm used to lose them). Events from the RealmStock list are recognised even
   if it loaded after the app started.
+- A realm event made of several big enemies (a god and its tentacles, a boss and its towers, a boss that changes
+  form) counts as one kill, not one per part. This fixes old kills in your log too.
 - **Puzzle log** on the Puzzle tab: how many practice puzzles you've solved (and how many perfectly), and how many
   in game.
 - **15 puppy badges**, with paw and bone medals: Good Pup, Very Good Pup, Best in Show (practice puzzles), Belly Rubs

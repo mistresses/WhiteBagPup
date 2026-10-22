@@ -192,6 +192,8 @@ public class DpsTracker {
         public final List<Row> rows;
         /** Already saved to the kill log when the boss died. */
         public boolean savedEarly;
+        /** When it died (its last hit), for kills saved straight away; 0 otherwise. */
+        public long endMs;
 
         Board(String title, int maxHp, double seconds, boolean killed, long total, List<Row> rows) {
             this.title = title;
@@ -696,6 +698,7 @@ public class DpsTracker {
         Board b = current.boardOf(f);
         if (b == null) return;
         f.savedEarly = true;
+        b.endMs = f.lastHitMs;
         try {
             c.accept(current, b);
         } catch (Exception e) {

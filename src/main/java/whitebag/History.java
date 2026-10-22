@@ -302,7 +302,7 @@ final class History {
                 DpsTracker.Row r = b.rows.get(i);
                 if (!r.you) continue;
                 Dps d = new Dps();
-                d.at = run.startMs / 1000;
+                d.at = (b.endMs > 0 ? b.endMs : run.startMs) / 1000;
                 d.account = account == null ? "" : account;
                 d.map = run.mapName;
                 d.boss = b.title;

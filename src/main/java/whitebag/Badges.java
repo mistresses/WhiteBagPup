@@ -269,8 +269,9 @@ final class Badges {
             if (st.map.isEmpty()) continue;
             for (long[] b : st.broken) s.brokeStreak = Math.max(s.brokeStreak, b[1]);
         }
-        for (History.Dps d : History.dps()) {
-            if (!mine.test(d.account) || !d.killed) continue;
+        List<History.Dps> myKills = new ArrayList<>();
+        for (History.Dps d : History.dps()) if (mine.test(d.account) && d.killed) myKills.add(d);
+        for (History.Dps d : KillsPage.oneEach(myKills)) {
             boolean event = KillsPage.isEvent(d);
             if (event) s.eventKills++;
             if (event || d.kind.isEmpty() || d.kind.equals("BOSS")) s.bossKills++;
