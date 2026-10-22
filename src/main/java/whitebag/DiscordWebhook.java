@@ -138,6 +138,7 @@ public class DiscordWebhook {
                 desc.append(PAW).append(" **").append(i.name).append("**");
                 if (!i.rarity.isEmpty()) desc.append("  `").append(i.rarity).append("`");
                 if (i.enchant != Enchant.NONE) desc.append("  ").append(i.enchant.label);
+                if (LootBook.isShiny(i.id)) desc.append("  \u2728 **Shiny**");
                 desc.append("\n");
             }
         }

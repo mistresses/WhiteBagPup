@@ -105,6 +105,7 @@ final class LootStats {
             case BOOSTED_GOLD: return BagType.GOLD;
             case BOOSTED_EGG: return BagType.EGG;
             case BOOSTED_BLUE: return BagType.BLUE;
+            case BOOSTED_CYAN: return BagType.CYAN;
             default: return t;
         }
     }

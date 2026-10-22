@@ -3,6 +3,19 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6
+
+- **Dungeons** page under Loot: every dungeon side by side (scroll sideways), with its difficulty, what drops the
+  portal, and the UT and ST items you can get there. Items you've collected are in colour with a heart; hover over
+  one to see if it's in your collection and when you first found it. Search by dungeon, enemy or item.
+- **Shiny only** in the Discord filter on the Home tab: only bags with a shiny item get posted, from every bag
+  colour (even ones not ticked under Bags to Watch).
+- Shiny items are marked "✨ Shiny" in bag posts.
+- **Cyan bags** are tracked too (shinies can drop in them): tick Cyan and Boosted Cyan under Bags to Watch, and
+  there's a Cyan box in the recap bag filter. Shiny only includes them.
+- **Sound boxes** under each bag in Bags to Watch: untick one to turn off the pup's built-in sound for that bag.
+  Your own sound file for it (in the sounds folder) still plays.
+
 ## 2.5
 
 - **Tidier tabs:** 14 tabs are now 7, on one row. Related pages share a tab, with a switch along the top:

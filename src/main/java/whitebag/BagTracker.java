@@ -61,6 +61,14 @@ public class BagTracker {
         this.listener = listener;
     }
 
+    /** Set while the Discord filter is "Shiny only": then shinies are posted from every bag colour. */
+    static volatile boolean shinyAnyBag;
+
+    private static boolean hasShiny(BagDrop drop) {
+        for (ItemInfo i : drop.items()) if (LootBook.isShiny(i.id)) return true;
+        return false;
+    }
+
     public void setWatched(Set<BagType> types) {
         watched = types.isEmpty() ? EnumSet.noneOf(BagType.class) : EnumSet.copyOf(types);
     }
@@ -132,6 +140,7 @@ public class BagTracker {
             case RED: return 50;
             case ORANGE: return 40;
             case GOLD: return 30;
+            case CYAN: return 25;
             case BLUE: return 20;
             case EGG: return 10;
             default: return 0;
@@ -187,7 +196,8 @@ public class BagTracker {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (!watched.contains(drop.type)) return; // only ping for the bags you picked
+        // only ping for the bags you picked; with "Shiny only", a bag of any colour with a shiny item counts too
+        if (!watched.contains(drop.type) && !(shinyAnyBag && hasShiny(drop))) return;
         try {
             listener.bagDropped(drop);
         } catch (Exception e) {

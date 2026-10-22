@@ -488,6 +488,8 @@ final class Cute {
             case BOOSTED_EGG: return new Color(0xFFD1E1);
             case BLUE:
             case BOOSTED_BLUE: return new Color(0x8EC5FF);
+            case CYAN:
+            case BOOSTED_CYAN: return new Color(0x8FE8F2);
             default: return Color.WHITE;
         }
     }

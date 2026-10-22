@@ -36,7 +36,7 @@ public class BagDrop {
         this.objectId = objectId;
         this.type = type;
         this.bagName = type.displayName;
-        this.bagObjectType = type.objectType;
+        this.bagObjectType = type.spriteType();
         this.emoji = type.emoji;
         this.color = type.color;
         this.mapName = mapName;

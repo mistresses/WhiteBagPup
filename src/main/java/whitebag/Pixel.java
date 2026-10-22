@@ -527,7 +527,7 @@ final class Pixel {
             if (on) frame(g, 0, 3, s, s, INK, INK, 2);
             frame(g, 0, 0, s, s, on ? PINK_SOFT : (over ? new Color(0xF7F3FB) : SHEET), on ? INK : (over ? INK : LINE), on ? 3 : 2);
             if (sprite == null) {
-                BufferedImage raw = LootImage.sprites.sprite(type.objectType);
+                BufferedImage raw = LootImage.sprites.sprite(type.spriteType());
                 if (raw != null) sprite = LootImage.pixelIcon(raw, 40);
             }
             if (sprite != null) {

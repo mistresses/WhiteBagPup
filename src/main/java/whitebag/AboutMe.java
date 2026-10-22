@@ -685,7 +685,7 @@ final class AboutMe {
     }
 
     /** Pet ability names by id (ids as used by Puppy). */
-    private static String abilityName(int type, int slot) {
+    static String abilityName(int type, int slot) {
         switch (type) {
             case 402: return "Attack Close";
             case 404: return "Attack Mid";
@@ -700,7 +700,7 @@ final class AboutMe {
         }
     }
 
-    private static String rarity(int r) {
+    static String rarity(int r) {
         switch (r) {
             case 0: return "Common";
             case 1: return "Uncommon";

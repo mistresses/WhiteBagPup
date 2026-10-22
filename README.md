@@ -57,7 +57,7 @@ The tabs are **Home**, **Loot** (Bag Log, Stats, Collection), **Fights** (DPS, B
 Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
 
 - **Bag posts**: the bag, every item with its tier (UT, ST, T12...) and rarity (Uncommon to Divine), the dungeon,
-  your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity.
+  your character and the time. Pick which bag colours to watch, and only post bags with an item of a certain rarity (or only bags with a shiny).
   Optionally add a picture of your game window (**Game pictures: On**); only the game itself is pictured,
   never other windows in front of it. Overflow bags are merged into one post.
 - **Bag Log**: every bag it barked about this session.
@@ -73,6 +73,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
 - **Collection**: every UT and ST item that can drop (and every shiny version), by dungeon, greyed out until you've
   looted it. Share it on Discord,
   and bag posts say when an item is new to your collection.
+- **Dungeons**: every dungeon side by side, with its difficulty, what drops the portal and the UT/ST items there. Hover over an item to see if it's in your collection.
 - **Badges**: pup achievements that unlock as you play, announced on Discord.
 - **Puzzle**: a solver for The Shatters' Puzzle Room: the towers to shoot to turn them all green.
 - **Trades**: every trade you finish, who with, and what you gave and got.
@@ -88,9 +89,11 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
 
 ## Sounds
 
+Each bag has its own built-in squeak. To turn one off, untick the Sound box under that bag in Bags to Watch.
+
 Put `.wav` files in the `sounds` folder next to the app (MP3 doesn't work, convert it first):
 
-- Bags: `white.wav`, `red.wav`, `orange.wav`, `gold.wav`, `egg.wav`, `blue.wav` (and `boosted-white.wav` and so on).
+- Bags: `white.wav`, `red.wav`, `orange.wav`, `gold.wav`, `egg.wav`, `blue.wav`, `cyan.wav` (and `boosted-white.wav` and so on).
 - Events: `event.wav`, `key-pop.wav`, `realm-closed.wav`, or one named after a single event, like `cube-god.wav`.
 
 ## Files it saves

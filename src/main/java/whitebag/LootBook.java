@@ -286,6 +286,11 @@ final class LootBook {
         return out;
     }
 
+    /** The collection item with this name (as the wiki writes it), or null. */
+    static synchronized Item byName(String name) {
+        return items().get(norm(name));
+    }
+
     private static Map<String, Item> items() {
         load();
         return items;

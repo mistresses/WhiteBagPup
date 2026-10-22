@@ -515,10 +515,10 @@ public class WhiteBagNotifier {
 
         // ---- Bags to watch: an inventory grid of the real bag sprites
         section(home, new Pixel.Heading("bags to watch", 2), 26);
-        JPanel grid = new JPanel(new GridLayout(2, 6, 8, 8));
+        JPanel grid = new JPanel(new GridLayout(2, 7, 8, 8));
         grid.setOpaque(false);
-        BagType[] order = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE,
-                BagType.BOOSTED_WHITE, BagType.BOOSTED_RED, BagType.BOOSTED_ORANGE, BagType.BOOSTED_GOLD, BagType.BOOSTED_EGG, BagType.BOOSTED_BLUE};
+        BagType[] order = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.CYAN, BagType.BLUE,
+                BagType.BOOSTED_WHITE, BagType.BOOSTED_RED, BagType.BOOSTED_ORANGE, BagType.BOOSTED_GOLD, BagType.BOOSTED_EGG, BagType.BOOSTED_CYAN, BagType.BOOSTED_BLUE};
         for (BagType type : order) {
             boolean on = Boolean.parseBoolean(settings.getProperty(type.settingKey(), String.valueOf(type.defaultOn)));
             Pixel.BagSlot slot = new Pixel.BagSlot(type, on);
@@ -528,7 +528,27 @@ public class WhiteBagNotifier {
                 if (slot.isSelected()) Squeak.play(type); // preview this bag's sound
             });
             bagBoxes.put(type, slot);
-            grid.add(slot);
+            // a box under each bag to turn its built-in sound off
+            boolean soundOn = Boolean.parseBoolean(settings.getProperty(type.soundKey(), "true"));
+            if (!soundOn) Squeak.muted.add(type);
+            Pixel.Check sound = new Pixel.Check("Sound", soundOn);
+            sound.setFont(Cute.font(Font.PLAIN, 11));
+            sound.setBorder(new EmptyBorder(2, 28, 2, 2));
+            sound.setToolTipText("Play the pup's " + type.displayName + " bag sound (your own sound file still plays if it's off)");
+            sound.addActionListener(e -> {
+                if (sound.isSelected()) Squeak.muted.remove(type); else Squeak.muted.add(type);
+                settings.setProperty(type.soundKey(), String.valueOf(sound.isSelected()));
+                saveSettings();
+                if (sound.isSelected()) Squeak.playDefault(type);
+            });
+            JPanel cell = new JPanel(new BorderLayout(0, 2));
+            cell.setOpaque(false);
+            JPanel slotWrap = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            slotWrap.setOpaque(false);
+            slotWrap.add(slot);
+            cell.add(slotWrap, BorderLayout.CENTER);
+            cell.add(sound, BorderLayout.SOUTH);
+            grid.add(cell);
         }
         JPanel gridWrap = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         gridWrap.setOpaque(false);
@@ -545,10 +565,13 @@ public class WhiteBagNotifier {
         JPanel rarityRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         rarityRow.setOpaque(false);
         int minR = minRarity();
-        rarityRow.add(new LogTabs.Segments(new String[]{"Any", "Uncommon", "Rare", "Legendary", "Divine"}, minR, i -> {
+        BagTracker.shinyAnyBag = minR == SHINY_ONLY;
+        rarityRow.add(new LogTabs.Segments(new String[]{"Any", "Uncommon", "Rare", "Legendary", "Divine", "Shiny only"}, minR, i -> {
             settings.setProperty("discord.minRarity", String.valueOf(i));
+            BagTracker.shinyAnyBag = i == SHINY_ONLY;
             saveSettings();
             log(i == 0 ? "*wags* every watched bag goes to Discord again."
+                    : i == SHINY_ONLY ? "*sparkly eyes* only bags with a shiny item go to Discord now, from every bag colour (the rest still show here)."
                     : "*sniffs carefully* only bags with a " + Enchant.values()[i].label + " or better item go to Discord now (the rest still show here).");
         }));
         section(home, rarityRow, 4);
@@ -781,9 +804,12 @@ public class WhiteBagNotifier {
         String url = settings.getProperty("webhook.url", "");
         int min = minRarity();
         boolean rareEnough = min == 0;
-        for (ItemInfo it : drop.items()) if (it.enchant.ordinal() >= min && it.enchant != Enchant.NONE) rareEnough = true;
+        for (ItemInfo it : drop.items()) {
+            if (min == SHINY_ONLY ? LootBook.isShiny(it.id) : it.enchant.ordinal() >= min && it.enchant != Enchant.NONE) rareEnough = true;
+        }
         if (!rareEnough && DiscordWebhook.isValidUrl(url)) {
-            log("*sniffs* nothing " + Enchant.values()[min].label + " or better in it, so it stays off Discord.");
+            log(min == SHINY_ONLY ? "*sniffs* no shiny item in it, so it stays off Discord."
+                    : "*sniffs* nothing " + Enchant.values()[min].label + " or better in it, so it stays off Discord.");
         }
         if (rareEnough && DiscordWebhook.isValidUrl(url)) {
             if (shotBox != null && shotBox.isSelected()) {
@@ -798,10 +824,13 @@ public class WhiteBagNotifier {
         checkBadges(account);
     }
 
+    /** The rarity filter's last choice: only bags with a shiny item. */
+    private static final int SHINY_ONLY = 5;
+
     private int minRarity() {
         try {
             int v = Integer.parseInt(settings.getProperty("discord.minRarity", "0"));
-            return v >= 0 && v <= 4 ? v : 0;
+            return v >= 0 && v <= SHINY_ONLY ? v : 0;
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -832,11 +861,11 @@ public class WhiteBagNotifier {
         Account a = new Account(accounts.size(), host);
         Runnable ui = () -> {
             a.buildPanels();
-            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.killsPage, a.puzzlePage, a.badgesPage, a.eventsPage, a.famePage, a.tradesPage}) {
+            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.dungeonPage, a.killsPage, a.puzzlePage, a.badgesPage, a.eventsPage, a.famePage, a.tradesPage}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
             }
             // related pages share a tab, with a switch along the top
-            a.lootGroup = new GroupPage(new String[]{"Bag Log", "Stats", "Collection"}, a.bagLog, a.lootPage, a.bookPage);
+            a.lootGroup = new GroupPage(new String[]{"Bag Log", "Stats", "Collection", "Dungeons"}, a.bagLog, a.lootPage, a.bookPage, a.dungeonPage);
             a.fightsGroup = new GroupPage(new String[]{"DPS", "Boss Kills"}, a.dpsPanel, a.killsPage);
             a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage);
             a.chatGroup = new GroupPage(new String[]{"Chat", "Trades"}, a.chatPanel, a.tradesPage);

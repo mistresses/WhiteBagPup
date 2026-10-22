@@ -192,7 +192,7 @@ final class Recap {
         Map<String, byte[]> files = new LinkedHashMap<>();
     }
 
-    static final BagType[] COLOURS = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE};
+    static final BagType[] COLOURS = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE, BagType.CYAN};
 
     /** Which bag colours go in the recap (setting recap.bags); White, Red and Orange unless changed. */
     static Set<BagType> bagFilter(Properties s) {

@@ -15,6 +15,8 @@ final class Squeak {
     private static final Random RANDOM = new Random();
     /** Turned off from the Home page. */
     static volatile boolean enabled = true;
+    /** Bags whose built-in sound is turned off (the boxes under the bags on Home). Your own sound file still plays. */
+    static final java.util.Set<BagType> muted = java.util.Collections.synchronizedSet(java.util.EnumSet.noneOf(BagType.class));
 
     private Squeak() {
     }
@@ -40,6 +42,13 @@ final class Squeak {
         }
         java.io.File custom = customSound(type);
         if (custom != null && playFile(custom)) return;
+        if (muted.contains(type)) return;
+        playAsync(bagSound(type), true);
+    }
+
+    /** The built-in sound for this bag, even if it's turned off (to preview it). */
+    static void playDefault(BagType type) {
+        if (!enabled) return;
         playAsync(bagSound(type), true);
     }
 
@@ -124,9 +133,9 @@ final class Squeak {
             }
             String text = "Put your own bag sounds in this folder and the pup plays them instead of its squeaks.\r\n\r\n"
                     + "Name each file after the bag colour:\r\n"
-                    + "  white.wav, red.wav, orange.wav, gold.wav, egg.wav, blue.wav\r\n\r\n"
+                    + "  white.wav, red.wav, orange.wav, gold.wav, egg.wav, blue.wav, cyan.wav\r\n\r\n"
                     + "Boosted bags use the same sound, unless you add one just for them:\r\n"
-                    + "  boosted-white.wav, boosted-red.wav, boosted-orange.wav, boosted-gold.wav, boosted-egg.wav, boosted-blue.wav\r\n\r\n"
+                    + "  boosted-white.wav, boosted-red.wav, boosted-orange.wav, boosted-gold.wav, boosted-egg.wav, boosted-blue.wav, boosted-cyan.wav\r\n\r\n"
                     + "Events tab: event.wav for realm events, key-pop.wav for key pops, realm-closed.wav for closing realms,\r\n"
                     + "or one file per event or dungeon named after it, like cube-god.wav or the-shatters.wav.\r\n\r\n"
                     + "Use .wav files (.aiff and .au work too). MP3 doesn't work, so convert it to .wav first,\r\n"

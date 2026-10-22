@@ -226,7 +226,7 @@ public final class LootImage {
         int y = PAD + 22;
         for (int n = 0; n < bags.size(); n++) {
             RecapBag b = bags.get(n);
-            BufferedImage bagIcon = pixelIcon(sprites.sprite(b.bag.objectType), 36);
+            BufferedImage bagIcon = pixelIcon(sprites.sprite(b.bag.spriteType()), 36);
             int tx = PAD;
             if (bagIcon != null) {
                 g.drawImage(bagIcon, PAD, y + (BAG_HEAD - 8 - bagIcon.getHeight()) / 2, null);

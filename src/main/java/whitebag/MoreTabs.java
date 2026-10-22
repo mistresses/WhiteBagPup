@@ -181,7 +181,7 @@ final class MoreTabs {
     // ================================================================== Loot stats
 
     static class LootPage extends Page {
-        private static final BagType[] COLOURS = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE};
+        private static final BagType[] COLOURS = {BagType.WHITE, BagType.RED, BagType.ORANGE, BagType.GOLD, BagType.EGG, BagType.BLUE, BagType.CYAN};
         /** Which bags belong to this page's account (null = every bag). */
         private final java.util.function.Predicate<LootStats.Entry> mine;
         private final java.util.function.Predicate<RunLog.Run> myRuns;

@@ -57,6 +57,7 @@ final class Account {
     MoreTabs.VaultPage vaultPage;
     MoreTabs.LootPage lootPage;
     BookPage bookPage;
+    DungeonPage dungeonPage;
     KillsPage killsPage;
     PuzzlePage puzzlePage;
     BadgesPage badgesPage;
@@ -90,6 +91,7 @@ final class Account {
             LootStats.add(d, key);
             if (lootPage != null) lootPage.changed();
             if (bookPage != null) bookPage.changed();
+            if (dungeonPage != null) dungeonPage.changed();
         };
         events = new EventTracker(e -> host.event(this, e), () -> {
             if (eventsPage != null) eventsPage.changed();
@@ -109,6 +111,7 @@ final class Account {
             }
             if (lootPage != null) lootPage.changed();
             if (bookPage != null) bookPage.changed();
+            if (dungeonPage != null) dungeonPage.changed();
         });
         puzzle = new ShattersPuzzle(green -> {
             if (puzzlePage != null) puzzlePage.boardSeen(green);
@@ -148,6 +151,7 @@ final class Account {
         bookPage = new BookPage(e -> isMine(e.account),
                 r -> isMine(r.account));
         bookPage.who = () -> key == null ? "" : History.nameOf(key);
+        dungeonPage = new DungeonPage(e -> isMine(e.account));
         lootPage = new MoreTabs.LootPage(e -> isMine(e.account),
                 r -> isMine(r.account));
     }
@@ -162,6 +166,7 @@ final class Account {
     /** Redraws the pages that show items (after the game files are read). */
     void refreshPages() {
         for (MoreTabs.Page p : new MoreTabs.Page[]{lootPage, bookPage, killsPage, tradesPage, vaultPage, badgesPage}) if (p != null) p.changed();
+        if (dungeonPage != null) dungeonPage.changed();
         if (aboutPanel != null) aboutPanel.changed();
     }
 

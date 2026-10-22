@@ -15,7 +15,10 @@ public enum BagType {
     EGG(1288, "Egg Basket", "🥚", 0xF8BBD0, false),
     BOOSTED_EGG(1723, "Boosted Egg Basket", "🥚", 0xF8BBD0, false),
     BLUE(1291, "Blue", "🔵", 0x1E88E5, false),
-    BOOSTED_BLUE(1726, "Boosted Blue", "🔵", 0x1E88E5, false);
+    BOOSTED_BLUE(1726, "Boosted Blue", "🔵", 0x1E88E5, false),
+    // the cyan bag (RealmShark calls it "Teal")
+    CYAN(1289, "Cyan", "🩵", 0x26C6DA, false),
+    BOOSTED_CYAN(1725, "Boosted Cyan", "🩵", 0x26C6DA, false);
 
     public final int objectType;
     public final String displayName;
@@ -35,8 +38,18 @@ public enum BagType {
         return "notify." + name().toLowerCase();
     }
 
+    /** Setting for whether this bag's built-in sound plays. */
+    public String soundKey() {
+        return "sound." + name().toLowerCase();
+    }
+
     public static BagType byObjectType(int objectType) {
         for (BagType b : values()) if (b.objectType == objectType) return b;
         return null;
+    }
+
+    /** The game object to draw this bag with. */
+    public int spriteType() {
+        return objectType;
     }
 }
