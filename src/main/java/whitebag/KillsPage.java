@@ -142,29 +142,45 @@ final class KillsPage extends MoreTabs.Page {
     }
 
     /**
-     * One entry per kill: a realm event made of several big enemies (a god and its tentacles, towers around a boss,
-     * or a boss that changes form) counts once. Parts of the same event within a few minutes are one kill, kept as
-     * the part named like the event itself.
+     * One entry per kill. The boss itself always counts (every Skeletal Centipede you kill is a kill). The extra parts
+     * of an event (a god's tentacles, the towers around a boss: big enemies named after the event) only count when the
+     * main boss wasn't killed around the same time, and then once per few minutes, so one event isn't counted several
+     * times.
      */
     static List<History.Dps> oneEach(List<History.Dps> kills) {
         List<History.Dps> sorted = new ArrayList<>(kills);
         sorted.sort((a, b) -> Long.compare(a.at, b.at));
+        // when each event's main boss died, per account
+        Map<String, List<Long>> mains = new java.util.HashMap<>();
+        for (History.Dps d : sorted) {
+            String ev = eventOf(d);
+            if (!ev.isEmpty() && EventTracker.norm(d.boss).equals(ev)) mains.computeIfAbsent(d.account + "|" + ev, k -> new ArrayList<>()).add(d.at);
+        }
         List<History.Dps> out = new ArrayList<>();
-        Map<String, Integer> lastAt = new java.util.HashMap<>(); // account|event -> index in out
+        Map<String, Long> lastPart = new java.util.HashMap<>(), lastMain = new java.util.HashMap<>();
         for (History.Dps d : sorted) {
             String ev = eventOf(d);
             if (ev.isEmpty()) {
+                out.add(d); // not a realm event
+                continue;
+            }
+            if (EventTracker.norm(d.boss).equals(ev)) {
+                // the event's boss itself. Several of the same dying within seconds (like the Pentaract's towers) are
+                // one event; kills saved before 2.6 all carry the time you entered the realm, so those always count.
+                String k = d.account + "|" + ev;
+                Long prev = lastMain.get(k);
+                if (prev != null && d.at > prev && d.at - prev <= 15) continue;
+                lastMain.put(k, d.at);
                 out.add(d);
                 continue;
             }
             String k = d.account + "|" + ev;
-            Integer i = lastAt.get(k);
-            if (i != null && d.at - out.get(i).at <= 180) {
-                // another part of the same event: keep the main one (the part named like the event)
-                if (EventTracker.norm(d.boss).equals(ev) && !EventTracker.norm(out.get(i).boss).equals(ev)) out.set(i, d);
-                continue;
-            }
-            lastAt.put(k, out.size());
+            boolean mainNear = false;
+            for (long t : mains.getOrDefault(k, java.util.Collections.emptyList())) if (Math.abs(t - d.at) <= 180) { mainNear = true; break; }
+            if (mainNear) continue; // a part of an event whose boss is already counted
+            Long prev = lastPart.get(k);
+            if (prev != null && d.at - prev <= 180) continue; // another part of the same event
+            lastPart.put(k, d.at);
             out.add(d);
         }
         return out;

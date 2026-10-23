@@ -345,7 +345,7 @@ public class MeTracker {
     }
 
     private void save(FameVisit v) {
-        History.addFame(accountId, me == null ? "" : me.s(StatType.NAME_STAT), me == null ? "" : AboutMe.objectName(me.objectType, ""), v.area, v.startMs, v.endMs, v.gained());
+        History.addFame(accountId, me == null ? "" : DpsTracker.cleanName(me.s(StatType.NAME_STAT)), me == null ? "" : AboutMe.objectName(me.objectType, ""), v.area, v.startMs, v.endMs, v.gained());
     }
 
     /** {fame gained, milliseconds since first seen} for the current character this session, or null. */

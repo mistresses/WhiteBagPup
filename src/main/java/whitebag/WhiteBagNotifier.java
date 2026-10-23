@@ -72,6 +72,10 @@ public class WhiteBagNotifier {
     private Pixel.Button updateButton;
     private volatile String updateLink = "";
     private volatile String updateJar = null, updateTag = "";
+    /** An update downloaded in the background, put in place when the pup closes (or on Restart now). */
+    private volatile java.io.File pendingUpdate = null;
+    private volatile String pendingTag = null, downloadingTag = null;
+    private volatile boolean handedOver = false;
     private Pixel.Button startButton;
     private Pixel.Status status;
     private JLabel watchingLabel;
@@ -379,6 +383,12 @@ public class WhiteBagNotifier {
             saveSettings();
         });
         section(home, weekly, 6);
+        Pixel.Check autoUpdate = new Pixel.Check("Install updates by itself (when the pup closes)", !"false".equals(settings.getProperty("update.auto")));
+        autoUpdate.addActionListener(e -> {
+            settings.setProperty("update.auto", String.valueOf(autoUpdate.isSelected()));
+            saveSettings();
+        });
+        section(home, autoUpdate, 2);
     }
 
     /** Picks a backup and puts it back (after backing up what's there now), then closes so it opens fresh. */
@@ -448,6 +458,7 @@ public class WhiteBagNotifier {
                 if (Recap.isDue(settings)) for (Account a : accounts) a.me.checkpointPlay();
                 boolean changed = Recap.tick(settings, (json, files, what) -> webhook.sendJson(u, json, files, what), this::log);
                 if (leaderboardTick++ % 10 == 0) sendLeaderboard(false);
+                if (leaderboardTick % 360 == 0) SwingUtilities.invokeLater(this::checkForUpdate); // every 6 hours
                 if (Backup.weeklyDue(settings)) {
                     try {
                         java.io.File b = Backup.backupNow("weekly");
@@ -472,14 +483,88 @@ public class WhiteBagNotifier {
                 } catch (Throwable ignored) {
                 }
             }
+            installPendingOnExit(); // a downloaded update goes in now, ready for next time
         }, "save-on-exit"));
     }
 
     // ---------------------------------------------------------------- startup
 
+    /**
+     * Updates by itself: backs up, downloads the new version in the background, and puts it in place when the pup
+     * closes (so it opens on the new version next time). The button at the top of Home restarts onto it straight away.
+     */
+    private void downloadInBackground(String tag, String url) {
+        if (tag.equals(pendingTag) || tag.equals(downloadingTag)) return;
+        java.io.File jar = Updater.runningJar();
+        if (jar == null) return;
+        downloadingTag = tag;
+        Thread t = new Thread(() -> {
+            try {
+                try {
+                    Backup.backupNow("before-update");
+                } catch (java.io.IOException ignored) {
+                    // nothing to back up yet
+                }
+                java.io.File got = Updater.download(url, jar);
+                pendingUpdate = got;
+                pendingTag = tag;
+                SwingUtilities.invokeLater(() -> {
+                    log("*wags* White Bag Pup " + tag + " is downloaded! It installs by itself next time you close the pup "
+                            + "(or press the button at the top of Home to restart onto it now).");
+                    if (updateButton != null) {
+                        updateButton.setText("White Bag Pup " + tag + " is ready! Restart to update");
+                        updateButton.setEnabled(true);
+                        updateButton.setVisible(true);
+                        updateButton.revalidate();
+                    }
+                });
+            } catch (Exception ex) {
+                SwingUtilities.invokeLater(() -> {
+                    log("*whimper* couldn't download White Bag Pup " + tag + " by itself: " + ex.getMessage() + ". Press the button at the top of Home to try again.");
+                    if (updateButton != null) {
+                        updateButton.setText("White Bag Pup " + tag + " is out! Update now");
+                        updateButton.setVisible(true);
+                        updateButton.revalidate();
+                    }
+                });
+            } finally {
+                downloadingTag = null;
+            }
+        }, "update-download");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    /** When the pup closes with an update waiting, put it in place for next time. */
+    private void installPendingOnExit() {
+        java.io.File jar = Updater.runningJar();
+        if (pendingUpdate == null || handedOver || jar == null || !pendingUpdate.isFile()) return;
+        try {
+            handedOver = true;
+            Updater.handOver(jar, pendingUpdate, false);
+        } catch (Exception e) {
+            System.out.println("Couldn't install the update: " + e.getMessage());
+        }
+    }
+
     /** Backs up, downloads the new jar, and hands over to the script that swaps it in and restarts the pup. */
     private void installUpdate() {
         java.io.File jar = Updater.runningJar();
+        if (pendingUpdate != null && pendingUpdate.isFile() && jar != null) {
+            // already downloaded: just restart onto it
+            try {
+                saveSettings();
+                handedOver = true;
+                Updater.handOver(jar, pendingUpdate);
+                log("*wags* restarting on White Bag Pup " + pendingTag + "...");
+                stopSniffer();
+                new Timer(800, ev -> System.exit(0)).start();
+            } catch (Exception ex) {
+                handedOver = false;
+                log("*whimper* couldn't restart onto the update: " + ex.getMessage());
+            }
+            return;
+        }
         int ok = JOptionPane.showConfirmDialog(frame,
                 "Update to White Bag Pup " + updateTag + "?\n\nThe pup backs up your files, downloads the update from GitHub,\n"
                         + "then closes and opens again on the new version (your old one is kept as " + jar.getName() + ".old).",
@@ -530,10 +615,15 @@ public class WhiteBagNotifier {
         String repo = settings.getProperty("update.repo", UpdateCheck.DEFAULT_REPO);
         if (Boolean.parseBoolean(settings.getProperty("update.off", "false"))) return;
         UpdateCheck.Found found = (tag, page, jar) -> SwingUtilities.invokeLater(() -> {
+            if (tag.equals(updateTag) || tag.equals(pendingTag)) return; // already told (the check repeats every 6 hours)
             updateLink = page;
             updateJar = jar;
             updateTag = tag;
             boolean auto = jar != null && Updater.runningJar() != null;
+            if (auto && !"false".equals(settings.getProperty("update.auto"))) {
+                downloadInBackground(tag, jar);
+                return;
+            }
             log("*ears perk up* White Bag Pup " + tag + " is out! Press the button at the top of Home to "
                     + (auto ? "update (the pup backs up your files and restarts by itself)." : "get it."));
             if (updateButton != null) {

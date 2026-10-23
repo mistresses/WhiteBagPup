@@ -83,7 +83,7 @@ public class ChatLog {
         for (ObjectData o : p.newObjects) {
             if (o.status == null || o.status.objectId != myId || o.status.stats == null) continue;
             for (StatData s : o.status.stats) {
-                if (s.statTypeNum == NAME_STAT && s.stringStatValue != null && !s.stringStatValue.isEmpty()) myName = s.stringStatValue;
+                if (s.statTypeNum == NAME_STAT && s.stringStatValue != null && !s.stringStatValue.isEmpty()) myName = DpsTracker.cleanName(s.stringStatValue);
             }
         }
     }

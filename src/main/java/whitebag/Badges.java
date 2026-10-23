@@ -24,7 +24,9 @@ final class Badges {
     }
 
     enum Tier {
-        BRONZE(0xCD8B5A), SILVER(0x9FA8B8), GOLD(0xE8B630), PINK(0xFF6FA8);
+        BRONZE(0xCD8B5A), SILVER(0x9FA8B8), GOLD(0xE8B630), PINK(0xFF6FA8),
+        /** The hardest badges: drawn with a rainbow medal. */
+        PRISMATIC(0x9B5CFF);
         final Color color;
 
         Tier(int rgb) {
@@ -39,6 +41,7 @@ final class Badges {
         long fame, playSeconds, collection, completedDungeons, trades;
         long puzzleSolved, puzzlePerfect, practicePerfect, practiceSolved;
         long pets, bags, shinies, busiestDay, nightRuns, dungeonsVisited, playDays, mostWhitesOneRun;
+        long mostWhitesOneDay, topDamageTotal;
         String mostRunDungeon = "";
     }
 
@@ -75,8 +78,6 @@ final class Badges {
             new Badge("runs100", "Regular", "Finish 100 dungeon runs", "R", Tier.SILVER, 100, s -> s.runs),
             new Badge("runs500", "Dungeon Dweller", "Finish 500 dungeon runs", "R", Tier.GOLD, 500, s -> s.runs),
             new Badge("devoted", "Devoted", "Run the same dungeon 100 times", "♥", Tier.GOLD, 100, s -> s.mostRunsOneDungeon),
-            new Badge("streak25", "Never Give Up", "End a 25-run dry streak with a white", "S", Tier.SILVER, 25, s -> s.brokeStreak),
-            new Badge("streak50", "Survivor", "End a 50-run dry streak with a white", "S", Tier.PINK, 50, s -> s.brokeStreak),
             new Badge("boss50", "Boss Hunter", "Help kill 50 bosses", "B", Tier.BRONZE, 50, s -> s.bossKills),
             new Badge("boss500", "Boss Slayer", "Help kill 500 bosses", "B", Tier.GOLD, 500, s -> s.bossKills),
             new Badge("topdog", "Top Dog", "Do the most damage in a group 25 times", "1", Tier.SILVER, 25, s -> s.topDamage),
@@ -114,7 +115,6 @@ final class Badges {
             new Badge("white500", "Ice Age", "Loot 500 white bags", "W", Tier.PINK, 500, s -> s.whites),
             new Badge("jackpot", "Jackpot", "Get three white bags in one run", "3", Tier.PINK, 3, s -> s.mostWhitesOneRun),
             new Badge("blessed", "Blessed", "Loot 10 Divine items", "D", Tier.PINK, 10, s -> s.divines),
-            new Badge("unbreakable", "Unbreakable", "End a 100-run dry streak with a white", "S", Tier.PINK, 100, s -> s.brokeStreak),
             new Badge("dungeonmaster", "Dungeon Master", "Finish 1,000 dungeon runs", "R", Tier.PINK, 1000, s -> s.runs),
             new Badge("obsessed", "Obsessed", "Run the same dungeon 500 times", "♥", Tier.PINK, 500, s -> s.mostRunsOneDungeon),
             new Badge("traveller", "World Traveller", "Run 60 different dungeons", "paw", Tier.PINK, 60, s -> s.dungeonsVisited),
@@ -130,7 +130,32 @@ final class Badges {
             new Badge("puzzlemaster", "Puzzle Master", "Solve the Shatters puzzle in the fewest shots 10 times", "P", Tier.PINK, 10, s -> s.puzzlePerfect),
             new Badge("puzzleaddict", "Puzzle Addict", "Solve 500 practice puzzles", "paw", Tier.PINK, 500, s -> s.practiceSolved),
             new Badge("turbozoomies", "Turbo Zoomies", "Finish 25 dungeon runs in one day", "Z", Tier.PINK, 25, s -> s.busiestDay),
-            new Badge("mostloved", "Most Loved Pup", "Pet the pup 2,000 times", "♥", Tier.PINK, 2000, s -> s.pets)));
+            new Badge("mostloved", "Most Loved Pup", "Pet the pup 2,000 times", "♥", Tier.PINK, 2000, s -> s.pets),
+            // ---- prismatic: the hardest of all
+            new Badge("white1000", "Eternal Winter", "Loot 1,000 white bags", "W", Tier.PRISMATIC, 1000, s -> s.whites),
+            new Badge("royalflush", "Royal Flush", "Get four white bags in one run", "4", Tier.PRISMATIC, 4, s -> s.mostWhitesOneRun),
+            new Badge("luckyday", "Lucky Day", "Loot 10 white bags in one day", "W", Tier.PRISMATIC, 10, s -> s.mostWhitesOneDay),
+            new Badge("divine50", "Divine Collector", "Loot 50 Divine items", "D", Tier.PRISMATIC, 50, s -> s.divines),
+            new Badge("legendary250", "Legendary Hoarder", "Loot 250 Legendary items", "L", Tier.PRISMATIC, 250, s -> s.legendaries),
+            new Badge("bags10k", "Bag Hoarder", "Loot 10,000 bags of any colour", "bone", Tier.PRISMATIC, 10_000, s -> s.bags),
+            new Badge("runs5000", "Dungeon Legend", "Finish 5,000 dungeon runs", "R", Tier.PRISMATIC, 5000, s -> s.runs),
+            new Badge("livingthere", "Living There", "Run the same dungeon 1,000 times", "♥", Tier.PRISMATIC, 1000, s -> s.mostRunsOneDungeon),
+            new Badge("beeneverywhere", "Been Everywhere", "Run 75 different dungeons", "paw", Tier.PRISMATIC, 75, s -> s.dungeonsVisited),
+            new Badge("speedrunpup", "Speedrun Pup", "Finish 50 dungeon runs in one day", "Z", Tier.PRISMATIC, 50, s -> s.busiestDay),
+            new Badge("boss10k", "Boss Nightmare", "Help kill 10,000 bosses", "B", Tier.PRISMATIC, 10_000, s -> s.bossKills),
+            new Badge("unstoppable", "Unstoppable", "Kill 50 bosses doing all the damage", "!", Tier.PRISMATIC, 50, s -> s.soloKills),
+            new Badge("alpha", "Alpha", "Do the most damage in a group 500 times", "1", Tier.PRISMATIC, 500, s -> s.topDamage),
+            new Badge("eventhorizon", "Event Horizon", "Help kill 1,000 realm events", "E", Tier.PRISMATIC, 1000, s -> s.eventKills),
+            new Badge("ascended", "Ascended", "Gain 10,000,000 fame", "F", Tier.PRISMATIC, 10_000_000, s -> s.fame),
+            new Badge("realmishome", "The Realm Is Home", "Play for 2,000 hours", "T", Tier.PRISMATIC, 2000, s -> s.playSeconds / 3600),
+            new Badge("wholeyear", "A Whole Year", "Play on 365 different days", "♥", Tier.PRISMATIC, 365, s -> s.playDays),
+            new Badge("grandmuseum", "Grand Museum", "Find 600 items for your collection", "C", Tier.PRISMATIC, 600, s -> s.collection),
+            new Badge("archivist", "Archivist", "Find every item from 20 dungeons", "★", Tier.PRISMATIC, 20, s -> s.completedDungeons),
+            new Badge("shinylegend", "Shiny Legend", "Find 100 shiny items", "★", Tier.PRISMATIC, 100, s -> s.shinies),
+            new Badge("puzzleprodigy", "Puzzle Prodigy", "Solve the Shatters puzzle in the fewest shots 50 times", "P", Tier.PRISMATIC, 50, s -> s.puzzlePerfect),
+            new Badge("puzzlemachine", "Puzzle Machine", "Solve 2,000 practice puzzles", "paw", Tier.PRISMATIC, 2000, s -> s.practiceSolved),
+            new Badge("merchantprince", "Merchant Prince", "Finish 500 trades", "$", Tier.PRISMATIC, 500, s -> s.trades),
+            new Badge("spoiledbeyond", "Spoiled Beyond Belief", "Pet the pup 10,000 times", "♥", Tier.PRISMATIC, 10_000, s -> s.pets)));
 
     // ---------------------------------------------------------------- unlocked badges
 
@@ -279,6 +304,12 @@ final class Badges {
                 if (r == 3) s.legendaries++;
                 if (r == 4) s.divines++;
             }
+        }
+        Map<java.time.LocalDate, Integer> whitesPerDay = new HashMap<>();
+        for (LootStats.Entry e : bags) {
+            if (LootStats.colour(e.type) != BagType.WHITE) continue;
+            java.time.LocalDate d = java.time.Instant.ofEpochSecond(e.at).atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            s.mostWhitesOneDay = Math.max(s.mostWhitesOneDay, whitesPerDay.merge(d, 1, Integer::sum));
         }
         Map<String, List<Long>> whitesAt = new HashMap<>();
         for (LootStats.Entry e : bags) {

@@ -156,7 +156,15 @@ final class BadgesPage extends MoreTabs.Page {
             g.setColor(Cute.mix(c, Color.BLACK, 0.22));
             g.fill(new Ellipse2D.Double(cx - r, cy - r + 2, r * 2, r * 2));
             g.setColor(c);
+            if (on && b.tier == Badges.Tier.PRISMATIC) {
+                // a rainbow coin for the hardest badges
+                float[] at = {0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f};
+                Color[] rainbow = {new Color(0xFF6FA8), new Color(0xFFB347), new Color(0xFFE066), new Color(0x7BDCB5),
+                        new Color(0x6EC6FF), new Color(0xB388FF)};
+                g.setPaint(new java.awt.LinearGradientPaint((float) (cx - r), (float) (cy - r), (float) (cx + r), (float) (cy + r), at, rainbow));
+            }
             g.fill(new Ellipse2D.Double(cx - r, cy - r, r * 2, r * 2));
+            g.setPaint(c);
             g.setColor(Cute.mix(c, Color.WHITE, 0.45));
             g.setStroke(new BasicStroke(2f));
             g.draw(new Ellipse2D.Double(cx - r + 4, cy - r + 4, r * 2 - 8, r * 2 - 8));

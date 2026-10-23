@@ -106,6 +106,11 @@ final class Updater {
      * the new version. The caller then closes the app.
      */
     static void handOver(File jar, File downloaded) throws IOException {
+        handOver(jar, downloaded, true);
+    }
+
+    /** As above; with {@code relaunch} false the new version is just put in place, for next time the pup is opened. */
+    static void handOver(File jar, File downloaded, boolean relaunch) throws IOException {
         File dir = jar.getAbsoluteFile().getParentFile();
         String work = new File(".").getAbsoluteFile().getParent();
         List<String> args = new ArrayList<>();
@@ -124,7 +129,7 @@ final class Updater {
             StringBuilder argList = new StringBuilder("@('-jar', ('\"' + $jar + '\"')");
             for (String a : args) argList.append(", ").append(ps("\"" + a.replace("\"", "") + "\""));
             argList.append(")");
-            s.append("Start-Process -FilePath ").append(ps(javaExe())).append(" -ArgumentList ").append(argList)
+            if (relaunch) s.append("Start-Process -FilePath ").append(ps(javaExe())).append(" -ArgumentList ").append(argList)
                     .append(" -WorkingDirectory ").append(ps(work)).append("\r\n");
             s.append("Remove-Item -LiteralPath $MyInvocation.MyCommand.Path -Force\r\n");
             File script = new File(dir, "update-pup.ps1");
@@ -136,9 +141,11 @@ final class Updater {
             s.append("while kill -0 ").append(pid()).append(" 2>/dev/null; do sleep 1; done\n");
             s.append("cp -f ").append(sh(jar.getAbsolutePath())).append(' ').append(sh(jar.getAbsolutePath() + ".old")).append('\n');
             s.append("mv -f ").append(sh(downloaded.getAbsolutePath())).append(' ').append(sh(jar.getAbsolutePath())).append('\n');
-            s.append("cd ").append(sh(work)).append(" && nohup ").append(sh(javaExe())).append(" -jar ").append(sh(jar.getAbsolutePath()));
-            for (String a : args) s.append(' ').append(sh(a));
-            s.append(" >/dev/null 2>&1 &\n");
+            if (relaunch) {
+                s.append("cd ").append(sh(work)).append(" && nohup ").append(sh(javaExe())).append(" -jar ").append(sh(jar.getAbsolutePath()));
+                for (String a : args) s.append(' ').append(sh(a));
+                s.append(" >/dev/null 2>&1 &\n");
+            }
             s.append("rm -f \"$0\"\n");
             File script = new File(dir, "update-pup.sh");
             Files.write(script.toPath(), s.toString().getBytes(StandardCharsets.UTF_8));

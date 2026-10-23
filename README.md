@@ -12,9 +12,10 @@ never sends anything to the game, and never plays for you.
 
 Get **WhiteBagPup.jar** from the [latest release](../../releases/latest).
 
-When there's a new version, a pink **Update now** button appears at the top of the Home tab. Press it and the pup
-backs up your files, downloads the new version from GitHub, and restarts on it (the old one is kept as
-`WhiteBagPup.jar.old`).
+From 2.6 on, the pup updates itself: when a new version is out, it downloads it in the background (after backing up
+your files) and installs it when you close the pup, so it opens on the new version next time. Press the pink button
+at the top of Home to restart onto it straight away. The old version is kept as `WhiteBagPup.jar.old`. Untick
+**Install updates by itself** on Home if you'd rather update by hand.
 Download the new jar and put it in the same folder in place of the old one. Your settings and logs stay.
 See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 
@@ -40,7 +41,7 @@ whenever the game updates. If your game is installed somewhere unusual, run
 
 If your recap link is a Femcore bot link (`https://.../recap?key=...`), tick **Join the friends leaderboard** under
 Recaps on the Webhooks tab. Every few minutes the pup sends your in-game name and totals (white bags, bags, runs,
-kills, fame, play time, badge and collection counts) to the bot, which keeps a weekly leaderboard in Discord.
+kills, fame, play time, badge and collection counts) to the bot, which keeps a daily leaderboard in Discord.
 Nothing else is sent.
 
 ### Backups

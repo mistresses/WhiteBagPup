@@ -45,9 +45,26 @@ final class Leaderboard {
         return Instant.ofEpochSecond(unixSeconds).atZone(ZoneOffset.UTC).toLocalDate().toString();
     }
 
+    /** "2026-10-22T13": the UTC hour, so the bot can work out days in its own timezone. */
+    private static String hour(long unixSeconds) {
+        return java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH").format(Instant.ofEpochSecond(unixSeconds).atZone(ZoneOffset.UTC));
+    }
+
+    /** The day and the hour something happened in (either may be null if it's too old). */
+    private static List<Day> slots(Map<String, Day> days, Map<String, Day> hours, long at, long firstDay) {
+        List<Day> out = new ArrayList<>(2);
+        if (at < firstDay) return out;
+        Day d = days.get(day(at));
+        if (d != null) out.add(d);
+        out.add(hours.computeIfAbsent(hour(at), k -> new Day()));
+        return out;
+    }
+
     /** One day's numbers. */
     static final class Day {
         long whites, bags, runs, bosses, events, fame, seconds;
+        /** Bags by colour (boosted ones count as their colour). */
+        final Map<BagType, Long> colours = new java.util.EnumMap<>(BagType.class);
     }
 
     /** The JSON the bot gets for this account, or null if there's nothing to send yet. */
@@ -59,6 +76,7 @@ final class Leaderboard {
         Map<String, Day> days = new LinkedHashMap<>();
         for (int i = 8; i >= 0; i--) days.put(today.minusDays(i).toString(), new Day());
         long firstDay = today.minusDays(8).atStartOfDay(ZoneOffset.UTC).toEpochSecond();
+        Map<String, Day> hours = new java.util.TreeMap<>();
 
         long allWhites = 0, allRuns = 0;
         List<LootStats.Entry> bags = new ArrayList<>();
@@ -67,34 +85,31 @@ final class Leaderboard {
             bags.add(e);
             boolean white = LootStats.colour(e.type) == BagType.WHITE;
             if (white) allWhites++;
-            Day d = e.at >= firstDay ? days.get(day(e.at)) : null;
-            if (d != null) {
+            for (Day d : slots(days, hours, e.at, firstDay)) {
                 d.bags++;
                 if (white) d.whites++;
+                d.colours.merge(LootStats.colour(e.type), 1L, Long::sum);
             }
         }
         for (RunLog.Run r : RunLog.all()) {
             if (!mine.test(r.account) || RunLog.isRealm(r.map)) continue;
             allRuns++;
-            Day d = r.at >= firstDay ? days.get(day(r.at)) : null;
-            if (d != null) d.runs++;
+            for (Day d : slots(days, hours, r.at, firstDay)) d.runs++;
         }
         List<History.Dps> kills = new ArrayList<>();
         for (History.Dps k : History.dps()) if (mine.test(k.account) && k.killed && k.at >= firstDay) kills.add(k);
         for (History.Dps k : KillsPage.oneEach(kills)) {
-            Day d = days.get(day(k.at));
-            if (d == null) continue;
             boolean event = KillsPage.isEvent(k);
-            if (event) d.events++;
-            if (event || k.kind.isEmpty() || k.kind.equals("BOSS")) d.bosses++;
+            for (Day d : slots(days, hours, k.at, firstDay)) {
+                if (event) d.events++;
+                if (event || k.kind.isEmpty() || k.kind.equals("BOSS")) d.bosses++;
+            }
         }
         for (History.Fame f : History.fame()) {
-            Day d = mine.test(f.account) && f.end >= firstDay ? days.get(day(f.end)) : null;
-            if (d != null) d.fame += f.gained;
+            if (mine.test(f.account)) for (Day d : slots(days, hours, f.end, firstDay)) d.fame += f.gained;
         }
         for (History.Play p : History.play()) {
-            Day d = mine.test(p.account) && p.end >= firstDay ? days.get(day(p.start)) : null;
-            if (d != null) d.seconds += Math.max(0, p.end - p.start);
+            if (mine.test(p.account) && p.end >= firstDay) for (Day d : slots(days, hours, Math.max(p.start, firstDay), firstDay)) d.seconds += Math.max(0, p.end - p.start);
         }
         int badges = Badges.unlocked(account).size();
         int collection = LootBook.found(bags).size();
@@ -103,19 +118,32 @@ final class Leaderboard {
         j.append("\"id\":").append(DiscordWebhook.str(idOf(account)));
         j.append(",\"name\":").append(DiscordWebhook.str(name.trim()));
         j.append(",\"version\":").append(DiscordWebhook.str(UpdateCheck.VERSION));
-        j.append(",\"days\":{");
+        j.append(",\"days\":");
+        numbers(j, days);
+        j.append(",\"hours\":");
+        numbers(j, hours);
+        j.append(",\"all\":{\"whites\":").append(allWhites).append(",\"runs\":").append(allRuns)
+                .append(",\"badges\":").append(badges).append(",\"collection\":").append(collection).append("}}");
+        return j.toString();
+    }
+
+    /** {"key":{"whites":1,...},...} */
+    private static void numbers(StringBuilder j, Map<String, Day> slots) {
+        j.append('{');
         boolean first = true;
-        for (Map.Entry<String, Day> e : days.entrySet()) {
+        for (Map.Entry<String, Day> e : slots.entrySet()) {
             Day d = e.getValue();
             if (!first) j.append(',');
             first = false;
             j.append('"').append(e.getKey()).append("\":{\"whites\":").append(d.whites).append(",\"bags\":").append(d.bags)
                     .append(",\"runs\":").append(d.runs).append(",\"bosses\":").append(d.bosses).append(",\"events\":").append(d.events)
-                    .append(",\"fame\":").append(d.fame).append(",\"minutes\":").append(d.seconds / 60).append('}');
+                    .append(",\"fame\":").append(d.fame).append(",\"minutes\":").append(d.seconds / 60);
+            for (Map.Entry<BagType, Long> c : d.colours.entrySet()) {
+                j.append(",\"").append(c.getKey().name().toLowerCase(java.util.Locale.ROOT)).append("\":").append(c.getValue());
+            }
+            j.append('}');
         }
-        j.append("},\"all\":{\"whites\":").append(allWhites).append(",\"runs\":").append(allRuns)
-                .append(",\"badges\":").append(badges).append(",\"collection\":").append(collection).append("}}");
-        return j.toString();
+        j.append('}');
     }
 
     private static final Map<String, String> lastSent = new java.util.HashMap<>();

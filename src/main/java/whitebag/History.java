@@ -37,7 +37,7 @@ final class History {
                 x.start = Long.parseLong(f[0]);
                 x.end = Long.parseLong(f[1]);
                 x.account = f[2];
-                x.character = f[3];
+                x.character = DpsTracker.cleanName(f[3]);
                 x.area = f[4];
                 x.gained = Integer.parseInt(f[5]);
                 if (f.length > 6) x.cls = f[6];
@@ -217,12 +217,12 @@ final class History {
     /** The account's in-game name, or "". */
     static synchronized String nameOf(String account) {
         String n = names().get(account == null ? "" : account);
-        return n == null ? "" : n;
+        return n == null ? "" : DpsTracker.cleanName(n); // older names.txt lines can have the game's ",a19d,fe3" on the end
     }
 
     static synchronized void rememberName(String account, String name) {
         if (account == null || account.isEmpty() || name == null || name.trim().isEmpty()) return;
-        name = clean(name.trim());
+        name = clean(DpsTracker.cleanName(name)); // the game sends "Name,a19d,fe3": just the name
         if (name.equals(names().get(account))) return;
         names.put(account, name);
         List<String> lines = new ArrayList<>();

@@ -3,18 +3,35 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.1
+
+- Fixed player names showing the game's extra codes ("Kiinguu,a19d,fe3") in badge posts, recaps, About Me and the
+  friends leaderboard. Names saved before are cleaned up too.
+
 ## 2.6
 
-- **Updates in the app:** the update button downloads the new version from GitHub, backs up your files and restarts
-  the pup on it (the old version is kept as WhiteBagPup.jar.old). If that can't work, it opens the download page.
+- The dry streak badges (Never Give Up, Survivor, Unbreakable, Cursed and Cured) are gone: they were close to
+  impossible.
+- **25 Prismatic badges** with rainbow medals, the hardest of all: Eternal Winter (1,000 whites), Royal Flush
+  (4 whites in one run), Lucky Day (10 whites in one day), Divine Collector (50 Divines), Legendary Hoarder,
+  Bag Hoarder (10,000 bags), Dungeon Legend (5,000 runs), Living There,
+  Been Everywhere (75 dungeons), Speedrun Pup (50 runs in a day), Boss Nightmare (10,000 bosses), Unstoppable, Alpha,
+  Event Horizon (1,000 realm events), Ascended (10,000,000 fame), The Realm Is Home (2,000 hours), A Whole Year
+  (365 days played), Grand Museum (600 collection items), Archivist (complete 20 dungeons), Shiny Legend (100 shinies),
+  Puzzle Prodigy, Puzzle Machine, Merchant Prince (500 trades) and Spoiled Beyond Belief (10,000 pets).
+- **Updates itself:** from now on the pup checks GitHub (when it opens and every 6 hours), downloads a new version in
+  the background, backs up your files, and installs it when you close the pup. The button at the top of Home
+  restarts onto it straight away. The old version is kept as WhiteBagPup.jar.old. Turn it off with "Install updates
+  by itself" on Home.
 - **Backups** (Home): back up now, restore, and a weekly backup by itself. The last 8 are kept in the backups folder.
 - **Friends leaderboard:** with a Femcore bot recap link, tick "Join the friends leaderboard" (Webhooks tab). The bot
-  keeps a weekly board of white bags, runs, boss kills, realm events, fame and play time, and posts the winners.
+  keeps a daily board (resetting at midnight your time) of white bags, all bags (with each colour), runs, boss
+  kills, realm events, fame and play time, and posts the day's winners.
 - **Wardrobe** (Me tab): dress up the pup with 10 hats (party hat, pink bow, flower crown, top hat, Viking helmet,
   halo, crown, plus the witch and Santa hats any time) and 7 outfits (bow tie, red bandana, cosy scarf, hero cape,
   gold collar, royal cape). Most unlock with badges; badge posts say what they unlock.
 - **21 harder badges** (pink), like Avalanche and Ice Age (250 / 500 whites), Jackpot (3 whites in one run),
-  Blessed (10 Divines), Unbreakable (end a 100-run dry streak), Dungeon Master (1,000 runs), Obsessed, World
+  Blessed (10 Divines), Dungeon Master (1,000 runs), Obsessed, World
   Traveller (60 dungeons), Boss Exterminator, One Pup Army, Storm Chaser, Mythic (1,000,000 fame), Realm Resident,
   Best Friends Forever, Museum, Master Completionist, Shiny Hunter, Puzzle Master, Puzzle Addict, Turbo Zoomies and
   Most Loved Pup.
@@ -25,8 +42,8 @@ Download the latest from [Releases](../../releases/latest).
 - Realm event and realm boss kills count on Boss Kills as soon as they die, instead of when you leave the realm
   (closing the game while still in the realm used to lose them). Events from the RealmStock list are recognised even
   if it loaded after the app started.
-- A realm event made of several big enemies (a god and its tentacles, a boss and its towers, a boss that changes
-  form) counts as one kill, not one per part. This fixes old kills in your log too.
+- A realm event made of several big enemies (a god and its tentacles, a boss and its towers) counts as one kill,
+  not one per part. Every kill of the boss itself still counts, including several in one realm visit.
 - **Puzzle log** on the Puzzle tab: how many practice puzzles you've solved (and how many perfectly), and how many
   in game.
 - **15 puppy badges**, with paw and bone medals: Good Pup, Very Good Pup, Best in Show (practice puzzles), Belly Rubs
