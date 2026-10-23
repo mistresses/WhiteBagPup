@@ -3,6 +3,11 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.2
+
+- **Titles:** your title shows with your name ("Sophie the Wanderer") in About Me and badge posts. The words come
+  from the game files; what was found is written to titles-debug.txt. The friends leaderboard keeps just the name.
+
 ## 2.6.1
 
 - Fixed player names showing the game's extra codes ("Kiinguu,a19d,fe3") in badge posts, recaps, About Me and the

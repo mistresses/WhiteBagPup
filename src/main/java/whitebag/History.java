@@ -202,16 +202,33 @@ final class History {
     /** Each account's in-game name (names.txt: account|name), so recaps can say who played. */
     private static final String NAMES_FILE = "names.txt";
     private static java.util.Map<String, String> names;
+    /** Each account's title codes ("a19d,fe3"), the third part of names.txt lines. */
+    private static final java.util.Map<String, String> titles = new java.util.HashMap<>();
 
     private static java.util.Map<String, String> names() {
         if (names == null) {
             names = new java.util.LinkedHashMap<>();
             for (String l : read(NAMES_FILE)) {
                 String[] f = l.split("\\|", -1);
-                if (f.length >= 2 && !f[0].isEmpty() && !f[1].isEmpty()) names.put(f[0], f[1]);
+                if (f.length >= 2 && !f[0].isEmpty() && !f[1].isEmpty()) {
+                    names.put(f[0], f[1]);
+                    if (f.length >= 3 && !f[2].isEmpty()) titles.put(f[0], f[2]);
+                }
             }
         }
         return names;
+    }
+
+    /** The account's name with its title ("Sophie the Wanderer"), or just the name, or "". */
+    static synchronized String titledNameOf(String account) {
+        String n = nameOf(account);
+        if (n.isEmpty()) return n;
+        String codes = titles.get(account == null ? "" : account);
+        if (codes == null || codes.isEmpty()) {
+            String raw = names().get(account == null ? "" : account); // older names.txt lines kept the codes in the name
+            codes = raw == null ? "" : Titles.codes(raw);
+        }
+        return Titles.titled(n, codes);
     }
 
     /** The account's in-game name, or "". */
@@ -222,11 +239,16 @@ final class History {
 
     static synchronized void rememberName(String account, String name) {
         if (account == null || account.isEmpty() || name == null || name.trim().isEmpty()) return;
-        name = clean(DpsTracker.cleanName(name)); // the game sends "Name,a19d,fe3": just the name
-        if (name.equals(names().get(account))) return;
+        String codes = Titles.codes(name).replace('|', '/');
+        name = clean(DpsTracker.cleanName(name)); // the game sends "Name,a19d,fe3": the name, then the title codes
+        if (name.equals(names().get(account)) && codes.equals(titles.getOrDefault(account, ""))) return;
         names.put(account, name);
+        titles.put(account, codes);
         List<String> lines = new ArrayList<>();
-        for (java.util.Map.Entry<String, String> e : names.entrySet()) lines.add(clean(e.getKey()) + "|" + e.getValue());
+        for (java.util.Map.Entry<String, String> e : names.entrySet()) {
+            String t = titles.getOrDefault(e.getKey(), "");
+            lines.add(clean(e.getKey()) + "|" + e.getValue() + (t.isEmpty() ? "" : "|" + t));
+        }
         try {
             Files.write(Paths.get(NAMES_FILE), lines, StandardCharsets.UTF_8);
         } catch (Exception ignored) {

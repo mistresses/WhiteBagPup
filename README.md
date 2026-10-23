@@ -125,6 +125,7 @@ Everything stays in the app's folder on your PC:
 
 | File | What's in it |
 | --- | --- |
+| `titles-debug.txt` | What the pup found for your title in the game files (send it over if your title shows wrong) |
 | `whitebag-notifier.properties` | Your settings and webhook URLs (keep this private) |
 | `events.properties` | Your Events tick boxes |
 | `loot-log.txt`, `runs-log.txt` | Bags seen and dungeons run (for Loot and drop rates) |

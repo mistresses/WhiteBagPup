@@ -77,7 +77,7 @@ final class AboutMe {
                 list.add(note("Start watching, then load into the game (or change area once) and your character shows up here."));
             } else {
                 String cls = objectName(me.objectType, "Character");
-                String name = DpsTracker.cleanName(me.s(StatType.NAME_STAT));
+                String name = Titles.titled(me.s(StatType.NAME_STAT)); // with your title, like "Sophie the Wanderer"
                 int fame = me.i(StatType.CURR_FAME_STAT, -1);
                 String guild = me.s(StatType.GUILD_NAME_STAT);
                 String line2 = "Level " + me.i(StatType.LEVEL_STAT, 1) + " " + cls;

@@ -281,7 +281,7 @@ public class WhiteBagNotifier {
                 return;
             }
             log("*runs off to Discord with a test badge*");
-            String who = selected != null && selected.key() != null ? History.nameOf(selected.key()) : "";
+            String who = selected != null && selected.key() != null ? History.titledNameOf(selected.key()) : "";
             postBadge(url, Badges.ALL.get(0), who, true);
         });
         row.add(Pixel.label("Badge webhook URL  "));
@@ -328,7 +328,7 @@ public class WhiteBagNotifier {
             return;
         }
         if (fresh.isEmpty()) return;
-        String who = History.nameOf(key);
+        String who = History.titledNameOf(key);
         String url = badgeUrl();
         for (Badges.Badge b : fresh) {
             log((accounts.size() > 1 ? a.prefix() : "") + "*happy howl* badge unlocked: " + b.name + "! (" + b.desc + ")");
