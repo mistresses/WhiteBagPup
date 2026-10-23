@@ -35,19 +35,27 @@ final class Titles {
     /** "Sophie the Wanderer" from "Sophie" and "a19d,fe3" (just the name if the titles can't be found). */
     static String titled(String name, String codes) {
         if (name == null || name.isEmpty() || codes == null || codes.isEmpty()) return name == null ? "" : name;
-        String[] parts = codes.split(",");
-        String prefix = parts.length > 0 ? word(parts[0]) : "";
-        String suffix = parts.length > 1 ? word(parts[1]) : "";
-        StringBuilder sb = new StringBuilder();
-        if (!prefix.isEmpty()) sb.append(prefix).append(' ');
-        sb.append(name);
-        if (!suffix.isEmpty()) sb.append(' ').append(suffix);
-        return sb.toString();
+        // the codes don't say which part goes where, so the wording does: "the Wanderer" and "of the Realm" go after
+        // the name, anything else ("Mighty") in front of it
+        StringBuilder before = new StringBuilder(), after = new StringBuilder();
+        for (String code : codes.split(",")) {
+            String w = word(code);
+            if (w.isEmpty()) continue;
+            if (goesAfter(w)) after.append(' ').append(w);
+            else before.append(w).append(' ');
+        }
+        return before + name + after;
     }
 
     /** "Sophie,a19d,fe3" -> "Sophie the Wanderer". */
     static String titled(String raw) {
         return titled(DpsTracker.cleanName(raw), codes(raw));
+    }
+
+    /** "the Wanderer", "of the Realm", "from Beyond": words that come after a name. */
+    static boolean goesAfter(String title) {
+        String t = title.trim().toLowerCase(Locale.ROOT);
+        return t.startsWith("the ") || t.startsWith("of ") || t.startsWith("from ") || t.startsWith("who ") || t.startsWith(",");
     }
 
     private static synchronized String word(String hex) {
