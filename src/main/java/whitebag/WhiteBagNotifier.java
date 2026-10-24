@@ -951,6 +951,22 @@ public class WhiteBagNotifier {
         soundBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         options.add(autoStartBox);
         options.add(soundBox);
+        AccountRouter.singleAccount = "true".equals(settings.getProperty("accounts.single"));
+        Pixel.Check single = new Pixel.Check("I only play one account", AccountRouter.singleAccount);
+        single.setToolTipText("Everything goes to one account and the account buttons above the tabs go away");
+        single.addActionListener(e -> {
+            AccountRouter.singleAccount = single.isSelected();
+            settings.setProperty("accounts.single", String.valueOf(single.isSelected()));
+            saveSettings();
+            if (single.isSelected() && !accounts.isEmpty() && selected != accounts.get(0)) {
+                selected = accounts.get(0);
+                showPage();
+            }
+            refreshAccountBar();
+            log(single.isSelected() ? "*boop* one account it is! The account buttons are gone." : "*boop* the pup will keep accounts apart again.");
+        });
+        single.setAlignmentX(Component.LEFT_ALIGNMENT);
+        options.add(single);
         controls.add(startButton);
         controls.add(Box.createHorizontalStrut(18));
         controls.add(status);
@@ -1272,7 +1288,7 @@ public class WhiteBagNotifier {
     private void refreshAccountBar() {
         if (accountBar == null) return;
         accountBar.removeAll();
-        boolean several = accounts.size() > 1;
+        boolean several = accounts.size() > 1 && !AccountRouter.singleAccount;
         accountBar.setVisible(several);
         if (several) {
             String[] labels = new String[accounts.size()];

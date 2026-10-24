@@ -39,6 +39,8 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
     private final Map<Integer, Conn> conns = new HashMap<>();
     private final Map<String, Account> byKey = new HashMap<>();
     private final Map<String, Account> byToken = new HashMap<>();
+    /** "I only play one account" (Home): every connection goes to the first account and no others are made. */
+    static volatile boolean singleAccount = false;
 
     /**
      * @param accounts   the app's account list (the first one exists from the start, unclaimed)
@@ -105,6 +107,12 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
     }
 
     private Account accountFor(String key, Conn asking) {
+        if (singleAccount) {
+            Account first = accounts.get(0);
+            if (!first.claimed()) first.claim(key);
+            byKey.put(key, first);
+            return first;
+        }
         Account a = byKey.get(key);
         if (a != null) return a;
         // an account nobody has claimed, and no other connection is using
@@ -122,6 +130,7 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
 
     /** An unclaimed account no other connection is using yet. */
     private Account freeAccount(Conn asking) {
+        if (singleAccount) return accounts.get(0);
         for (Account x : accounts) if (!x.claimed() && !usedByOther(x, asking)) return x;
         return null;
     }

@@ -3,6 +3,11 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.4
+
+- **"I only play one account"** on Home: everything goes to one account, and the account buttons above the tabs
+  go away (for when the pup thinks a reconnect is a second account).
+
 ## 2.6.3
 
 - Titles are the right way round: "Sophie the Wanderer", not "the Wanderer Sophie".
