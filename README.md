@@ -41,7 +41,7 @@ whenever the game updates. If your game is installed somewhere unusual, run
 
 If your recap link is a Femcore bot link (`https://.../recap?key=...`), tick **Join the friends leaderboard** under
 Recaps on the Webhooks tab. Every few minutes the pup sends your in-game name and totals (white bags, bags, runs,
-kills, fame, play time, badge and collection counts) to the bot, which keeps a daily leaderboard in Discord.
+kills, fame, play time, badge and collection counts) to the bot, which keeps a live leaderboard in Discord.
 Nothing else is sent.
 
 ### Backups

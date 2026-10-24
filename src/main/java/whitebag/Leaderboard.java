@@ -79,12 +79,16 @@ final class Leaderboard {
         Map<String, Day> hours = new java.util.TreeMap<>();
 
         long allWhites = 0, allRuns = 0;
+        Day life = new Day(); // everything ever, for the lifetime leaderboard
         List<LootStats.Entry> bags = new ArrayList<>();
         for (LootStats.Entry e : LootStats.all()) {
             if (!mine.test(e.account)) continue;
             bags.add(e);
             boolean white = LootStats.colour(e.type) == BagType.WHITE;
             if (white) allWhites++;
+            life.bags++;
+            if (white) life.whites++;
+            life.colours.merge(LootStats.colour(e.type), 1L, Long::sum);
             for (Day d : slots(days, hours, e.at, firstDay)) {
                 d.bags++;
                 if (white) d.whites++;
@@ -94,21 +98,27 @@ final class Leaderboard {
         for (RunLog.Run r : RunLog.all()) {
             if (!mine.test(r.account) || RunLog.isRealm(r.map)) continue;
             allRuns++;
+            life.runs++;
             for (Day d : slots(days, hours, r.at, firstDay)) d.runs++;
         }
         List<History.Dps> kills = new ArrayList<>();
-        for (History.Dps k : History.dps()) if (mine.test(k.account) && k.killed && k.at >= firstDay) kills.add(k);
+        for (History.Dps k : History.dps()) if (mine.test(k.account) && k.killed) kills.add(k);
         for (History.Dps k : KillsPage.oneEach(kills)) {
             boolean event = KillsPage.isEvent(k);
+            if (event) life.events++;
+            if (event || k.kind.isEmpty() || k.kind.equals("BOSS")) life.bosses++;
             for (Day d : slots(days, hours, k.at, firstDay)) {
                 if (event) d.events++;
                 if (event || k.kind.isEmpty() || k.kind.equals("BOSS")) d.bosses++;
             }
         }
         for (History.Fame f : History.fame()) {
-            if (mine.test(f.account)) for (Day d : slots(days, hours, f.end, firstDay)) d.fame += f.gained;
+            if (!mine.test(f.account)) continue;
+            life.fame += f.gained;
+            for (Day d : slots(days, hours, f.end, firstDay)) d.fame += f.gained;
         }
         for (History.Play p : History.play()) {
+            if (mine.test(p.account)) life.seconds += Math.max(0, p.end - p.start);
             if (mine.test(p.account) && p.end >= firstDay) for (Day d : slots(days, hours, Math.max(p.start, firstDay), firstDay)) d.seconds += Math.max(0, p.end - p.start);
         }
         int badges = Badges.unlocked(account).size();
@@ -122,7 +132,13 @@ final class Leaderboard {
         numbers(j, days);
         j.append(",\"hours\":");
         numbers(j, hours);
-        j.append(",\"all\":{\"whites\":").append(allWhites).append(",\"runs\":").append(allRuns)
+        // all time: everything the lifetime leaderboard shows
+        Map<String, Day> all = new LinkedHashMap<>();
+        all.put("all", life);
+        StringBuilder a = new StringBuilder();
+        numbers(a, all);
+        String lifeJson = a.substring(a.indexOf(":{") + 2, a.length() - 2); // the numbers inside {"all":{...}}
+        j.append(",\"all\":{").append(lifeJson)
                 .append(",\"badges\":").append(badges).append(",\"collection\":").append(collection).append("}}");
         return j.toString();
     }

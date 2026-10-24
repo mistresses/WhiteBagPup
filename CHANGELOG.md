@@ -3,6 +3,11 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.5
+
+- The friends leaderboard can show everyone's all-time totals: the pup now sends all-time bags (with colours),
+  boss kills, realm events, fame and play time too.
+
 ## 2.6.4
 
 - **"I only play one account"** on Home: everything goes to one account, and the account buttons above the tabs
