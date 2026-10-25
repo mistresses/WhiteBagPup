@@ -3,6 +3,10 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.6
+
+- Empty title slots (the game's "the Blank Suffix") aren't shown: no title just shows your name.
+
 ## 2.6.5
 
 - The friends leaderboard can show everyone's all-time totals: the pup now sends all-time bags (with colours),

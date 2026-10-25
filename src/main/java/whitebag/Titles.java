@@ -40,7 +40,7 @@ final class Titles {
         StringBuilder before = new StringBuilder(), after = new StringBuilder();
         for (String code : codes.split(",")) {
             String w = word(code);
-            if (w.isEmpty()) continue;
+            if (w.isEmpty() || placeholder(w)) continue;
             if (goesAfter(w)) after.append(' ').append(w);
             else before.append(w).append(' ');
         }
@@ -50,6 +50,11 @@ final class Titles {
     /** "Sophie,a19d,fe3" -> "Sophie the Wanderer". */
     static String titled(String raw) {
         return titled(DpsTracker.cleanName(raw), codes(raw));
+    }
+
+    /** The game's stand-ins for an empty title slot ("the Blank Suffix", "Empty Prefix", "None"): not shown. */
+    static boolean placeholder(String title) {
+        return title.toLowerCase(Locale.ROOT).matches(".*\\b(blank|empty|none|no title|placeholder|unset)\\b.*");
     }
 
     /** "the Wanderer", "of the Realm", "from Beyond": words that come after a name. */
