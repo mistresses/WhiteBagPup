@@ -5,8 +5,7 @@ Download the latest from [Releases](../../releases/latest).
 
 ## 2.6.7
 
-- Titles read exactly like in game, using the game's own title data: your name, then the prefix, then the suffix
-  ("Sophie the Wanderer", or just "Sophie the"). An empty title slot shows nothing.
+- Titles read exactly like in game, using the game's own title data: your name, then the prefix, then the suffix, An empty title slot shows nothing.
 
 ## 2.6.6
 
