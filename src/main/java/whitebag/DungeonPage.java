@@ -191,8 +191,8 @@ final class DungeonPage extends JPanel {
         q = LootBook.norm(search.getText());
         List<LootStats.Entry> bags = new ArrayList<>();
         bags.addAll(LootStats.all()); // every account's loot counts
-        found = LootBook.found(bags);
-        foundShiny = LootBook.foundShinies(bags);
+        found = LootBook.found(bags, a -> true);
+        foundShiny = LootBook.foundShinies(bags, a -> true);
         Map<String, LootBook.Item> byBase = new HashMap<>();
         for (LootBook.Item sh : LootBook.shinies()) byBase.put(LootBook.norm(sh.name.replace(" (Shiny)", "")), sh);
         shinyReady = !byBase.isEmpty();
@@ -584,10 +584,7 @@ final class DungeonPage extends JPanel {
                 StringBuilder sb = new StringBuilder("<html><div style='width:240px'><b>").append(esc(sh.name.replace(" (Shiny)", "")))
                         .append("</b> (shiny ").append(sh.tier).append(")<br>");
                 if (f == null) sb.append("<span style='color:#B0305F'><b>Not in your collection yet</b></span>");
-                else sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>Found ")
-                        .append(f.times == 1 ? "once" : f.times + " times").append(", first on ")
-                        .append(new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(f.first * 1000L)))
-                        .append(f.where.isEmpty() ? "" : " in " + esc(f.where));
+                else sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>").append(LootBook.describe(f));
                 return sb.append("</div></html>").toString();
             }
             String name = itemAt(e.getPoint());
@@ -602,10 +599,7 @@ final class DungeonPage extends JPanel {
             } else if (f == null) {
                 sb.append("<span style='color:#B0305F'><b>Not in your collection yet</b></span>");
             } else {
-                sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>Found ")
-                        .append(f.times == 1 ? "once" : f.times + " times").append(", first on ")
-                        .append(new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(f.first * 1000L)))
-                        .append(f.where.isEmpty() ? "" : " in " + esc(f.where));
+                sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>").append(LootBook.describe(f));
             }
             return sb.append("</div></html>").toString();
         }

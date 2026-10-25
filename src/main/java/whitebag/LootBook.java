@@ -143,6 +143,8 @@ final class LootBook {
         int times;
         long first = Long.MAX_VALUE; // Unix seconds
         String where = "";
+        /** Also (or only) seen owned: "your vault", "a character"... ("" if not). */
+        String owned = "";
     }
 
     private static Map<String, Place> places;
@@ -236,6 +238,49 @@ final class LootBook {
         } catch (Exception ignored) {
         }
         System.out.println("Collection book: " + (items.size() - missing.size()) + " items matched the game, " + missing.size() + " not (collection-debug.txt)");
+    }
+
+    /**
+     * Which collection items these accounts have: looted in a bag, or seen in their vault, seasonal vault or on a
+     * character (see Owned).
+     */
+    static synchronized Map<Item, Found> found(List<LootStats.Entry> bags, java.util.function.Predicate<String> mine) {
+        Map<Item, Found> out = found(bags);
+        Map<Integer, Item> cache = new HashMap<>();
+        for (Owned.Sighting s : Owned.of(mine)) {
+            if (isShiny(s.item)) continue;
+            Item it = cache.computeIfAbsent(s.item, k -> items.get(norm(ItemInfo.of(k).name)));
+            if (it == null) continue;
+            if (it.id < 0) it.id = s.item;
+            Found f = out.computeIfAbsent(it, k -> new Found());
+            if (f.owned.isEmpty()) f.owned = Owned.describe(s.where);
+            if (f.times == 0 && s.first < f.first) f.first = s.first;
+        }
+        return out;
+    }
+
+    /** Which shinies these accounts have: looted, or seen in a vault or on a character. */
+    static synchronized Map<Item, Found> foundShinies(List<LootStats.Entry> bags, java.util.function.Predicate<String> mine) {
+        Map<Item, Found> out = foundShinies(bags);
+        if (shinyById == null) return out;
+        for (Owned.Sighting s : Owned.of(mine)) {
+            Item it = shinyById.get(s.item);
+            if (it == null) continue;
+            Found f = out.computeIfAbsent(it, k -> new Found());
+            if (f.owned.isEmpty()) f.owned = Owned.describe(s.where);
+            if (f.times == 0 && s.first < f.first) f.first = s.first;
+        }
+        return out;
+    }
+
+    /** "Found 3 times, first on 9 Oct 2026 in Lost Halls" or "In your vault (seen 9 Oct 2026)", for tooltips (HTML-safe). */
+    static String describe(Found f) {
+        java.text.SimpleDateFormat day = new java.text.SimpleDateFormat("d MMM yyyy", Locale.ROOT);
+        String when = day.format(new java.util.Date(f.first * 1000L));
+        String where = f.where.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+        if (f.times == 0) return Character.toUpperCase(f.owned.charAt(0)) + f.owned.substring(1) + " (seen " + when + ")";
+        return "Found " + (f.times == 1 ? "once" : f.times + " times") + ", first on " + when + (where.isEmpty() ? "" : " in " + where)
+                + (f.owned.isEmpty() ? "" : ". Also " + f.owned);
     }
 
     /** Which collection items appear in these bags, by item. */

@@ -345,7 +345,7 @@ final class Badges {
         }
         for (History.Fame f : History.fame()) if (mine.test(f.account)) s.fame += f.gained;
         for (History.Play p : History.play()) if (mine.test(p.account)) s.playSeconds += p.end - p.start;
-        Map<LootBook.Item, LootBook.Found> found = LootBook.found(bags);
+        Map<LootBook.Item, LootBook.Found> found = LootBook.found(bags, mine);
         s.collection = found.size();
         for (LootBook.Place p : LootBook.places()) {
             if (p.name.equals("Elsewhere") || p.items.isEmpty()) continue;
@@ -360,7 +360,7 @@ final class Badges {
         s.practiceSolved = count(account, "practice");
         s.pets = count(account, "pet");
         s.bags = bags.size();
-        s.shinies = LootBook.foundShinies(bags).size();
+        s.shinies = LootBook.foundShinies(bags, mine).size();
         s.dungeonsVisited = byMap.size();
         java.time.ZoneId zone = java.time.ZoneId.systemDefault();
         Map<java.time.LocalDate, Integer> perDay = new HashMap<>();

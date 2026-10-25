@@ -3,6 +3,14 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.10
+
+- The **Collection** now counts items you already own, not just ones you looted while the pup was watching: everything
+  in your vault, your seasonal vault (open it on a seasonal character), your gift chest, and on your characters (gear,
+  inventory and backpack). Open each vault once and log in each character for a minute to fill it in. Hover an item to
+  see where it was seen. Kept in owned-items.txt.
+- Dungeons tab, collection badges and the friends leaderboard's collection count use the same thing.
+
 ## 2.6.9
 
 - The version shows next to "White Bag Pup" at the top, in the window's title bar, and in the diary when the pup

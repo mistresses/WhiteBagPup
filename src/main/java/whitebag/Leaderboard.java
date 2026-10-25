@@ -122,7 +122,7 @@ final class Leaderboard {
             if (mine.test(p.account) && p.end >= firstDay) for (Day d : slots(days, hours, Math.max(p.start, firstDay), firstDay)) d.seconds += Math.max(0, p.end - p.start);
         }
         int badges = Badges.unlocked(account).size();
-        int collection = LootBook.found(bags).size();
+        int collection = LootBook.found(bags, mine).size();
 
         StringBuilder j = new StringBuilder("{");
         j.append("\"id\":").append(DiscordWebhook.str(idOf(account)));

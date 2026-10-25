@@ -458,6 +458,7 @@ public class WhiteBagNotifier {
                 if (Recap.isDue(settings)) for (Account a : accounts) a.me.checkpointPlay();
                 boolean changed = Recap.tick(settings, (json, files, what) -> webhook.sendJson(u, json, files, what), this::log);
                 if (leaderboardTick++ % 10 == 0) sendLeaderboard(false);
+                for (Account a : accounts) a.noteCharacterItems();
                 if (leaderboardTick % 360 == 0) SwingUtilities.invokeLater(this::checkForUpdate); // every 6 hours
                 if (Backup.weeklyDue(settings)) {
                     try {

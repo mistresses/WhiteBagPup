@@ -82,6 +82,17 @@ final class Account {
         vault = new VaultStore(() -> {
             if (vaultPage != null) vaultPage.changed();
         }, t -> host.log(prefix() + t));
+        // everything in the vault (and gift chest) counts for the Collection; a seasonal character has its own vault
+        vault.onRead = v -> {
+            if (key == null) return;
+            boolean seasonal = Owned.seasonal(me.character());
+            String where = seasonal ? Owned.SEASONAL_VAULT : Owned.VAULT;
+            int n = Owned.note(key, where, v[0]) + Owned.note(key, where, v[1]);
+            if (n > 0) {
+                if (bookPage != null) bookPage.changed();
+                if (dungeonPage != null) dungeonPage.changed();
+            }
+        };
         bags.onAnyBag = d -> {
             // anything you'd never looted before? (checked before this bag is logged)
             try {
@@ -178,6 +189,18 @@ final class Account {
         if (dungeonPage != null) dungeonPage.changed();
         if (puzzlePage != null) puzzlePage.changed();
         if (aboutPanel != null) aboutPanel.changed();
+    }
+
+    /** Notes the current character's gear, inventory and backpack for the Collection. */
+    void noteCharacterItems() {
+        if (key == null) return;
+        MeTracker.Thing c = me.character();
+        if (c == null) return;
+        int n = Owned.note(key, Owned.seasonal(c) ? Owned.SEASONAL_CHARACTER : Owned.CHARACTER, Owned.onCharacter(c));
+        if (n > 0) {
+            if (bookPage != null) bookPage.changed();
+            if (dungeonPage != null) dungeonPage.changed();
+        }
     }
 
     String key() {

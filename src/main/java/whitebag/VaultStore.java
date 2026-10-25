@@ -32,6 +32,8 @@ final class VaultStore {
     private long at = 0;
     /** vault-<account>.txt once the account is known (see useFile). */
     private volatile String file;
+    /** Called with {vault, gifts} once a whole vault has been read (for the Collection). */
+    volatile java.util.function.Consumer<int[][]> onRead = v -> { };
 
     VaultStore(Listener listener, java.util.function.Consumer<String> log) {
         this.listener = listener;
@@ -73,6 +75,13 @@ final class VaultStore {
             done = p.lastVaultPacket;
             items = count(vault) + count(potions) + count(gifts);
             if (done) save();
+        }
+        if (done) {
+            try {
+                onRead.accept(new int[][]{vault(), gifts()});
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         if (log != null && done) {
             log.accept("*sniff sniff* read your vault (" + items + " items in " + pieces + (pieces == 1 ? " piece" : " pieces") + "). It's in the Vault tab!");

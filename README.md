@@ -93,7 +93,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
 - **Loot**: every bag seen (all colours), by dungeon, dry streaks ("23 Shatters runs since your last white"),
   drop rates ("1 white per 12 Shatters runs") and best drops.
 - **Collection**: every UT and ST item that can drop (and every shiny version), by dungeon, greyed out until you've
-  looted it. Share it on Discord,
+  looted it or the pup has seen it in your vault, seasonal vault or on one of your characters. Share it on Discord,
   and bag posts say when an item is new to your collection.
 - **Dungeons**: every dungeon side by side, with its difficulty, what drops the portal and the UT/ST items there. Hover over an item to see if it's in your collection.
 - **Wardrobe** (under Me): hats and outfits for the pup, unlocked by badges.
@@ -127,6 +127,7 @@ Everything stays in the app's folder on your PC:
 | File | What's in it |
 | --- | --- |
 | `titles-worn.txt` | The titles the pup has seen you wear |
+| `owned-items.txt` | Items the pup has seen in your vaults and on your characters (for the Collection) |
 | `titles-debug.txt` | What the pup found for your title in the game files (send it over if your title shows wrong) |
 | `whitebag-notifier.properties` | Your settings and webhook URLs (keep this private) |
 | `events.properties` | Your Events tick boxes |

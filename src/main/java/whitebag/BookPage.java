@@ -68,7 +68,7 @@ final class BookPage extends MoreTabs.Page {
             if (myRuns == null || everyAccount || myRuns.test(r)) runsBy.merge(r.map, 1, Integer::sum);
         }
         final boolean shiny = book == 1;
-        Map<LootBook.Item, LootBook.Found> found = shiny ? LootBook.foundShinies(bags) : LootBook.found(bags);
+        Map<LootBook.Item, LootBook.Found> found = shiny ? LootBook.foundShinies(bags, a -> true) : LootBook.found(bags, a -> true);
         List<LootBook.Place> places = shiny ? LootBook.shinyPlaces() : LootBook.places();
         int total = shiny ? LootBook.shinies().size() : LootBook.itemCount();
 
@@ -180,7 +180,8 @@ final class BookPage extends MoreTabs.Page {
                     : allPlaces ? "Nothing to show." : "Run a dungeon (or pick Every dungeon) and its items show up here."));
         }
         gap(6);
-        list.add(note("Counted from every bag the pup has seen (the Loot tab's log). Where items drop comes from the "
+        list.add(note("Counted from every bag the pup has seen (the Loot tab's log), plus everything it has seen in your vault, "
+                + "your seasonal vault and on your characters (open each vault once, and play each character for a minute). Where items drop comes from the "
                 + "RealmEye wiki, so very new items may be missing. Hover an item for details."));
     }
 
@@ -347,9 +348,7 @@ final class BookPage extends MoreTabs.Page {
             if (it.places.size() > 6) sb.append(" and ").append(it.places.size() - 5).append(" more places");
             sb.append("<br>");
             if (f == null) sb.append("<i>Not found yet</i>");
-            else sb.append("Found ").append(f.times == 1 ? "once" : f.times + " times").append(", first on ")
-                    .append(new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(f.first * 1000L)))
-                    .append(f.where.isEmpty() ? "" : " in " + esc(f.where));
+            else sb.append(LootBook.describe(f));
             return sb.append("</div></html>").toString();
         }
 
