@@ -3,6 +3,11 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.7
+
+- Titles read exactly like in game, using the game's own title data: your name, then the prefix, then the suffix
+  ("Sophie the Wanderer", or just "Sophie the"). An empty title slot shows nothing.
+
 ## 2.6.6
 
 - Empty title slots (the game's "the Blank Suffix") aren't shown: no title just shows your name.

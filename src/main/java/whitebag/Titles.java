@@ -13,7 +13,9 @@ import java.util.regex.Pattern;
 
 /**
  * Player titles ("Sophie the Wanderer"). The game sends a player's name as "Sophie,a19d,fe3": the name, then the
- * prefix and suffix titles as hex ids. The words for those ids are in the game files the app extracts (assets/xml).
+ * title parts as hex ids. Each part is an Object of class Title in the game files the app extracts (assets/xml), with
+ * its words in DisplayId and a TitleType of Prefix or Suffix. Like in game, both go after the name: name, prefix,
+ * suffix ("Sophie" + "the" + "Wanderer"). An empty DisplayId (Title_Blank_Suffix) means that slot is empty.
  * What was found for each id is written to titles-debug.txt, so a title that comes out wrong can be fixed.
  */
 final class Titles {
@@ -22,6 +24,8 @@ final class Titles {
 
     /** id -> title words ("" if it has none), looked up once. */
     private static final Map<Integer, String> words = new HashMap<>();
+    /** id -> "prefix" / "suffix" (from the game's TitleType), or "" if it doesn't say. */
+    private static final Map<Integer, String> kinds = new HashMap<>();
     private static final List<String> debug = new ArrayList<>();
     private static final Pattern TYPE = Pattern.compile("<(\\w+)([^>]*?)\\btype\\s*=\\s*\"(0x[0-9a-fA-F]+|\\d+)\"([^>]*)>", Pattern.CASE_INSENSITIVE);
 
@@ -35,16 +39,15 @@ final class Titles {
     /** "Sophie the Wanderer" from "Sophie" and "a19d,fe3" (just the name if the titles can't be found). */
     static String titled(String name, String codes) {
         if (name == null || name.isEmpty() || codes == null || codes.isEmpty()) return name == null ? "" : name;
-        // the codes don't say which part goes where, so the wording does: "the Wanderer" and "of the Realm" go after
-        // the name, anything else ("Mighty") in front of it
-        StringBuilder before = new StringBuilder(), after = new StringBuilder();
+        // like in game: the name, then the prefix, then the suffix ("Sophie the Wanderer")
+        StringBuilder prefix = new StringBuilder(), suffix = new StringBuilder(), other = new StringBuilder();
         for (String code : codes.split(",")) {
             String w = word(code);
             if (w.isEmpty() || placeholder(w)) continue;
-            if (goesAfter(w)) after.append(' ').append(w);
-            else before.append(w).append(' ');
+            String k = kindOf(code);
+            (k.equals("prefix") ? prefix : k.equals("suffix") ? suffix : other).append(' ').append(w);
         }
-        return before + name + after;
+        return name + prefix + other + suffix;
     }
 
     /** "Sophie,a19d,fe3" -> "Sophie the Wanderer". */
@@ -54,13 +57,24 @@ final class Titles {
 
     /** The game's stand-ins for an empty title slot ("the Blank Suffix", "Empty Prefix", "None"): not shown. */
     static boolean placeholder(String title) {
-        return title.toLowerCase(Locale.ROOT).matches(".*\\b(blank|empty|none|no title|placeholder|unset)\\b.*");
+        String t = title.trim().toLowerCase(Locale.ROOT);
+        // "blank"/"empty" anywhere ("the Blank Suffix"), or a title that is only "None" (not "Second to None")
+        return t.matches(".*\\b(blank|empty|placeholder)\\b.*") || t.matches("(the )?(none|no title|unset)");
     }
 
     /** "the Wanderer", "of the Realm", "from Beyond": words that come after a name. */
     static boolean goesAfter(String title) {
         String t = title.trim().toLowerCase(Locale.ROOT);
         return t.startsWith("the ") || t.startsWith("of ") || t.startsWith("from ") || t.startsWith("who ") || t.startsWith(",");
+    }
+
+    private static synchronized String kindOf(String hex) {
+        try {
+            String k = kinds.get(Integer.parseInt(hex.trim(), 16));
+            return k == null ? "" : k;
+        } catch (NumberFormatException e) {
+            return "";
+        }
     }
 
     private static synchronized String word(String hex) {
@@ -112,20 +126,27 @@ final class Titles {
                 }
                 if (got != id) continue;
                 String tag = m.group(1);
-                boolean titleLike = tag.toLowerCase(Locale.ROOT).contains("title") || f.getName().toLowerCase(Locale.ROOT).contains("title");
-                // the entry's body (up to its end tag) for a DisplayId / Text child
+                // the entry's body (up to its end tag): DisplayId, Class and TitleType
                 int end = text.indexOf("</" + tag + ">", m.end());
                 String body = m.group(0).endsWith("/>") || end < 0 ? "" : text.substring(m.end(), Math.min(end, m.end() + 2000));
                 String attrs = m.group(2) + " " + m.group(4);
-                String shown = child(body, "DisplayId");
-                if (shown.isEmpty()) shown = child(body, "Title");
-                if (shown.isEmpty()) shown = child(body, "Text");
-                if (shown.isEmpty()) shown = attr(attrs, "displayid");
-                if (shown.isEmpty()) shown = attr(attrs, "id");
+                boolean titleLike = child(body, "Class").equalsIgnoreCase("Title") || tag.toLowerCase(Locale.ROOT).contains("title")
+                        || f.getName().toLowerCase(Locale.ROOT).contains("title");
+                String type = child(body, "TitleType").toLowerCase(Locale.ROOT);
+                if (type.startsWith("pre")) kinds.put(id, "prefix");
+                else if (type.startsWith("suf")) kinds.put(id, "suffix");
+                String shown;
+                if (has(body, "DisplayId")) {
+                    shown = child(body, "DisplayId"); // empty means no title in this slot
+                } else {
+                    shown = child(body, "Text");
+                    if (shown.isEmpty()) shown = attr(attrs, "displayid");
+                    if (shown.isEmpty()) shown = pretty(attr(attrs, "id"));
+                }
                 String snippet = (m.group(0) + " " + body).replaceAll("\\s+", " ").trim();
                 if (snippet.length() > 300) snippet = snippet.substring(0, 300) + "...";
                 debug.add(hex + " -> " + (shown.isEmpty() ? "(no name)" : shown) + "  [" + f.getName() + ", <" + tag + ">]  " + snippet);
-                if (titleLike) return pretty(shown);
+                if (titleLike) return shown.length() > 40 ? shown.substring(0, 40) : shown;
                 // not a title entry (items and enemies share the numbers): noted, but not used
             }
         }
@@ -136,6 +157,11 @@ final class Titles {
     private static String child(String body, String tag) {
         Matcher m = Pattern.compile("<" + tag + "\\b[^>]*>([^<]*)</" + tag + ">", Pattern.CASE_INSENSITIVE).matcher(body);
         return m.find() ? m.group(1).trim() : "";
+    }
+
+    /** True if the body has this tag at all (even empty, like {@code <DisplayId></DisplayId>} or {@code <DisplayId/>}). */
+    private static boolean has(String body, String tag) {
+        return Pattern.compile("<" + tag + "\\b", Pattern.CASE_INSENSITIVE).matcher(body).find();
     }
 
     private static String attr(String attrs, String name) {

@@ -24,7 +24,7 @@ final class UpdateCheck {
      * This build's version (never shown to users). Bump it for every release, and tag the GitHub release
      * the same: 1.0, 1.1, 1.2...
      */
-    static final String VERSION = "2.6.6";
+    static final String VERSION = "2.6.7";
 
     /** The GitHub repository releases come from, as "owner/name". Can be changed in the settings file (update.repo). */
     static final String DEFAULT_REPO = "mistresses/WhiteBagPup";
