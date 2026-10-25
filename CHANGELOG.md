@@ -3,6 +3,11 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.9
+
+- The version shows next to "White Bag Pup" at the top, in the window's title bar, and in the diary when the pup
+  opens.
+
 ## 2.6.8
 
 - **Titles page** (Me tab): every title in the game, prefixes and suffixes by tier, with the ones you've worn ticked

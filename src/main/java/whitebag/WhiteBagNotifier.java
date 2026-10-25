@@ -687,7 +687,7 @@ public class WhiteBagNotifier {
         TcpStreamErrorHandler.INSTANCE.setErrorMessageHandler((error, dump) -> log("*whimper* sniffer error: " + error));
         TcpStreamErrorHandler.INSTANCE.setErrorStopHandler(() -> SwingUtilities.invokeLater(this::stopSniffer));
 
-        frame = new JFrame("White Bag Pup");
+        frame = new JFrame("White Bag Pup " + UpdateCheck.VERSION);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setIconImages(java.util.Arrays.asList(Cute.catIcon(16), Cute.catIcon(32), Cute.catIcon(48), Cute.catIcon(64), Cute.catIcon(128), Cute.catIcon(256)));
 
@@ -1028,6 +1028,7 @@ public class WhiteBagNotifier {
         } else {
             log("*tilts head* no background.png in " + new File("").getAbsolutePath() + ", so using the plain colour.");
         }
+        log("*wags tail* White Bag Pup " + UpdateCheck.VERSION + " is awake!");
         log("*wags tail* hi! paste your webhook URL on the Webhooks tab, send a test post, then press Start watching.");
         if (autoStartBox.isSelected()) startSniffer();
     }
