@@ -62,6 +62,7 @@ final class Account {
     PuzzlePage puzzlePage;
     BadgesPage badgesPage;
     WardrobePage wardrobePage;
+    TitlesPage titlesPage;
     /** The grouped tabs (Loot, Fights, Me, Chat), made by the main window. */
     GroupPage lootGroup, fightsGroup, meGroup, chatGroup;
     final ShattersPuzzle puzzle;
@@ -154,6 +155,7 @@ final class Account {
         };
         badgesPage = new BadgesPage(() -> key, this::isMine);
         wardrobePage = new WardrobePage();
+        titlesPage = new TitlesPage(() -> key, this::isMine);
         killsPage = new KillsPage(d -> isMine(d.account));
         bookPage = new BookPage(e -> isMine(e.account),
                 r -> isMine(r.account));

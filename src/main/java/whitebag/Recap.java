@@ -282,6 +282,8 @@ final class Recap {
             }
         }
         if (name.isEmpty()) name = History.nameOf(account);
+        String titled = History.titledNameOf(account); // with the title, like "Sophie the Wanderer"
+        if (!titled.isEmpty() && (name.isEmpty() || titled.startsWith(name))) name = titled;
         // time in game, from the play log (1.6 on); older weeks fall back to the fame log's visits
         long logged = 0;
         Map<String, Long> loggedClass = new LinkedHashMap<>();

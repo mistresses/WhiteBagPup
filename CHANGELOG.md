@@ -3,9 +3,17 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.6.8
+
+- **Titles page** (Me tab): every title in the game, prefixes and suffixes by tier, with the ones you've worn ticked
+  off and the one you're wearing marked with a heart. Titles count once the pup sees you wearing them (kept in
+  titles-worn.txt).
+- Your title shows on the friends leaderboard and in recaps ("Sophie the Wanderer").
+
 ## 2.6.7
 
-- Titles read exactly like in game, using the game's own title data: your name, then the prefix, then the suffix, An empty title slot shows nothing.
+- Titles read exactly like in game, using the game's own title data: your name, then the prefix, then the suffix
+  ("Sophie the Wanderer", or just "Sophie the"). An empty title slot shows nothing.
 
 ## 2.6.6
 

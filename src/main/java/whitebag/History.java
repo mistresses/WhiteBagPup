@@ -212,7 +212,10 @@ final class History {
                 String[] f = l.split("\\|", -1);
                 if (f.length >= 2 && !f[0].isEmpty() && !f[1].isEmpty()) {
                     names.put(f[0], f[1]);
-                    if (f.length >= 3 && !f[2].isEmpty()) titles.put(f[0], f[2]);
+                    if (f.length >= 3 && !f[2].isEmpty()) {
+                        titles.put(f[0], f[2]);
+                        Titles.noteWorn(f[0], f[2]);
+                    }
                 }
             }
         }
@@ -240,6 +243,7 @@ final class History {
     static synchronized void rememberName(String account, String name) {
         if (account == null || account.isEmpty() || name == null || name.trim().isEmpty()) return;
         String codes = Titles.codes(name).replace('|', '/');
+        Titles.noteWorn(account, codes);
         name = clean(DpsTracker.cleanName(name)); // the game sends "Name,a19d,fe3": the name, then the title codes
         if (name.equals(names().get(account)) && codes.equals(titles.getOrDefault(account, ""))) return;
         names.put(account, name);

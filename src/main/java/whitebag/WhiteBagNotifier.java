@@ -658,6 +658,7 @@ public class WhiteBagNotifier {
             // pages drawn before the game files were read showed item numbers: read again and redraw
             ItemXml.reset();
             LootBook.reset();
+            Titles.reset();
             for (Account a : accounts) a.refreshPages();
             Badges.ready = true;
             if (!LootImage.gameSpritesReady) log("*tilts head* found item names but no sprite sheets, so posts will be text only.");
@@ -1233,14 +1234,14 @@ public class WhiteBagNotifier {
         Account a = new Account(accounts.size(), host);
         Runnable ui = () -> {
             a.buildPanels();
-            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.dungeonPage, a.killsPage, a.puzzlePage, a.badgesPage, a.wardrobePage, a.eventsPage, a.famePage, a.tradesPage}) {
+            for (JComponent page : new JComponent[]{a.bagLog, a.chatPanel, a.dpsPanel, a.aboutPanel, a.vaultPage, a.lootPage, a.bookPage, a.dungeonPage, a.killsPage, a.puzzlePage, a.badgesPage, a.wardrobePage, a.titlesPage, a.eventsPage, a.famePage, a.tradesPage}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE); // these scroll inside themselves
             }
             // related pages share a tab, with a switch along the top
             a.lootGroup = new GroupPage(new String[]{"Bag Log", "Stats", "Collection", "Dungeons"}, a.bagLog, a.lootPage, a.bookPage, a.dungeonPage);
             a.fightsGroup = new GroupPage(new String[]{"DPS", "Boss Kills"}, a.dpsPanel, a.killsPage);
             a.badgesPage.checkNow = () -> checkBadges(a); // opening Badges unlocks anything newly earned
-            a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges", "Wardrobe"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage, a.wardrobePage);
+            a.meGroup = new GroupPage(new String[]{"About Me", "Fame", "Vault", "Badges", "Wardrobe", "Titles"}, a.aboutPanel, a.famePage, a.vaultPage, a.badgesPage, a.wardrobePage, a.titlesPage);
             a.chatGroup = new GroupPage(new String[]{"Chat", "Trades"}, a.chatPanel, a.tradesPage);
             for (JComponent page : new JComponent[]{a.lootGroup, a.fightsGroup, a.meGroup, a.chatGroup}) {
                 page.putClientProperty("pixel.ownScroll", Boolean.TRUE);

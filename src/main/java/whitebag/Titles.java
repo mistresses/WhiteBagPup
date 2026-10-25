@@ -174,4 +174,126 @@ final class Titles {
         String t = s.replaceFirst("(?i)^(title|prefix|suffix)[ _.:-]+", "").replace('_', ' ').trim();
         return t.length() > 40 ? t.substring(0, 40) : t;
     }
+
+    // ---------------------------------------------------------------- every title, and the ones you've worn
+
+    /** One title from the game files. */
+    static final class Info {
+        final int id;
+        final String words, kind; // kind: "prefix", "suffix" or ""
+        final int tier;
+
+        Info(int id, String words, String kind, int tier) {
+            this.id = id;
+            this.words = words;
+            this.kind = kind;
+            this.tier = tier;
+        }
+
+        String hex() {
+            return Integer.toHexString(id);
+        }
+    }
+
+    private static List<Info> all;
+    private static final Pattern OBJECT = Pattern.compile("<Object\\b([^>]*)>(.*?)</Object>", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+
+    /** Every title in the game files (empty ones left out), or an empty list until they're extracted. */
+    static synchronized List<Info> all() {
+        if (all != null) return all;
+        List<Info> out = new ArrayList<>();
+        File[] files = new File("assets/xml").listFiles((d, n) -> n.toLowerCase(Locale.ROOT).endsWith(".xml"));
+        if (files == null) return out; // not extracted yet: try again later
+        java.util.Set<Integer> seen = new java.util.HashSet<>();
+        for (File f : files) {
+            String text;
+            try {
+                if (f.length() > 64L * 1024 * 1024) continue;
+                text = new String(Files.readAllBytes(f.toPath()), StandardCharsets.UTF_8);
+            } catch (Exception e) {
+                continue;
+            }
+            if (!text.contains("TitleType") && !text.toLowerCase(Locale.ROOT).contains("<class>title</class>")) continue;
+            Matcher m = OBJECT.matcher(text);
+            while (m.find()) {
+                String body = m.group(2);
+                if (!child(body, "Class").equalsIgnoreCase("Title")) continue;
+                String t = attr(m.group(1), "type");
+                int id;
+                try {
+                    id = t.toLowerCase(Locale.ROOT).startsWith("0x") ? Integer.parseInt(t.substring(2), 16) : Integer.parseInt(t);
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+                String words = has(body, "DisplayId") ? child(body, "DisplayId") : pretty(attr(m.group(1), "id"));
+                if (words.isEmpty() || placeholder(words) || !seen.add(id)) continue;
+                String type = child(body, "TitleType").toLowerCase(Locale.ROOT);
+                int tier = 0;
+                try {
+                    tier = Integer.parseInt(child(body, "TitleTier"));
+                } catch (NumberFormatException ignored) {
+                }
+                out.add(new Info(id, words, type.startsWith("pre") ? "prefix" : type.startsWith("suf") ? "suffix" : "", tier));
+            }
+        }
+        out.sort((a, b) -> a.tier != b.tier ? Integer.compare(a.tier, b.tier) : a.words.compareToIgnoreCase(b.words));
+        if (!out.isEmpty()) all = out;
+        return out;
+    }
+
+    /** Forget the list (after the game files are read again). */
+    static synchronized void reset() {
+        all = null;
+        words.clear();
+        kinds.clear();
+    }
+
+    private static final String WORN_FILE = "titles-worn.txt";
+    private static Map<String, Long> worn; // "account|hex" -> when first seen (Unix seconds)
+
+    private static Map<String, Long> worn() {
+        if (worn == null) {
+            worn = new java.util.LinkedHashMap<>();
+            try {
+                for (String l : Files.readAllLines(new File(WORN_FILE).toPath(), StandardCharsets.UTF_8)) {
+                    String[] f = l.split("\\|");
+                    if (f.length >= 3) worn.putIfAbsent(f[0] + "|" + f[1].toLowerCase(Locale.ROOT), Long.parseLong(f[2]));
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        return worn;
+    }
+
+    /** Remembers the titles this account is wearing ("a19d,fe3"), in titles-worn.txt. */
+    static synchronized void noteWorn(String account, String codes) {
+        if (account == null || account.isEmpty() || codes == null || codes.isEmpty()) return;
+        long now = System.currentTimeMillis() / 1000;
+        for (String c : codes.split(",")) {
+            String hex = c.trim().toLowerCase(Locale.ROOT);
+            if (!hex.matches("[0-9a-f]{1,8}") || hex.matches("0+")) continue;
+            String k = account + "|" + hex;
+            if (worn().containsKey(k)) continue;
+            worn.put(k, now);
+            try {
+                Files.write(new File(WORN_FILE).toPath(), java.util.Collections.singletonList(k + "|" + now), StandardCharsets.UTF_8,
+                        java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
+    /** The title ids any of these accounts has worn, with when each was first seen. */
+    static synchronized Map<Integer, Long> wornBy(java.util.function.Predicate<String> mine) {
+        Map<Integer, Long> out = new HashMap<>();
+        for (Map.Entry<String, Long> e : worn().entrySet()) {
+            int bar = e.getKey().lastIndexOf('|');
+            if (!mine.test(e.getKey().substring(0, bar))) continue;
+            try {
+                out.merge(Integer.parseInt(e.getKey().substring(bar + 1), 16), e.getValue(), Math::min);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return out;
+    }
 }

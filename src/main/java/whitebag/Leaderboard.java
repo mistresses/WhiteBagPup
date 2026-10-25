@@ -127,6 +127,8 @@ final class Leaderboard {
         StringBuilder j = new StringBuilder("{");
         j.append("\"id\":").append(DiscordWebhook.str(idOf(account)));
         j.append(",\"name\":").append(DiscordWebhook.str(name.trim()));
+        String titled = History.titledNameOf(account); // "Sophie the Wanderer", shown on the board
+        if (!titled.isEmpty() && !titled.equals(name.trim())) j.append(",\"title\":").append(DiscordWebhook.str(titled));
         j.append(",\"version\":").append(DiscordWebhook.str(UpdateCheck.VERSION));
         j.append(",\"days\":");
         numbers(j, days);

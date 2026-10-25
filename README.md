@@ -97,6 +97,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
   and bag posts say when an item is new to your collection.
 - **Dungeons**: every dungeon side by side, with its difficulty, what drops the portal and the UT/ST items there. Hover over an item to see if it's in your collection.
 - **Wardrobe** (under Me): hats and outfits for the pup, unlocked by badges.
+- **Titles** (under Me): every title in the game, with the ones you've worn ticked off.
 - **Badges**: pup achievements that unlock as you play, announced on Discord.
 - **Puzzle**: a solver for The Shatters' Puzzle Room: the towers to shoot to turn them all green.
 - **Trades**: every trade you finish, who with, and what you gave and got.
@@ -125,6 +126,7 @@ Everything stays in the app's folder on your PC:
 
 | File | What's in it |
 | --- | --- |
+| `titles-worn.txt` | The titles the pup has seen you wear |
 | `titles-debug.txt` | What the pup found for your title in the game files (send it over if your title shows wrong) |
 | `whitebag-notifier.properties` | Your settings and webhook URLs (keep this private) |
 | `events.properties` | Your Events tick boxes |
