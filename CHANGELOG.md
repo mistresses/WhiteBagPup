@@ -3,6 +3,10 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.8.9
+
+- The app icon presets no longer include the bags. If you'd picked one, the pup goes back to the Golden cat.
+
 ## 2.8.8
 
 - **App icon** on Home: pick the pup's window and taskbar icon from 8 pixel-art presets: Golden cat, Your pup (wearing

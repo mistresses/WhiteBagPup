@@ -18,7 +18,7 @@ final class AppIcon {
     }
 
     enum Preset {
-        CAT("Golden cat"), PUP("Your pup"), WHITE_BAG("White bag"), GOLD_BAG("Gold bag"), PAW("Pink paw"),
+        CAT("Golden cat"), PUP("Your pup"), PAW("Pink paw"),
         HEART("Heart"), BONE("Bone"), STAR("Shiny star");
         final String label;
 
@@ -48,24 +48,6 @@ final class AppIcon {
         PAL.put('R', 0xFFFF6FA8); // ribbon
     }
 
-    private static final String[] BAG = {
-            "................",
-            "......OOOO......",
-            ".....ORRRRO.....",
-            "......ORRO......",
-            ".....OWWWWO.....",
-            "....OWWWWWWO....",
-            "...OWWWWWWWGO...",
-            "..OWWWWWWWWWGO..",
-            "..OWWWWWWWWWGO..",
-            ".OWWWWWWWWWWWGO.",
-            ".OWWWWWWWWWWWGO.",
-            ".OWWWWWWWWWWGGO.",
-            ".OWWWWWWWWWGGGO.",
-            "..OWWWWWWWGGGO..",
-            "...OOOOOOOOOO...",
-            "................",
-    };
     private static final String[] PAW = {
             "................",
             "....OO....OO....",
@@ -149,12 +131,6 @@ final class AppIcon {
         return img;
     }
 
-    private static String[] recolour(String[] rows, char from, char to, char from2, char to2) {
-        String[] out = new String[rows.length];
-        for (int i = 0; i < rows.length; i++) out[i] = rows[i].replace(from, to).replace(from2, to2);
-        return out;
-    }
-
     /** The preset's pixel art at its own size (16 x 16, or the pup's frame), on a transparent background. */
     static BufferedImage art(Preset p) {
         switch (p) {
@@ -176,8 +152,6 @@ final class AppIcon {
                 g.dispose();
                 return sq;
             }
-            case WHITE_BAG: return sprite(BAG);
-            case GOLD_BAG: return sprite(recolour(BAG, 'W', 'Y', 'G', 'D'));
             case PAW: return sprite(PAW);
             case HEART: return sprite(HEART);
             case BONE: return sprite(BONE);
