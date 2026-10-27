@@ -42,6 +42,12 @@ final class Badges {
         long puzzleSolved, puzzlePerfect, practicePerfect, practiceSolved;
         long pets, bags, shinies, busiestDay, nightRuns, dungeonsVisited, playDays, mostWhitesOneRun;
         long mostWhitesOneDay, topDamageTotal;
+        // more badges (2.8)
+        long reds, oranges, golds, eggs, blues, cyans, boostedWhites, boosted, colours, mostColoursOneDay;
+        long rares, items, mostLegendariesOneBag, mostDivinesOneDay, whiteDungeons, whiteRunsInARow, firstRunWhites, quickWhites;
+        long longestRunMinutes, earlyRuns, dungeons10, dungeons25, dayStreak, longestSessionHours;
+        long minibosses, differentBosses, quickKills, biggestHit, topBigGroup, mostEventsOneDay, mostFameOneDay, classes;
+        long tradePartners, vaultItems, seasonalItems, badges, wardrobe, titles, darkMode, spookyWhites, festiveWhites, newYear;
         String mostRunDungeon = "";
     }
 
@@ -155,7 +161,96 @@ final class Badges {
             new Badge("puzzleprodigy", "Puzzle Prodigy", "Solve the Shatters puzzle in the fewest shots 50 times", "P", Tier.PRISMATIC, 50, s -> s.puzzlePerfect),
             new Badge("puzzlemachine", "Puzzle Machine", "Solve 2,000 practice puzzles", "paw", Tier.PRISMATIC, 2000, s -> s.practiceSolved),
             new Badge("merchantprince", "Merchant Prince", "Finish 500 trades", "$", Tier.PRISMATIC, 500, s -> s.trades),
-            new Badge("spoiledbeyond", "Spoiled Beyond Belief", "Pet the pup 10,000 times", "♥", Tier.PRISMATIC, 10_000, s -> s.pets)));
+            new Badge("spoiledbeyond", "Spoiled Beyond Belief", "Pet the pup 10,000 times", "♥", Tier.PRISMATIC, 10_000, s -> s.pets),
+            // ---- bags of every colour
+            new Badge("red1", "Seeing Red", "Loot a red bag", "bone", Tier.BRONZE, 1, s -> s.reds),
+            new Badge("red25", "Red Alert", "Loot 25 red bags", "bone", Tier.SILVER, 25, s -> s.reds),
+            new Badge("red100", "Crimson Tide", "Loot 100 red bags", "bone", Tier.GOLD, 100, s -> s.reds),
+            new Badge("orange10", "Orange You Glad", "Loot 10 orange bags", "bone", Tier.BRONZE, 10, s -> s.oranges),
+            new Badge("orange100", "Tangerine Dream", "Loot 100 orange bags", "bone", Tier.GOLD, 100, s -> s.oranges),
+            new Badge("gold25", "Golden Retriever", "Loot 25 gold bags", "bone", Tier.SILVER, 25, s -> s.golds),
+            new Badge("gold250", "Midas Paws", "Loot 250 gold bags", "bone", Tier.PINK, 250, s -> s.golds),
+            new Badge("egg10", "Egg Hunt", "Loot 10 egg baskets", "bone", Tier.BRONZE, 10, s -> s.eggs),
+            new Badge("egg50", "Easter Pup", "Loot 50 egg baskets", "bone", Tier.GOLD, 50, s -> s.eggs),
+            new Badge("blue25", "Feeling Blue", "Loot 25 blue bags", "bone", Tier.SILVER, 25, s -> s.blues),
+            new Badge("blue250", "Deep Blue", "Loot 250 blue bags", "bone", Tier.PINK, 250, s -> s.blues),
+            new Badge("cyan1", "Cyan Sighting", "Loot a cyan bag", "bone", Tier.SILVER, 1, s -> s.cyans),
+            new Badge("cyan10", "Cyan Collector", "Loot 10 cyan bags", "bone", Tier.PINK, 10, s -> s.cyans),
+            new Badge("boostwhite", "Boost Mode", "Loot a boosted white bag", "W", Tier.SILVER, 1, s -> s.boostedWhites),
+            new Badge("boostwhite10", "Turbo Snow", "Loot 10 boosted white bags", "W", Tier.PINK, 10, s -> s.boostedWhites),
+            new Badge("boosted100", "Supercharged", "Loot 100 boosted bags of any colour", "bone", Tier.GOLD, 100, s -> s.boosted),
+            new Badge("rainbow", "Taste the Rainbow", "Loot a bag of every colour", "★", Tier.GOLD, 7, s -> s.colours),
+            new Badge("doublerainbow", "Double Rainbow", "Loot a bag of every colour in one day", "★", Tier.PRISMATIC, 7, s -> s.mostColoursOneDay),
+            // ---- items
+            new Badge("rare100", "Rare Breed", "Loot 100 Rare items", "L", Tier.SILVER, 100, s -> s.rares),
+            new Badge("packrat", "Pack Rat", "Loot 1,000 items from bags", "bone", Tier.GOLD, 1000, s -> s.items),
+            new Badge("hoard", "Dragon's Hoard", "Loot 10,000 items from bags", "bone", Tier.PRISMATIC, 10_000, s -> s.items),
+            new Badge("legendtrio", "Legendary Trio", "Get 3 Legendary items in one bag", "L", Tier.PINK, 3, s -> s.mostLegendariesOneBag),
+            new Badge("divinedouble", "Heaven Sent", "Loot 2 Divine items in one day", "D", Tier.PINK, 2, s -> s.mostDivinesOneDay),
+            // ---- white bags
+            new Badge("snowday", "Snow Day", "Loot 3 white bags in one day", "W", Tier.SILVER, 3, s -> s.mostWhitesOneDay),
+            new Badge("snowstorm", "Snowstorm", "Loot 5 white bags in one day", "W", Tier.GOLD, 5, s -> s.mostWhitesOneDay),
+            new Badge("whiteout10", "White Out", "Loot white bags in 10 different dungeons", "W", Tier.GOLD, 10, s -> s.whiteDungeons),
+            new Badge("whiteout25", "Snow Globe Trotter", "Loot white bags in 25 different dungeons", "W", Tier.PINK, 25, s -> s.whiteDungeons),
+            new Badge("whiteout50", "Winter Everywhere", "Loot white bags in 50 different dungeons", "W", Tier.PRISMATIC, 50, s -> s.whiteDungeons),
+            new Badge("backtoback", "Back to Back", "Get a white bag in 2 runs in a row", "2", Tier.GOLD, 2, s -> s.whiteRunsInARow),
+            new Badge("hattrick", "Hat Trick", "Get a white bag in 3 runs in a row", "3", Tier.PRISMATIC, 3, s -> s.whiteRunsInARow),
+            new Badge("beginnersluck", "Beginner's Luck", "Get a white bag on your first run of a dungeon", "!", Tier.GOLD, 1, s -> s.firstRunWhites),
+            new Badge("smashgrab", "Smash and Grab", "Get a white bag in a run under 5 minutes", "Z", Tier.PINK, 1, s -> s.quickWhites),
+            new Badge("spooky", "Spooky Pup", "Loot a white bag in October", "W", Tier.SILVER, 1, s -> s.spookyWhites),
+            new Badge("festive", "Festive Pup", "Loot a white bag in December", "W", Tier.SILVER, 1, s -> s.festiveWhites),
+            // ---- runs and play
+            new Badge("earlybird", "Early Bird", "Start a dungeon run between 5 and 7 am", "M", Tier.BRONZE, 1, s -> s.earlyRuns),
+            new Badge("nightowl", "Night Owl", "Start 50 runs between midnight and 4 am", "M", Tier.GOLD, 50, s -> s.nightRuns),
+            new Badge("longhaul", "Long Haul", "Spend an hour in one dungeon", "T", Tier.SILVER, 60, s -> s.longestRunMinutes),
+            new Badge("regulars", "Regular Customer", "Run 10 different dungeons 10 times each", "R", Tier.GOLD, 10, s -> s.dungeons10),
+            new Badge("everycorner", "Know Every Corner", "Run 25 different dungeons 25 times each", "R", Tier.PRISMATIC, 25, s -> s.dungeons25),
+            new Badge("dailywalk", "Daily Walkies", "Play 7 days in a row", "♥", Tier.SILVER, 7, s -> s.dayStreak),
+            new Badge("goodhabit", "Good Habit", "Play 30 days in a row", "♥", Tier.PINK, 30, s -> s.dayStreak),
+            new Badge("nevermiss", "Never Miss a Day", "Play 100 days in a row", "♥", Tier.PRISMATIC, 100, s -> s.dayStreak),
+            new Badge("session6", "Marathon Pup", "Play for 6 hours in one go", "T", Tier.GOLD, 6, s -> s.longestSessionHours),
+            new Badge("session12", "No Sleep Pup", "Play for 12 hours in one go", "T", Tier.PINK, 12, s -> s.longestSessionHours),
+            new Badge("time1000", "Realm Lifer", "Play for 1,000 hours", "T", Tier.PINK, 1000, s -> s.playSeconds / 3600),
+            new Badge("newyear", "Happy New Year", "Play on the 1st of January", "★", Tier.GOLD, 1, s -> s.newYear),
+            // ---- fights
+            new Badge("firstbite", "First Bite", "Help kill a boss", "B", Tier.BRONZE, 1, s -> s.bossKills),
+            new Badge("mini100", "Mini Menace", "Help kill 100 minibosses", "B", Tier.SILVER, 100, s -> s.minibosses),
+            new Badge("mini1000", "Mini Massacre", "Help kill 1,000 minibosses", "B", Tier.PINK, 1000, s -> s.minibosses),
+            new Badge("bestiary25", "Monster Manual", "Kill 25 different bosses", "B", Tier.GOLD, 25, s -> s.differentBosses),
+            new Badge("bestiary75", "Bestiary", "Kill 75 different bosses", "B", Tier.PRISMATIC, 75, s -> s.differentBosses),
+            new Badge("quickkill", "Speed Kill", "Kill a boss in under 10 seconds", "!", Tier.GOLD, 1, s -> s.quickKills),
+            new Badge("hit100k", "Heavy Hitter", "Do 100,000 damage to one boss", "!", Tier.GOLD, 100_000, s -> s.biggestHit),
+            new Badge("hit500k", "Big Bark", "Do 500,000 damage to one boss", "!", Tier.PRISMATIC, 500_000, s -> s.biggestHit),
+            new Badge("showoff", "Show Off", "Do the most damage in a group 5 times", "1", Tier.BRONZE, 5, s -> s.topDamage),
+            new Badge("topofpack", "Top of the Pack", "Do the most damage with 10 or more players", "1", Tier.PINK, 1, s -> s.topBigGroup),
+            new Badge("eventday", "Event Marathon", "Help kill 20 realm events in one day", "E", Tier.PINK, 20, s -> s.mostEventsOneDay),
+            new Badge("events100", "Event Regular", "Help kill 100 realm events", "E", Tier.GOLD, 100, s -> s.eventKills),
+            // ---- fame and classes
+            new Badge("fame1k", "Rising Star", "Gain 1,000 fame", "F", Tier.BRONZE, 1000, s -> s.fame),
+            new Badge("famerush", "Fame Rush", "Gain 2,000 fame in one day", "F", Tier.GOLD, 2000, s -> s.mostFameOneDay),
+            new Badge("class5", "Class Act", "Gain fame on 5 different classes", "C", Tier.SILVER, 5, s -> s.classes),
+            new Badge("class10", "Jack of All Trades", "Gain fame on 10 different classes", "C", Tier.GOLD, 10, s -> s.classes),
+            new Badge("class15", "Master of Many", "Gain fame on 15 different classes", "C", Tier.PINK, 15, s -> s.classes),
+            // ---- trades, vaults and collection
+            new Badge("trades50", "Haggler", "Finish 50 trades", "$", Tier.SILVER, 50, s -> s.trades),
+            new Badge("trades100", "Trader Pup", "Finish 100 trades", "$", Tier.GOLD, 100, s -> s.trades),
+            new Badge("partners25", "Social Butterfly", "Trade with 25 different players", "$", Tier.PINK, 25, s -> s.tradePartners),
+            new Badge("collect50", "Hobbyist", "Find 50 items for your collection", "C", Tier.SILVER, 50, s -> s.collection),
+            new Badge("collect200", "Gallery", "Find 200 items for your collection", "C", Tier.PINK, 200, s -> s.collection),
+            new Badge("shiny3", "Sparkle", "Find 3 shiny items", "★", Tier.GOLD, 3, s -> s.shinies),
+            new Badge("vault100", "Vault Keeper", "Have 100 different items in your vaults", "V", Tier.GOLD, 100, s -> s.vaultItems),
+            new Badge("seasonal25", "Seasonal Stash", "Own 25 different items in seasonal", "S", Tier.SILVER, 25, s -> s.seasonalItems),
+            // ---- the pup
+            new Badge("pets100", "Head Scratches", "Pet the pup 100 times", "♥", Tier.SILVER, 100, s -> s.pets),
+            new Badge("practice100", "Puzzle Champ", "Solve 100 practice puzzles", "paw", Tier.GOLD, 100, s -> s.practiceSolved),
+            new Badge("practiceperfect100", "Flawless", "Solve 100 practice puzzles perfectly", "paw", Tier.PINK, 100, s -> s.practicePerfect),
+            new Badge("nightpup", "Night Pup", "Turn on dark mode", "M", Tier.BRONZE, 1, s -> s.darkMode),
+            new Badge("dressup", "Dress Up", "Unlock 10 hats and outfits for the pup", "paw", Tier.GOLD, 10, s -> s.wardrobe),
+            new Badge("titles5", "Title Holder", "Wear 5 different titles", "T", Tier.SILVER, 5, s -> s.titles),
+            new Badge("titles25", "Name Dropper", "Wear 25 different titles", "T", Tier.PINK, 25, s -> s.titles),
+            new Badge("badges25", "Badge Collector", "Unlock 25 badges", "★", Tier.GOLD, 25, s -> s.badges),
+            new Badge("badges75", "Decorated", "Unlock 75 badges", "★", Tier.PINK, 75, s -> s.badges),
+            new Badge("badges150", "Overachiever", "Unlock 150 badges", "★", Tier.PRISMATIC, 150, s -> s.badges)));
 
     // ---------------------------------------------------------------- unlocked badges
 
@@ -373,7 +468,137 @@ final class Badges {
         java.util.Set<java.time.LocalDate> days = new java.util.HashSet<>();
         for (History.Play p : History.play()) if (mine.test(p.account)) days.add(java.time.Instant.ofEpochSecond(p.start).atZone(zone).toLocalDate());
         s.playDays = days.size();
+        more(s, account, mine, bags, runs, myKills, whitesAt, byMap, zone, days);
         return s;
+    }
+
+    /** The counts for the badges added in 2.8. */
+    private static void more(Stats s, String account, Predicate<String> mine, List<LootStats.Entry> bags, List<RunLog.Run> runs,
+                             List<History.Dps> myKills, Map<String, List<Long>> whitesAt, Map<String, Integer> byMap,
+                             java.time.ZoneId zone, java.util.Set<java.time.LocalDate> days) {
+        java.util.Set<BagType> colours = java.util.EnumSet.noneOf(BagType.class);
+        Map<java.time.LocalDate, java.util.Set<BagType>> coloursByDay = new HashMap<>();
+        Map<java.time.LocalDate, Integer> divinesByDay = new HashMap<>();
+        java.util.Set<String> whiteMaps = new java.util.HashSet<>();
+        for (LootStats.Entry e : bags) {
+            BagType c = LootStats.colour(e.type);
+            java.time.LocalDate d = java.time.Instant.ofEpochSecond(e.at).atZone(zone).toLocalDate();
+            switch (c) {
+                case RED: s.reds++; break;
+                case ORANGE: s.oranges++; break;
+                case GOLD: s.golds++; break;
+                case EGG: s.eggs++; break;
+                case BLUE: s.blues++; break;
+                case CYAN: s.cyans++; break;
+                case WHITE:
+                    if (!e.map.isEmpty()) whiteMaps.add(e.map);
+                    if (d.getMonthValue() == 10) s.spookyWhites++;
+                    if (d.getMonthValue() == 12) s.festiveWhites++;
+                    break;
+                default:
+            }
+            if (e.type.name().startsWith("BOOSTED_")) {
+                s.boosted++;
+                if (c == BagType.WHITE) s.boostedWhites++;
+            }
+            colours.add(c);
+            java.util.Set<BagType> today = coloursByDay.computeIfAbsent(d, k -> java.util.EnumSet.noneOf(BagType.class));
+            today.add(c);
+            s.mostColoursOneDay = Math.max(s.mostColoursOneDay, today.size());
+            s.items += e.items.size();
+            int legendaries = 0;
+            for (int r : e.rarity) {
+                if (r == 2) s.rares++;
+                if (r == 3) legendaries++;
+                if (r == 4) s.mostDivinesOneDay = Math.max(s.mostDivinesOneDay, divinesByDay.merge(d, 1, Integer::sum));
+            }
+            s.mostLegendariesOneBag = Math.max(s.mostLegendariesOneBag, legendaries);
+        }
+        s.colours = colours.size();
+        s.whiteDungeons = whiteMaps.size();
+
+        // runs, oldest first
+        List<RunLog.Run> sorted = new ArrayList<>();
+        for (RunLog.Run r : runs) if (!RunLog.isRealm(r.map)) sorted.add(r);
+        sorted.sort((a, b) -> Long.compare(a.at, b.at));
+        java.util.Set<String> ranBefore = new java.util.HashSet<>();
+        long inARow = 0;
+        for (RunLog.Run r : sorted) {
+            int whites = 0;
+            for (long at : whitesAt.getOrDefault(r.map, Collections.emptyList())) if (at >= r.at && at <= r.at + r.seconds + 10) whites++;
+            inARow = whites > 0 ? inARow + 1 : 0;
+            s.whiteRunsInARow = Math.max(s.whiteRunsInARow, inARow);
+            if (whites > 0 && !ranBefore.contains(r.map)) s.firstRunWhites++;
+            if (whites > 0 && r.seconds > 0 && r.seconds < 300) s.quickWhites++;
+            ranBefore.add(r.map);
+            s.longestRunMinutes = Math.max(s.longestRunMinutes, r.seconds / 60);
+            int h = java.time.Instant.ofEpochSecond(r.at).atZone(zone).getHour();
+            if (h >= 5 && h < 7) s.earlyRuns++;
+        }
+        for (int n : byMap.values()) {
+            if (n >= 10) s.dungeons10++;
+            if (n >= 25) s.dungeons25++;
+        }
+
+        // days in a row, longest sitting, new year
+        List<java.time.LocalDate> dayList = new ArrayList<>(days);
+        Collections.sort(dayList);
+        long streak = 0;
+        java.time.LocalDate prev = null;
+        for (java.time.LocalDate d : dayList) {
+            streak = prev != null && prev.plusDays(1).equals(d) ? streak + 1 : 1;
+            s.dayStreak = Math.max(s.dayStreak, streak);
+            if (d.getMonthValue() == 1 && d.getDayOfMonth() == 1) s.newYear = 1;
+            prev = d;
+        }
+        for (History.Play p : History.play()) if (mine.test(p.account)) s.longestSessionHours = Math.max(s.longestSessionHours, (p.end - p.start) / 3600);
+
+        // fights
+        java.util.Set<String> bosses = new java.util.HashSet<>();
+        Map<java.time.LocalDate, Integer> eventsByDay = new HashMap<>();
+        for (History.Dps d : KillsPage.oneEach(myKills)) {
+            boolean event = KillsPage.isEvent(d);
+            boolean boss = event || d.kind.isEmpty() || d.kind.equals("BOSS");
+            if (d.kind.equals("MINIBOSS")) s.minibosses++;
+            if (boss && !d.boss.isEmpty()) bosses.add(d.boss);
+            if (boss && d.seconds > 0 && d.seconds < 10) s.quickKills++;
+            s.biggestHit = Math.max(s.biggestHit, d.damage);
+            if (d.rank == 1 && d.players >= 10) s.topBigGroup++;
+            if (event) {
+                java.time.LocalDate day = java.time.Instant.ofEpochSecond(d.at).atZone(zone).toLocalDate();
+                s.mostEventsOneDay = Math.max(s.mostEventsOneDay, eventsByDay.merge(day, 1, Integer::sum));
+            }
+        }
+        s.differentBosses = bosses.size();
+
+        // fame and classes
+        Map<java.time.LocalDate, Long> fameByDay = new HashMap<>();
+        java.util.Set<String> classes = new java.util.HashSet<>();
+        for (History.Fame f : History.fame()) {
+            if (!mine.test(f.account)) continue;
+            java.time.LocalDate d = java.time.Instant.ofEpochSecond(f.end).atZone(zone).toLocalDate();
+            s.mostFameOneDay = Math.max(s.mostFameOneDay, fameByDay.merge(d, (long) f.gained, Long::sum));
+            if (!f.cls.isEmpty() && f.gained > 0) classes.add(f.cls);
+        }
+        s.classes = classes.size();
+
+        // trades, vaults
+        java.util.Set<String> partners = new java.util.HashSet<>();
+        for (TradeLog.Trade t : TradeLog.all()) if (mine.test(t.account) && !t.partner.isEmpty()) partners.add(t.partner.toLowerCase(java.util.Locale.ROOT));
+        s.tradePartners = partners.size();
+        java.util.Set<Integer> vault = new java.util.HashSet<>(), seasonal = new java.util.HashSet<>();
+        for (Owned.Sighting o : Owned.of(mine)) {
+            if (o.where.equals(Owned.VAULT) || o.where.equals(Owned.SEASONAL_VAULT)) vault.add(o.item);
+            if (o.where.equals(Owned.SEASONAL_VAULT) || o.where.equals(Owned.SEASONAL_CHARACTER)) seasonal.add(o.item);
+        }
+        s.vaultItems = vault.size();
+        s.seasonalItems = seasonal.size();
+
+        // the pup
+        s.badges = unlocked(account).size();
+        s.wardrobe = Wardrobe.owned();
+        s.titles = Titles.wornBy(mine).size();
+        s.darkMode = Theme.DARK ? 1 : 0;
     }
 
     // ---------------------------------------------------------------- files

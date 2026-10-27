@@ -3,6 +3,16 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.8.0
+
+- **81 new badges** (167 in all): bags of every colour (Seeing Red, Golden Retriever, Cyan Sighting, Taste the
+  Rainbow...), item hauls (Pack Rat, Legendary Trio, Heaven Sent), white bag feats (Snow Day, Back to Back, Hat Trick,
+  Beginner's Luck, Smash and Grab, Spooky Pup), play streaks (Daily Walkies, Good Habit, Marathon Pup), fights
+  (Mini Menace, Monster Manual, Speed Kill, Heavy Hitter, Top of the Pack), fame and classes (Class Act, Master of
+  Many), trades and vaults (Social Butterfly, Vault Keeper), and the pup itself (Night Pup, Dress Up, Name Dropper,
+  Badge Collector, Overachiever).
+- Badges you've already earned unlock quietly, so Discord isn't flooded when you update.
+
 ## 2.7.0
 
 - **Dark mode**: tick "Dark mode" on Home and the pup restarts in night colours (and wears pyjamas, unless you've
