@@ -85,7 +85,7 @@ final class Account {
         // everything in the vault, gift chest and seasonal spoils counts for the Collection; a seasonal character has its
         // own vault. A 4th (null) entry means it's the saved copy from last time, so it isn't known if it was seasonal.
         vault.onRead = v -> {
-            if (key == null) return;
+            if (key == null || (v.length < 4 && foreign())) return;
             boolean seasonal = v.length < 4 && Owned.seasonal(me.character());
             String where = seasonal ? Owned.SEASONAL_VAULT : Owned.VAULT;
             int n = Owned.note(key, where, v[0]) + Owned.note(key, Owned.GIFT_CHEST, v[1])
@@ -173,6 +173,7 @@ final class Account {
         bookPage = new BookPage(e -> isMine(e.account),
                 r -> isMine(r.account));
         bookPage.who = () -> key == null ? "" : History.nameOf(key);
+        bookPage.account = () -> key;
         dungeonPage = new DungeonPage(e -> isMine(e.account));
         lootPage = new MoreTabs.LootPage(e -> isMine(e.account),
                 r -> isMine(r.account));
@@ -193,9 +194,28 @@ final class Account {
         if (aboutPanel != null) aboutPanel.changed();
     }
 
+    /** The game account being played on this tab right now (with "I only play one account", it can be another). */
+    volatile String playing;
+    private volatile boolean warnedForeign;
+
+    /**
+     * True when "I only play one account" is on and someone else's account is logged in: its vault and characters
+     * don't go in your Collection.
+     */
+    boolean foreign() {
+        String p = playing;
+        boolean f = AccountRouter.singleAccount && key != null && p != null && !p.equals(key);
+        if (f && !warnedForeign) {
+            warnedForeign = true;
+            host.log(prefix() + "*sniff sniff* that's not your usual account, so its vault and characters won't go in your Collection.");
+        }
+        if (!f) warnedForeign = false;
+        return f;
+    }
+
     /** Notes the current character's gear, inventory and backpack for the Collection. */
     void noteCharacterItems() {
-        if (key == null) return;
+        if (key == null || foreign()) return;
         MeTracker.Thing c = me.character();
         if (c == null) return;
         int n = Owned.note(key, Owned.seasonal(c) ? Owned.SEASONAL_CHARACTER : Owned.CHARACTER, Owned.onCharacter(c));

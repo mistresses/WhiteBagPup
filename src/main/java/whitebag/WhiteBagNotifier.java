@@ -401,6 +401,14 @@ public class WhiteBagNotifier {
             else log("*nods* " + (dark.isSelected() ? "dark" : "light") + " mode starts next time you open the pup.");
         });
         section(home, dark, 2);
+        JLabel iconLabel = Pixel.label("App icon (window and taskbar)");
+        section(home, iconLabel, 12);
+        section(home, AppIcon.picker(AppIcon.of(settings.getProperty("app.icon")), p -> {
+            settings.setProperty("app.icon", p.name());
+            saveSettings();
+            if (frame != null) frame.setIconImages(AppIcon.images(p));
+            log("*wags* new app icon: " + p.label.toLowerCase(java.util.Locale.ROOT) + "!");
+        }), 6);
     }
 
     /** Closes and opens the pup again (onto a waiting update, if there is one). */
@@ -723,7 +731,7 @@ public class WhiteBagNotifier {
 
         frame = new JFrame("White Bag Pup");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setIconImages(java.util.Arrays.asList(Cute.catIcon(16), Cute.catIcon(32), Cute.catIcon(48), Cute.catIcon(64), Cute.catIcon(128), Cute.catIcon(256)));
+        frame.setIconImages(AppIcon.images(AppIcon.of(settings.getProperty("app.icon"))));
 
         // Background picture: put "background.png" next to the jar. Falls back to the plain colour if it's missing.
         final java.awt.image.BufferedImage bg = loadBackground();
@@ -791,6 +799,8 @@ public class WhiteBagNotifier {
             settings.setProperty(k, v);
             saveSettings();
             if (header != null) header.repaint();
+            if (frame != null && AppIcon.of(settings.getProperty("app.icon")) == AppIcon.Preset.PUP) // the pup icon wears it too
+                frame.setIconImages(AppIcon.images(AppIcon.Preset.PUP));
         };
         header = new Cute.Header();
         header.setAlignmentX(Component.LEFT_ALIGNMENT);

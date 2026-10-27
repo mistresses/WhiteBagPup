@@ -31,6 +31,8 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
         boolean confirmed;
         int myId = -1;
         String token;
+        /** The game's account id for this connection, once known. */
+        String key;
         final ArrayDeque<Packet> held = new ArrayDeque<>();
     }
 
@@ -39,6 +41,7 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
     private final Map<Integer, Conn> conns = new HashMap<>();
     private final Map<String, Account> byKey = new HashMap<>();
     private final Map<String, Account> byToken = new HashMap<>();
+    private final Map<String, String> keyByToken = new HashMap<>();
     /** "I only play one account" (Home): every connection goes to the first account and no others are made. */
     static volatile boolean singleAccount = false;
 
@@ -62,6 +65,7 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
 
         if (p instanceof HelloPacket) {
             c.token = ((HelloPacket) p).accessToken;
+            if (c.token != null) c.key = keyByToken.get(c.token);
             Account a = c.token == null ? null : byToken.get(c.token);
             if (a != null) bind(c, a, true);
         } else if (p instanceof CreateSuccessPacket) {
@@ -75,6 +79,7 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
             if (free != null) bind(c, free, false); // with one game open, go straight to the first account
         }
         if (c.account != null) {
+            if (c.key != null) c.account.playing = c.key;
             c.account.bus.emit(p);
         } else {
             c.held.add(p);
@@ -98,6 +103,9 @@ final class AccountRouter implements ConnectionRouter.Handler, ConnectionRouter.
                 if (s.statTypeNum == NAME_STAT && s.stringStatValue != null) name = DpsTracker.cleanName(s.stringStatValue);
             }
             if (acc == null) return;
+            c.key = acc;
+            if (c.token != null) keyByToken.put(c.token, acc);
+            if (c.account != null) c.account.playing = acc;
             Account a = accountFor(acc, c);
             if (name != null) a.setLabel(name);
             if (c.token != null) byToken.put(c.token, a);

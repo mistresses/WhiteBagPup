@@ -79,6 +79,31 @@ final class Owned {
         return fresh.size();
     }
 
+    /**
+     * Forgets what was seen for this account ("*" for every account) at or after {@code since} (Unix seconds; 0 for everything), e.g. after
+     * logging into someone else's account by mistake. Returns how many sightings were removed.
+     */
+    static synchronized int forget(String account, long since) {
+        if (account == null) return 0;
+        int n = 0;
+        for (java.util.Iterator<Sighting> it = seen().values().iterator(); it.hasNext(); ) {
+            Sighting s = it.next();
+            if ((account.equals("*") || s.account.equals(account)) && s.first >= since) {
+                it.remove();
+                n++;
+            }
+        }
+        if (n > 0) {
+            List<String> lines = new ArrayList<>();
+            for (Sighting s : seen.values()) lines.add(s.account + "|" + s.where + "|" + s.item + "|" + s.first);
+            try {
+                Files.write(Paths.get(FILE), lines, StandardCharsets.UTF_8);
+            } catch (Exception ignored) {
+            }
+        }
+        return n;
+    }
+
     /** Everything these accounts have been seen owning. */
     static synchronized List<Sighting> of(Predicate<String> mine) {
         List<Sighting> out = new ArrayList<>();

@@ -34,6 +34,8 @@ final class BookPage extends MoreTabs.Page {
     static volatile java.util.function.BiConsumer<byte[], String> share;
     /** This page's account's in-game name, for the shared picture. */
     java.util.function.Supplier<String> who = () -> "";
+    /** This tab's account id. */
+    java.util.function.Supplier<String> account = () -> null;
 
     BookPage(Predicate<LootStats.Entry> mine, Predicate<RunLog.Run> myRuns) {
         this.mine = mine;
@@ -111,6 +113,15 @@ final class BookPage extends MoreTabs.Page {
         Pixel.Button post = new Pixel.Button("Share on Discord", false);
         find.add(post);
         list.add(fit(find));
+        gap(6);
+        // on its own line, so a narrow window can't cut it off
+        JPanel fix = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        fix.setOpaque(false);
+        Pixel.Button forget = new Pixel.Button("Remove wrong items...", false);
+        forget.setToolTipText("Forget items the pup saw in a vault or on characters (e.g. after logging into another account by mistake)");
+        forget.addActionListener(e -> forgetOwned());
+        fix.add(forget);
+        list.add(fit(fix));
         if (searching) SwingUtilities.invokeLater(() -> {
             search.requestFocusInWindow();
             searching = false;
@@ -198,6 +209,25 @@ final class BookPage extends MoreTabs.Page {
     }
 
     /** A picture of your collection for Discord: the total, then each dungeon with a bar and what you've found. */
+    /** Forgets vault and character items seen in the last hour, today, or ever (they come back from your own vault). */
+    private void forgetOwned() {
+        String[] choices = {"Last hour", "Today", "Everything", "Cancel"};
+        int pick = JOptionPane.showOptionDialog(this,
+                "Forget items the pup saw in vaults and on characters?\n\n"
+                        + "Use this if you logged into another account by mistake and its items went into your Collection.\n"
+                        + "Items you looted in bags stay. Your own vault and characters are read again the next time you\n"
+                        + "go into your vault and play each character.",
+                "Remove wrong items", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+        if (pick < 0 || pick > 2) return;
+        long now = System.currentTimeMillis() / 1000;
+        long since = pick == 0 ? now - 3600
+                : pick == 1 ? java.time.LocalDate.now().atStartOfDay(java.time.ZoneId.systemDefault()).toEpochSecond() : 0;
+        int n = Owned.forget("*", since); // the Collection shows every account's items, so forget them all
+        JOptionPane.showMessageDialog(this, n == 0 ? "Nothing to remove from then." : "Removed " + n + (n == 1 ? " item." : " items.")
+                + "\nGo into your own vault (and seasonal vault) again to put your real items back.");
+        changed();
+    }
+
     static byte[] sharePng(String who, int found, int total, List<ShareRow> rows) {
         return sharePng(who, "collection", found, total, rows);
     }

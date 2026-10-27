@@ -3,6 +3,23 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.8.8
+
+- **App icon** on Home: pick the pup's window and taskbar icon from 8 pixel-art presets: Golden cat, Your pup (wearing
+  whatever it has on in the Wardrobe), White bag, Gold bag, Pink paw, Heart, Bone and Shiny star.
+
+## 2.8.7
+
+- The "Remove wrong items..." button on the Collection tab has its own line, so a narrow window can't hide it.
+
+## 2.8.6
+
+- **Remove wrong items...** on the Collection tab: forgets the items the pup saw in vaults and on characters in the
+  last hour, today, or ever, for when you log into another account by mistake. Looted bags stay. Your own items come
+  back the next time you go into your vault and play your characters.
+- With "I only play one account" on, logging into a different account no longer puts its vault or characters in
+  your Collection (the diary says so when it happens).
+
 ## 2.8.5
 
 - In trades, your gear (About Me) and the bag log, a slot's frame colour now only means its enchantment rarity
