@@ -24,15 +24,15 @@ final class VaultStore {
     private final Listener listener;
     private final java.util.function.Consumer<String> log;
     /** The game sends the vault in several pieces; these collect them until the last one arrives (like Puppy). */
-    private final List<Integer> inVault = new ArrayList<>(), inPotions = new ArrayList<>(), inGifts = new ArrayList<>();
+    private final List<Integer> inVault = new ArrayList<>(), inPotions = new ArrayList<>(), inGifts = new ArrayList<>(), inSpoils = new ArrayList<>();
     private boolean collecting = false;
     private int pieces = 0;
-    private int[] vault = new int[0], potions = new int[0], gifts = new int[0];
+    private int[] vault = new int[0], potions = new int[0], gifts = new int[0], spoils = new int[0];
     private int potionMax = -1;
     private long at = 0;
     /** vault-<account>.txt once the account is known (see useFile). */
     private volatile String file;
-    /** Called with {vault, gifts} once a whole vault has been read (for the Collection). */
+    /** Called with {vault, gifts, seasonal spoils} once a whole vault has been read, and with what was saved when it loads (for the Collection). */
     volatile java.util.function.Consumer<int[][]> onRead = v -> { };
 
     VaultStore(Listener listener, java.util.function.Consumer<String> log) {
@@ -47,6 +47,7 @@ final class VaultStore {
     synchronized int[] vault() { return vault.clone(); }
     synchronized int[] potions() { return potions.clone(); }
     synchronized int[] gifts() { return gifts.clone(); }
+    synchronized int[] spoils() { return spoils.clone(); }
     synchronized int potionMax() { return potionMax; }
     synchronized long updatedAt() { return at; }
 
@@ -59,11 +60,13 @@ final class VaultStore {
                 inVault.clear();
                 inPotions.clear();
                 inGifts.clear();
+                inSpoils.clear();
                 pieces = 0;
             }
             add(inVault, p.vaultContents);
             add(inPotions, p.potionContents);
             add(inGifts, p.giftContents);
+            add(inSpoils, p.seasonalSpoilContent);
             pieces++;
             if (p.currentPotionMax > 0) potionMax = p.currentPotionMax;
             collecting = !p.lastVaultPacket;
@@ -71,20 +74,28 @@ final class VaultStore {
             vault = toArray(inVault);
             potions = toArray(inPotions);
             gifts = toArray(inGifts);
+            spoils = toArray(inSpoils);
             at = System.currentTimeMillis();
             done = p.lastVaultPacket;
-            items = count(vault) + count(potions) + count(gifts);
+            items = count(vault) + count(potions) + count(gifts) + count(spoils);
             if (done) save();
         }
         if (done) {
             try {
-                onRead.accept(new int[][]{vault(), gifts()});
+                onRead.accept(new int[][]{vault(), gifts(), spoils()});
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         if (log != null && done) {
-            log.accept("*sniff sniff* read your vault (" + items + " items in " + pieces + (pieces == 1 ? " piece" : " pieces") + "). It's in the Vault tab!");
+            int v, g, sp;
+            synchronized (this) {
+                v = count(vault);
+                g = count(gifts);
+                sp = count(spoils);
+            }
+            log.accept("*sniff sniff* read your vault: " + v + " in the vault, " + g + " in the gift chest, " + sp + " in the seasonal spoils"
+                    + " (" + items + " items in all). It's in the Vault tab!");
         }
         try {
             listener.changed();
@@ -117,6 +128,7 @@ final class VaultStore {
         lines.add("vault|" + join(vault));
         lines.add("potions|" + join(potions));
         lines.add("gifts|" + join(gifts));
+        lines.add("spoils|" + join(spoils));
         try {
             if (file != null) Files.write(Paths.get(file), lines, StandardCharsets.UTF_8);
         } catch (Exception ignored) {
@@ -127,6 +139,13 @@ final class VaultStore {
     synchronized void useFile(String path) {
         file = path;
         load();
+        if (at > 0) { // the last vault seen before this version counts for the Collection too
+            try {
+                onRead.accept(new int[][]{vault.clone(), gifts.clone(), spoils.clone(), null});
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         try {
             listener.changed();
         } catch (Exception ignored) {
@@ -144,6 +163,7 @@ final class VaultStore {
                     case "vault": vault = split(f[1]); break;
                     case "potions": potions = split(f[1]); break;
                     case "gifts": gifts = split(f[1]); break;
+                    case "spoils": spoils = split(f[1]); break;
                     default:
                 }
             }

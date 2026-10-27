@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /**
- * Items you own: every item the pup has seen in your vault, your seasonal vault, your gift chest, or on one of your
+ * Items you own: every item the pup has seen in your vault, your seasonal vault, your gift chest, your seasonal spoils, or on one of your
  * characters (gear, inventory and backpack). They count towards the Collection even if you looted them before the pup
  * was watching. Kept in owned-items.txt (account|where|item id|first seen).
  */
@@ -20,7 +20,8 @@ final class Owned {
     private Owned() {
     }
 
-    static final String VAULT = "vault", SEASONAL_VAULT = "seasonal vault", CHARACTER = "character", SEASONAL_CHARACTER = "seasonal character";
+    static final String VAULT = "vault", SEASONAL_VAULT = "seasonal vault", CHARACTER = "character", SEASONAL_CHARACTER = "seasonal character",
+            GIFT_CHEST = "gift chest", SEASONAL_SPOILS = "seasonal spoils";
     private static final String FILE = "owned-items.txt";
 
     static final class Sighting {
@@ -90,6 +91,8 @@ final class Owned {
         switch (where) {
             case VAULT: return "in your vault";
             case SEASONAL_VAULT: return "in your seasonal vault";
+            case GIFT_CHEST: return "in your gift chest";
+            case SEASONAL_SPOILS: return "in your seasonal spoils";
             case SEASONAL_CHARACTER: return "on a seasonal character";
             default: return "on a character";
         }

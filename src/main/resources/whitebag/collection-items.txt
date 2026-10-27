@@ -5,18 +5,13 @@ Abandoned City|ST|Reinforced Root Armor
 Abandoned City|ST|Traveler's Trinket
 Abandoned City|ST|Watarimono
 Abandoned City|UT|Advent Seal
-Abandoned City|UT|An Icicle
 Abandoned City|UT|Blue Beehemoth Quiver
-Abandoned City|UT|Bow of Eternal Frost
-Abandoned City|UT|Bow of Nightmares
 Abandoned City|UT|Cavalry Lance
 Abandoned City|UT|Cloak of Bloody Surprises
-Abandoned City|UT|Corrupted Cleaver
 Abandoned City|UT|Crystal Mace
 Abandoned City|UT|Crystal Sword
 Abandoned City|UT|Crystal Wand
 Abandoned City|UT|Crystallised Fang's Venom
-Abandoned City|UT|Dagger of the Terrible Talon
 Abandoned City|UT|Dirk of Cronus
 Abandoned City|UT|Eternal Snowflake Wand
 Abandoned City|UT|Fitted Protective Matrix
@@ -24,7 +19,6 @@ Abandoned City|UT|Frost Citadel Armor
 Abandoned City|UT|Frost Drake Hide Armor
 Abandoned City|UT|Frost Elementalist Robe
 Abandoned City|UT|Frost Lich's Finger
-Abandoned City|UT|Frostbite
 Abandoned City|UT|Frosty's Walking Stick
 Abandoned City|UT|General's Arsenal
 Abandoned City|UT|Hama Yumi
@@ -41,22 +35,16 @@ Abandoned City|UT|Mouse Trap
 Abandoned City|UT|Orb of Conflict
 Abandoned City|UT|Pathfinder's Helm
 Abandoned City|UT|Piper's Pan Flute
-Abandoned City|UT|Present Dispensing Wand
 Abandoned City|UT|Ray Katana
 Abandoned City|UT|Red Beehemoth Quiver
 Abandoned City|UT|Saint Nicolas' Blade
-Abandoned City|UT|Salju
 Abandoned City|UT|Seal of Blasphemous Prayer
 Abandoned City|UT|Shield of Ogmur
-Abandoned City|UT|Skull-splitter Sword
-Abandoned City|UT|Staff of Horrific Knowledge
 Abandoned City|UT|Staff of Iceblast
-Abandoned City|UT|Staff of Yuletide Carols
 Abandoned City|UT|Tablet of the King's Avatar
 Abandoned City|UT|Tome of Frigid Protection
 Abandoned City|UT|Trap of the Vile Spirit
 Abandoned City|UT|Useless Katana
-Abandoned City|UT|Wand of Ancient Terror
 Abandoned City|UT|Winter's Breath Wand
 Abandoned City|UT|Yellow Beehemoth Quiver
 Abandoned City|UT|Yuki
@@ -66,14 +54,6 @@ Abyss of Demons|ST|Scorchium Stone
 Abyss of Demons|ST|Staff of Eruption
 Abyss of Demons|UT|Berserker's Breastplate
 Abyss of Demons|UT|Demon Blade
-Abyss of Demons|UT|Faded Heart Scarab
-Abyss of Demons|UT|Fractured Hannya
-Abyss of Demons|UT|Heavy Syndicate Attire
-Abyss of Demons|UT|Light Syndicate Attire
-Abyss of Demons|UT|Mystic Syndicate Attire
-Abyss of Demons|UT|Sheath of Thunderous Rites
-Abyss of Demons|UT|Storm Caller
-Abyss of Demons|UT|Sunken Fire Opal Ring
 Abyss of Demons|UT|Volcanic Sheath
 Ancient Ruins|ST|Aquamarine Amulet
 Ancient Ruins|ST|Embellished Quiver
@@ -82,14 +62,8 @@ Ancient Ruins|ST|Resplendent Bow
 Ancient Ruins|UT|Amber Encrusted Helmet
 Ancient Ruins|UT|Arcane Rapier
 Ancient Ruins|UT|Corsair's Crown Jewel
-Ancient Ruins|UT|Faded Heart Scarab
-Ancient Ruins|UT|Fractured Hannya
-Ancient Ruins|UT|Heavy Syndicate Attire
-Ancient Ruins|UT|Light Syndicate Attire
-Ancient Ruins|UT|Mystic Syndicate Attire
 Ancient Ruins|UT|Rusted Barrel
 Ancient Ruins|UT|Sandstone Seal
-Ancient Ruins|UT|Sunken Fire Opal Ring
 Ancient Ruins|UT|Titan's Heart
 Battle for the Nexus|UT|Arbiter's Wrath
 Battle for the Nexus|UT|Doctor Swordsworth
@@ -119,58 +93,21 @@ Candyland Hunting Grounds|UT|Bubblegum Bucket
 Candyland Hunting Grounds|UT|Candy Ring
 Candyland Hunting Grounds|UT|Candy-Coated Armor
 Carboniferous|ST|Angel's Fanfare
-Carboniferous|UT|An Icicle
-Carboniferous|UT|Bow of Eternal Frost
-Carboniferous|UT|Bow of Nightmares
-Carboniferous|UT|Corrupted Cleaver
 Carboniferous|UT|Crystallised Fang's Venom
-Carboniferous|UT|Dagger of the Terrible Talon
 Carboniferous|UT|Evolutionary Records
 Carboniferous|UT|Fossilized Skull
-Carboniferous|UT|Frostbite
-Carboniferous|UT|Present Dispensing Wand
-Carboniferous|UT|Salju
-Carboniferous|UT|Skull-splitter Sword
-Carboniferous|UT|Staff of Horrific Knowledge
-Carboniferous|UT|Staff of Yuletide Carols
 Carboniferous|UT|Tablet of the King's Avatar
 Carboniferous|UT|Token of Happiness
 Carboniferous|UT|Token of Warmth
-Carboniferous|UT|Wand of Ancient Terror
-Cnidarian Reef|UT|An Icicle
 Cnidarian Reef|UT|Bottled Medusozoan
-Cnidarian Reef|UT|Bow of Eternal Frost
-Cnidarian Reef|UT|Bow of Nightmares
 Cnidarian Reef|UT|Cnidaria Rod
-Cnidarian Reef|UT|Corrupted Cleaver
-Cnidarian Reef|UT|Dagger of the Terrible Talon
-Cnidarian Reef|UT|Faded Heart Scarab
-Cnidarian Reef|UT|Forbidden Artifact
-Cnidarian Reef|UT|Fractured Hannya
-Cnidarian Reef|UT|Frostbite
-Cnidarian Reef|UT|Heavy Syndicate Attire
-Cnidarian Reef|UT|Light Syndicate Attire
-Cnidarian Reef|UT|Mystic Syndicate Attire
-Cnidarian Reef|UT|Present Dispensing Wand
-Cnidarian Reef|UT|Salju
-Cnidarian Reef|UT|Skull-splitter Sword
-Cnidarian Reef|UT|Staff of Horrific Knowledge
-Cnidarian Reef|UT|Staff of Yuletide Carols
-Cnidarian Reef|UT|Sunken Fire Opal Ring
-Cnidarian Reef|UT|Wand of Ancient Terror
-Coral Reefs|UT|An Icicle
 Coral Reefs|UT|Anteros Longbow
 Coral Reefs|UT|Barnacle Basher
 Coral Reefs|UT|Barnacle Shell
-Coral Reefs|UT|Bow of Eternal Frost
-Coral Reefs|UT|Bow of Nightmares
 Coral Reefs|UT|Carnival's Conjurer
-Coral Reefs|UT|Corrupted Cleaver
 Coral Reefs|UT|Cupid's Bow
-Coral Reefs|UT|Dagger of the Terrible Talon
 Coral Reefs|UT|Diamond-Bladed Katana
 Coral Reefs|UT|Dreamcaster
-Coral Reefs|UT|Frostbite
 Coral Reefs|UT|Heart Jewel Blades
 Coral Reefs|UT|Heart of Gold Prism
 Coral Reefs|UT|Heartfind Dagger
@@ -179,19 +116,13 @@ Coral Reefs|UT|Lion Tamer
 Coral Reefs|UT|Love Heart Spellblade
 Coral Reefs|UT|Lovestruck Yoyo
 Coral Reefs|UT|Morning Star of Sweet Miracles
-Coral Reefs|UT|Present Dispensing Wand
 Coral Reefs|UT|Ringmaster's Bow
-Coral Reefs|UT|Salju
-Coral Reefs|UT|Skull-splitter Sword
 Coral Reefs|UT|Spooky Smasher
 Coral Reefs|UT|Staff of Adoration
-Coral Reefs|UT|Staff of Horrific Knowledge
-Coral Reefs|UT|Staff of Yuletide Carols
 Coral Reefs|UT|Sweetheart Taichi
 Coral Reefs|UT|Throwing Knives
 Coral Reefs|UT|Torrential Staff
 Coral Reefs|UT|Vinesword
-Coral Reefs|UT|Wand of Ancient Terror
 Coral Reefs|UT|Wand of Budding Romance
 Crystal Cavern|ST|Crystalline Kunai
 Crystal Cavern|ST|Luminous Armor
@@ -201,115 +132,43 @@ Crystal Cavern|UT|Cloak of Refraction
 Crystal Cavern|UT|Crystalline Sigil
 Crystal Cavern|UT|Crystallised Mist
 Crystal Cavern|UT|Echoes Prism
-Crystal Cavern|UT|Faded Heart Scarab
 Crystal Cavern|UT|Fractal Blades
 Crystal Cavern|UT|Fractured Gemstone Wakizashi
-Crystal Cavern|UT|Fractured Hannya
-Crystal Cavern|UT|Heavy Syndicate Attire
 Crystal Cavern|UT|Irradiance Sheath
-Crystal Cavern|UT|Light Syndicate Attire
-Crystal Cavern|UT|Mystic Syndicate Attire
 Crystal Cavern|UT|Ring of Decades
 Crystal Cavern|UT|Star of Enlightenment
-Crystal Cavern|UT|Storied Blades
-Crystal Cavern|UT|Sunken Fire Opal Ring
 Cultist Hideout|UT|Bloodshed Ring
 Cultist Hideout|UT|Burial Blades
-Cultist Hideout|UT|Faded Heart Scarab
-Cultist Hideout|UT|Fractured Hannya
-Cultist Hideout|UT|Heavy Syndicate Attire
-Cultist Hideout|UT|Light Syndicate Attire
-Cultist Hideout|UT|Mystic Syndicate Attire
 Cultist Hideout|UT|Ritual Robe
 Cultist Hideout|UT|Skull of Corrupted Souls
 Cultist Hideout|UT|Staff of Unholy Sacrifice
-Cultist Hideout|UT|Storied Blades
-Cultist Hideout|UT|Sunken Fire Opal Ring
 Cursed Library|ST|Deathless Crossbow
 Cursed Library|ST|Quiver of Shrieking Specters
 Cursed Library|ST|Revenant Ring
 Cursed Library|ST|Wraith's Brigandine
-Cursed Library|UT|An Icicle
-Cursed Library|UT|Bow of Eternal Frost
-Cursed Library|UT|Bow of Nightmares
-Cursed Library|UT|Corrupted Cleaver
 Cursed Library|UT|Corruption Cutter
-Cursed Library|UT|Dagger of the Terrible Talon
-Cursed Library|UT|Faded Heart Scarab
-Cursed Library|UT|Fractured Hannya
-Cursed Library|UT|Frostbite
-Cursed Library|UT|Heavy Syndicate Attire
-Cursed Library|UT|Light Syndicate Attire
-Cursed Library|UT|Mystic Syndicate Attire
 Cursed Library|UT|Necronomicon
-Cursed Library|UT|Present Dispensing Wand
 Cursed Library|UT|Ronin's Wakizashi
-Cursed Library|UT|Salju
 Cursed Library|UT|Scholar's Seal
-Cursed Library|UT|Sheath of Thunderous Rites
-Cursed Library|UT|Skull-splitter Sword
-Cursed Library|UT|Staff of Horrific Knowledge
-Cursed Library|UT|Staff of Yuletide Carols
-Cursed Library|UT|Storm Caller
-Cursed Library|UT|Sunken Fire Opal Ring
-Cursed Library|UT|Wand of Ancient Terror
 Cursed Library|UT|Wand of Hidden Knowledge
 Davy Jones' Locker|UT|Captain's Ring
-Davy Jones' Locker|UT|Faded Heart Scarab
-Davy Jones' Locker|UT|Forbidden Artifact
-Davy Jones' Locker|UT|Fractured Hannya
 Davy Jones' Locker|UT|Ghostly Prism
-Davy Jones' Locker|UT|Heavy Syndicate Attire
-Davy Jones' Locker|UT|Light Syndicate Attire
-Davy Jones' Locker|UT|Mystic Syndicate Attire
 Davy Jones' Locker|UT|Quartermaster Scabbard
 Davy Jones' Locker|UT|Spectral Cloth Armor
 Davy Jones' Locker|UT|Spirit Dagger
-Davy Jones' Locker|UT|Sunken Fire Opal Ring
 Dead Church|ST|Ring of the Covetous Heart
 Dead Church|ST|Soul of the Bearer
 Dead Church|ST|Soulless Robe
 Dead Church|ST|The Phylactery
-Dead Church|UT|An Icicle
-Dead Church|UT|Bow of Eternal Frost
-Dead Church|UT|Bow of Nightmares
-Dead Church|UT|Corrupted Cleaver
-Dead Church|UT|Dagger of the Terrible Talon
-Dead Church|UT|Frostbite
-Dead Church|UT|Present Dispensing Wand
-Dead Church|UT|Salju
 Dead Church|UT|Seal of Blasphemous Prayer
 Dead Church|UT|Skull of Restless Souls
-Dead Church|UT|Skull-splitter Sword
-Dead Church|UT|Staff of Horrific Knowledge
-Dead Church|UT|Staff of Yuletide Carols
 Dead Church|UT|Trap of the Vile Spirit
-Dead Church|UT|Wand of Ancient Terror
 Deadwater Docks|ST|First Mate's Hook
 Deadwater Docks|ST|Naval Uniform
 Deadwater Docks|ST|Swashbuckler's Sickle
 Deadwater Docks|ST|Tricorne of the High Seas
-Deadwater Docks|UT|An Icicle
 Deadwater Docks|UT|Big Berdtha
-Deadwater Docks|UT|Bow of Eternal Frost
-Deadwater Docks|UT|Bow of Nightmares
-Deadwater Docks|UT|Corrupted Cleaver
-Deadwater Docks|UT|Dagger of the Terrible Talon
-Deadwater Docks|UT|Faded Heart Scarab
-Deadwater Docks|UT|Forbidden Artifact
-Deadwater Docks|UT|Fractured Hannya
-Deadwater Docks|UT|Frostbite
-Deadwater Docks|UT|Heavy Syndicate Attire
-Deadwater Docks|UT|Light Syndicate Attire
-Deadwater Docks|UT|Mystic Syndicate Attire
 Deadwater Docks|UT|Pirate King's Cutlass
-Deadwater Docks|UT|Present Dispensing Wand
-Deadwater Docks|UT|Salju
-Deadwater Docks|UT|Skull-splitter Sword
-Deadwater Docks|UT|Staff of Horrific Knowledge
-Deadwater Docks|UT|Staff of Yuletide Carols
-Deadwater Docks|UT|Sunken Fire Opal Ring
-Deadwater Docks|UT|Wand of Ancient Terror
 Deadwater Docks|UT|Wavecrest Concertina
 Deep Sea Abyss|UT|Cloak of the Deep
 Deep Sea Abyss|UT|Crystallised Fang's Venom
@@ -318,36 +177,39 @@ Eternal Frost|UT|Advent Seal
 Eternal Frost|UT|Brass Chamberstick
 Eternal Frost|UT|Candy Katana
 Eternal Frost|UT|Cheerful Chipper
-Eternal Frost|UT|Esben's Twisted Heart
 Eternal Frost|UT|Eternal Snowflake Wand
 Eternal Frost|UT|Evergreen Dagger
 Eternal Frost|UT|Frost Citadel Armor
 Eternal Frost|UT|Frost Drake Hide Armor
 Eternal Frost|UT|Frost Elementalist Robe
-Eternal Frost|UT|Frost Lich's Finger
-Eternal Frost|UT|Frosty's Walking Stick
 Eternal Frost|UT|Garland Bow
-Eternal Frost|UT|Icicle Launcher
 Eternal Frost|UT|Pathfinder's Helm
-Eternal Frost|UT|Saint Nicolas' Blade
 Eternal Frost|UT|Sleigh Bell Staff
 Eternal Frost|UT|Snowbound Orb
 Eternal Frost|UT|Staff of Iceblast
 Eternal Frost|UT|Tome of Frigid Protection
-Eternal Frost|UT|Winter's Breath Wand
-Eternal Frost|UT|Yuki
 Events and seasonal|ST|Cane of the Void
 Events and seasonal|ST|Darkness Overcoat
 Events and seasonal|ST|Executioner's Garb
 Events and seasonal|ST|Gravekeeper's Scythe
 Events and seasonal|ST|Hooded Skull
+Events and seasonal|ST|Immortal Mantle
+Events and seasonal|ST|Spectral Spell
+Events and seasonal|ST|Supernatural Staff
 Events and seasonal|ST|Void Leeches
+Events and seasonal|UT|An Icicle
 Events and seasonal|UT|Ashen Talon
+Events and seasonal|UT|Bachelor's Tuxedo
 Events and seasonal|UT|Barely Attuned Magic Thingy
+Events and seasonal|UT|Big Bad Fursuit
 Events and seasonal|UT|Blade of Eternal Rebirth
 Events and seasonal|UT|Bloom-Fire Scepter
+Events and seasonal|UT|Bow of Eternal Frost
+Events and seasonal|UT|Bow of Nightmares
 Events and seasonal|UT|Carrotroot Vestments
+Events and seasonal|UT|Corrupted Cleaver
 Events and seasonal|UT|Crest of the Rising Sun
+Events and seasonal|UT|Dagger of the Terrible Talon
 Events and seasonal|UT|Dragon Mace
 Events and seasonal|UT|Dragon Slayer
 Events and seasonal|UT|Eggshell Carapace
@@ -355,8 +217,11 @@ Events and seasonal|UT|Enchanted Ice Blade
 Events and seasonal|UT|Esoteric Buckler
 Events and seasonal|UT|Eternal Echo
 Events and seasonal|UT|Frost Storm Bow
+Events and seasonal|UT|Frostbite
 Events and seasonal|UT|Frozen Wand
 Events and seasonal|UT|Fudgeclad Armor
+Events and seasonal|UT|Haori of the Wind
+Events and seasonal|UT|Holy Order's Habit
 Events and seasonal|UT|Hookblade Tachi
 Events and seasonal|UT|Joker Timbrel
 Events and seasonal|UT|Kagenohikari
@@ -364,14 +229,21 @@ Events and seasonal|UT|Krathana
 Events and seasonal|UT|Lethargic Sentience
 Events and seasonal|UT|Makakoyumi
 Events and seasonal|UT|Mimicry Trap
+Events and seasonal|UT|Platinum Segmentata
 Events and seasonal|UT|Precisely Calibrated Stringstick
+Events and seasonal|UT|Present Dispensing Wand
 Events and seasonal|UT|Prismimic
 Events and seasonal|UT|Random Spell Extraction Device
+Events and seasonal|UT|Red Riding Dress
+Events and seasonal|UT|Salju
 Events and seasonal|UT|Silex's Hammer
+Events and seasonal|UT|Skull-splitter Sword
 Events and seasonal|UT|Snow Branch
 Events and seasonal|UT|Snowflake Blade
 Events and seasonal|UT|Solar Flare Igniter
 Events and seasonal|UT|Sovereign Cinder-Blade
+Events and seasonal|UT|Staff of Horrific Knowledge
+Events and seasonal|UT|Staff of Yuletide Carols
 Events and seasonal|UT|Sweettreats Bow
 Events and seasonal|UT|Sweettreats Dagger
 Events and seasonal|UT|Sweettreats Katana
@@ -393,123 +265,62 @@ Events and seasonal|UT|Venerable Resurrected Warrior's Armor
 Events and seasonal|UT|Venerable Robe of the Mad Scientist
 Events and seasonal|UT|Venerable Spirit Dagger
 Events and seasonal|UT|Venerable Staff of the Crystal Serpent
+Events and seasonal|UT|Wand of Ancient Terror
 Floral Escape|ST|Heavenly Halo
-Floral Escape|UT|An Icicle
 Floral Escape|UT|Blue Beehemoth Armor
 Floral Escape|UT|Blue Beehemoth Quiver
-Floral Escape|UT|Bow of Eternal Frost
-Floral Escape|UT|Bow of Nightmares
-Floral Escape|UT|Corrupted Cleaver
-Floral Escape|UT|Dagger of the Terrible Talon
 Floral Escape|UT|Frost Lich's Finger
-Floral Escape|UT|Frostbite
 Floral Escape|UT|Frosty's Walking Stick
 Floral Escape|UT|Icicle Launcher
 Floral Escape|UT|Kogbold Multitool
 Floral Escape|UT|Pollen Incendiary
-Floral Escape|UT|Present Dispensing Wand
 Floral Escape|UT|Red Beehemoth Armor
 Floral Escape|UT|Red Beehemoth Quiver
 Floral Escape|UT|Saint Nicolas' Blade
-Floral Escape|UT|Salju
-Floral Escape|UT|Skull-splitter Sword
-Floral Escape|UT|Staff of Horrific Knowledge
-Floral Escape|UT|Staff of Yuletide Carols
 Floral Escape|UT|Token of Happiness
 Floral Escape|UT|Token of Warmth
-Floral Escape|UT|Wand of Ancient Terror
 Floral Escape|UT|Winter's Breath Wand
 Floral Escape|UT|Yellow Beehemoth Armor
 Floral Escape|UT|Yellow Beehemoth Quiver
 Floral Escape|UT|Yuki
+Forax|ST|Alien Core: Corrosion
+Forax|UT|Acidic Slasher
+Forax|UT|Corrosion Cutter
+Forax|UT|Foramite Staff
 Forbidden Jungle|UT|Corsair's Crown Jewel
 Forbidden Jungle|UT|Cracked Crystal Skull
 Forbidden Jungle|UT|Crystal Bone Ring
-Forbidden Jungle|UT|Faded Heart Scarab
-Forbidden Jungle|UT|Fractured Hannya
-Forbidden Jungle|UT|Heavy Syndicate Attire
-Forbidden Jungle|UT|Light Syndicate Attire
-Forbidden Jungle|UT|Mystic Syndicate Attire
 Forbidden Jungle|UT|Robe of the Tlatoani
 Forbidden Jungle|UT|Rusted Barrel
 Forbidden Jungle|UT|Staff of the Crystal Serpent
-Forbidden Jungle|UT|Sunken Fire Opal Ring
 Forest Maze|UT|Bramble Bow
 Forest Maze|UT|Cocoon Quiver
 Fungal Cavern|ST|Crystalline Kunai
 Fungal Cavern|ST|Luminous Armor
 Fungal Cavern|ST|Quartz Cutter
 Fungal Cavern|ST|Radiant Heart
-Fungal Cavern|UT|An Icicle
-Fungal Cavern|UT|Bow of Eternal Frost
-Fungal Cavern|UT|Bow of Nightmares
 Fungal Cavern|UT|Cave Dweller Trap
-Fungal Cavern|UT|Corrupted Cleaver
 Fungal Cavern|UT|Crystal Shield
 Fungal Cavern|UT|Crystallised Fang's Venom
 Fungal Cavern|UT|Crystallized Worm Spellblade
-Fungal Cavern|UT|Dagger of the Terrible Talon
-Fungal Cavern|UT|Faded Heart Scarab
-Fungal Cavern|UT|Fractured Hannya
-Fungal Cavern|UT|Frostbite
 Fungal Cavern|UT|Fungal Breastplate
-Fungal Cavern|UT|Heavy Syndicate Attire
-Fungal Cavern|UT|Light Syndicate Attire
-Fungal Cavern|UT|Mystic Syndicate Attire
-Fungal Cavern|UT|Present Dispensing Wand
 Fungal Cavern|UT|Ring of Decades
-Fungal Cavern|UT|Salju
-Fungal Cavern|UT|Skull-splitter Sword
 Fungal Cavern|UT|Sporous Spray Spell
-Fungal Cavern|UT|Staff of Horrific Knowledge
-Fungal Cavern|UT|Staff of Yuletide Carols
-Fungal Cavern|UT|Storied Blades
-Fungal Cavern|UT|Sunken Fire Opal Ring
 Fungal Cavern|UT|Tome of the Mushroom Tribes
-Fungal Cavern|UT|Wand of Ancient Terror
 Haunted Cemetery|ST|Etherite Dagger
 Haunted Cemetery|ST|Ghastly Drape
 Haunted Cemetery|ST|Mantle of Skuld
 Haunted Cemetery|ST|Spectral Ring of Horrors
 Haunted Cemetery|UT|Amulet of Dispersion
-Haunted Cemetery|UT|An Icicle
-Haunted Cemetery|UT|Bachelor's Tuxedo
-Haunted Cemetery|UT|Big Bad Fursuit
-Haunted Cemetery|UT|Bow of Eternal Frost
-Haunted Cemetery|UT|Bow of Nightmares
-Haunted Cemetery|UT|Corrupted Cleaver
-Haunted Cemetery|UT|Dagger of the Terrible Talon
-Haunted Cemetery|UT|Faded Heart Scarab
-Haunted Cemetery|UT|Fractured Hannya
-Haunted Cemetery|UT|Frostbite
-Haunted Cemetery|UT|Haori of the Wind
-Haunted Cemetery|UT|Heavy Syndicate Attire
-Haunted Cemetery|UT|Holy Order's Habit
-Haunted Cemetery|UT|Light Syndicate Attire
-Haunted Cemetery|UT|Mystic Syndicate Attire
 Haunted Cemetery|UT|Plague Poison
-Haunted Cemetery|UT|Platinum Segmentata
-Haunted Cemetery|UT|Present Dispensing Wand
-Haunted Cemetery|UT|Red Riding Dress
 Haunted Cemetery|UT|Resurrected Warrior's Armor
-Haunted Cemetery|UT|Salju
-Haunted Cemetery|UT|Sheath of Thunderous Rites
-Haunted Cemetery|UT|Skull-splitter Sword
 Haunted Cemetery|UT|Soul's Guidance
-Haunted Cemetery|UT|Staff of Horrific Knowledge
-Haunted Cemetery|UT|Staff of Yuletide Carols
-Haunted Cemetery|UT|Storm Caller
-Haunted Cemetery|UT|Sunken Fire Opal Ring
-Haunted Cemetery|UT|Wand of Ancient Terror
 Haunted Hallows|ST|Interregnum
 Haunted Hallows|ST|Memento Mori
 Haunted Hallows|ST|Orb of the Sabbath
 Haunted Hallows|ST|Robe of the Enchantress
 Haunted Hallows|ST|Stygian Torch
-Haunted Hallows|UT|Bow of Nightmares
 Haunted Hallows|UT|Carnival's Conjurer
-Haunted Hallows|UT|Corrupted Cleaver
-Haunted Hallows|UT|Dagger of the Terrible Talon
 Haunted Hallows|UT|Dreamcaster
 Haunted Hallows|UT|Helm of the Juggernaut
 Haunted Hallows|UT|Kageboshi
@@ -518,66 +329,33 @@ Haunted Hallows|UT|Mace of the Pumpkin Effigy
 Haunted Hallows|UT|Ringmaster's Bow
 Haunted Hallows|UT|Scary Stories
 Haunted Hallows|UT|Shifting Shroud
-Haunted Hallows|UT|Skull-splitter Sword
-Haunted Hallows|UT|Staff of Horrific Knowledge
 Haunted Hallows|UT|Throwing Knives
-Haunted Hallows|UT|Wand of Ancient Terror
 Heroic Undead Lair|ST|Edictum Praetoris
 Heroic Undead Lair|ST|Interregnum
 Heroic Undead Lair|ST|Memento Mori
 Heroic Undead Lair|ST|Toga Picta
-Heroic Undead Lair|UT|An Icicle
-Heroic Undead Lair|UT|Bow of Eternal Frost
-Heroic Undead Lair|UT|Bow of Nightmares
 Heroic Undead Lair|UT|Bow of the Morning Star
-Heroic Undead Lair|UT|Corrupted Cleaver
-Heroic Undead Lair|UT|Dagger of the Terrible Talon
 Heroic Undead Lair|UT|Doom Bow
-Heroic Undead Lair|UT|Faded Heart Scarab
-Heroic Undead Lair|UT|Fractured Hannya
-Heroic Undead Lair|UT|Frostbite
-Heroic Undead Lair|UT|Heavy Syndicate Attire
-Heroic Undead Lair|UT|Light Syndicate Attire
-Heroic Undead Lair|UT|Mystic Syndicate Attire
-Heroic Undead Lair|UT|Present Dispensing Wand
 Heroic Undead Lair|UT|Ring of Skeletal Specters
-Heroic Undead Lair|UT|Salju
-Heroic Undead Lair|UT|Skull-splitter Sword
 Heroic Undead Lair|UT|Spectral Sword
 Heroic Undead Lair|UT|Spirit's Bane
-Heroic Undead Lair|UT|Staff of Horrific Knowledge
-Heroic Undead Lair|UT|Staff of Yuletide Carols
-Heroic Undead Lair|UT|Storied Blades
-Heroic Undead Lair|UT|Sunken Fire Opal Ring
-Heroic Undead Lair|UT|Wand of Ancient Terror
 Heroic Undead Lair|UT|Wandering Souls Spell
-Hidden Interregnum|UT|Faded Heart Scarab
-Hidden Interregnum|UT|Fractured Hannya
 Hidden Interregnum|UT|Frangible Longbow
 Hidden Interregnum|UT|Gilded Chain Scythe
 Hidden Interregnum|UT|Huntsman's Volley
-Hidden Interregnum|UT|Light Syndicate Attire
 Hidden Interregnum|UT|Obsidian Macuahuitl
 Hidden Interregnum|UT|Pirate's Sidearms
 Hidden Interregnum|UT|Ritual Khopesh
 Hidden Interregnum|UT|Royal Sekhem
-Hidden Interregnum|UT|Sunken Fire Opal Ring
 High Tech Terror|ST|A.R.M.O.R.
 High Tech Terror|ST|B.O.O.M.
 High Tech Terror|ST|C.L.A.W.
 High Tech Terror|ST|C.O.N.T.R.O.L.L.E.R.
 High Tech Terror|UT|B.O.W.
 High Tech Terror|UT|E.Y.E.
-High Tech Terror|UT|Faded Heart Scarab
-High Tech Terror|UT|Forbidden Artifact
-High Tech Terror|UT|Fractured Hannya
-High Tech Terror|UT|Heavy Syndicate Attire
-High Tech Terror|UT|Light Syndicate Attire
-High Tech Terror|UT|Mystic Syndicate Attire
 High Tech Terror|UT|Q.U.I.V.E.R.
 High Tech Terror|UT|S.H.E.A.T.H.
 High Tech Terror|UT|S.T.A.F.F.
-High Tech Terror|UT|Sunken Fire Opal Ring
 Ice Cave|UT|Staff of Esben Legacy
 Ice Citadel|ST|Chainmail Body Armor
 Ice Citadel|ST|Dalvar's Battle Axe
@@ -596,15 +374,8 @@ Ice Citadel|UT|Esben's Shaman Attire
 Ice Citadel|UT|Esben's Twisted Heart
 Ice Citadel|UT|Esben's Vows
 Ice Citadel|UT|Esben's Wedding Ring
-Ice Citadel|UT|Faded Heart Scarab
-Ice Citadel|UT|Fractured Hannya
-Ice Citadel|UT|Heavy Syndicate Attire
-Ice Citadel|UT|Light Syndicate Attire
-Ice Citadel|UT|Mystic Syndicate Attire
 Ice Citadel|UT|Skullish Remains of Esben
 Ice Citadel|UT|Staff of Esben
-Ice Citadel|UT|Storied Blades
-Ice Citadel|UT|Sunken Fire Opal Ring
 Ice Tomb|UT|Arctic Bow
 Ice Tomb|UT|Enchanted Ice Shard
 Ice Tomb|UT|Freezing Quiver
@@ -614,29 +385,19 @@ Infernal Abyss of Demons|ST|Scorchium Stone
 Infernal Abyss of Demons|ST|Staff of Eruption
 Infernal Abyss of Demons|UT|Adamantine Helm
 Infernal Abyss of Demons|UT|Berserker's Breastplate
-Infernal Abyss of Demons|UT|Faded Heart Scarab
-Infernal Abyss of Demons|UT|Fractured Hannya
-Infernal Abyss of Demons|UT|Heavy Syndicate Attire
-Infernal Abyss of Demons|UT|Light Syndicate Attire
-Infernal Abyss of Demons|UT|Mystic Syndicate Attire
-Infernal Abyss of Demons|UT|Storied Blades
-Infernal Abyss of Demons|UT|Sunken Fire Opal Ring
 Infernal Abyss of Demons|UT|Sword of Illumination
 Infernal Abyss of Demons|UT|Volcanic Sheath
+Katalund|ST|Alien Core: Warp
+Katalund|UT|Blazon Bow
+Katalund|UT|Gaseous Glaive
+Katalund|UT|Warlord Wand
 Kogbold Steamworks|UT|Brain Cube
 Kogbold Steamworks|UT|Chain Dagger
-Kogbold Steamworks|UT|Faded Heart Scarab
-Kogbold Steamworks|UT|Fractured Hannya
-Kogbold Steamworks|UT|Heavy Syndicate Attire
 Kogbold Steamworks|UT|Kogbold Cower Shield
 Kogbold Steamworks|UT|Laser Pointer
-Kogbold Steamworks|UT|Light Syndicate Attire
-Kogbold Steamworks|UT|Mystic Syndicate Attire
 Kogbold Steamworks|UT|Overclocking Amulet
 Kogbold Steamworks|UT|Scepter of Rust
 Kogbold Steamworks|UT|Steam Pipe
-Kogbold Steamworks|UT|Storied Blades
-Kogbold Steamworks|UT|Sunken Fire Opal Ring
 Lair of Draconis|ST|Alexander's Band
 Lair of Draconis|ST|Amulet of Drakefyre
 Lair of Draconis|ST|Augur of the Tempest
@@ -655,173 +416,101 @@ Lair of Draconis|ST|Wind Dancer Robe
 Lair of Draconis|ST|Zaarvox's Heart
 Lair of Draconis|UT|Celestial Blade
 Lair of Draconis|UT|Draconic Insignia
-Lair of Draconis|UT|Faded Heart Scarab
 Lair of Draconis|UT|Fire Dragon Battle Armor
-Lair of Draconis|UT|Forbidden Artifact
-Lair of Draconis|UT|Fractured Hannya
-Lair of Draconis|UT|Heavy Syndicate Attire
 Lair of Draconis|UT|Leaf Dragon Hide Armor
-Lair of Draconis|UT|Light Syndicate Attire
 Lair of Draconis|UT|Midnight Star
-Lair of Draconis|UT|Mystic Syndicate Attire
-Lair of Draconis|UT|Sunken Fire Opal Ring
 Lair of Draconis|UT|Vision of Draconis
 Lair of Draconis|UT|Water Dragon Silk Robe
 Lair of Shaitan|ST|Fiery Katana
 Lair of Shaitan|ST|Firelight Necklace
 Lair of Shaitan|ST|Flame Guard
 Lair of Shaitan|ST|Pyro Sheath
-Lair of Shaitan|UT|An Icicle
-Lair of Shaitan|UT|Bow of Eternal Frost
-Lair of Shaitan|UT|Bow of Nightmares
-Lair of Shaitan|UT|Corrupted Cleaver
-Lair of Shaitan|UT|Dagger of the Terrible Talon
-Lair of Shaitan|UT|Frostbite
 Lair of Shaitan|UT|Igneous Starblossom
-Lair of Shaitan|UT|Present Dispensing Wand
-Lair of Shaitan|UT|Salju
 Lair of Shaitan|UT|Skull of Endless Torment
-Lair of Shaitan|UT|Skull-splitter Sword
-Lair of Shaitan|UT|Staff of Horrific Knowledge
-Lair of Shaitan|UT|Staff of Yuletide Carols
 Lair of Shaitan|UT|Wakizashi of Crossing Fires
-Lair of Shaitan|UT|Wand of Ancient Terror
+Legacy Heroic Abyss of Demons|ST|Molten Mantle
+Legacy Heroic Abyss of Demons|ST|Ring of the Inferno
+Legacy Heroic Abyss of Demons|ST|Scorchium Stone
+Legacy Heroic Abyss of Demons|ST|Staff of Eruption
+Legacy Heroic Abyss of Demons|UT|Demon Blade
+Legacy Heroic Abyss of Demons|UT|Sword of Illumination
 Lost Halls|ST|Brain of the Golem
 Lost Halls|ST|Carved Golem Remains
 Lost Halls|ST|Golem Garments
 Lost Halls|ST|Rusty Cuffs
 Lost Halls|UT|Breastplate of New Life
-Lost Halls|UT|Faded Heart Scarab
-Lost Halls|UT|Fractured Hannya
-Lost Halls|UT|Heavy Syndicate Attire
-Lost Halls|UT|Light Syndicate Attire
 Lost Halls|UT|Magical Lodestone
 Lost Halls|UT|Marble Seal
-Lost Halls|UT|Mystic Syndicate Attire
-Lost Halls|UT|Storied Blades
-Lost Halls|UT|Sunken Fire Opal Ring
 Lost Halls|UT|Sword of the Colossus
+Mad God Mayhem|UT|Cloak of the Mad God
+Mad God Mayhem|UT|Jade Storm
+Mad God Mayhem|UT|Shield of Flowing Clarity
+Mad God Mayhem|UT|Tome of Holy Furor
 Mad Lab|ST|Abomination's Wrath
 Mad Lab|ST|Garment of the Beast
 Mad Lab|ST|Grotesque Scepter
 Mad Lab|ST|Horrific Claws
-Mad Lab|UT|An Icicle
-Mad Lab|UT|Bow of Eternal Frost
-Mad Lab|UT|Bow of Nightmares
 Mad Lab|UT|Conducting Wand
-Mad Lab|UT|Corrupted Cleaver
-Mad Lab|UT|Dagger of the Terrible Talon
 Mad Lab|UT|Experimental Ring
-Mad Lab|UT|Faded Heart Scarab
-Mad Lab|UT|Fractured Hannya
-Mad Lab|UT|Frostbite
-Mad Lab|UT|Heavy Syndicate Attire
-Mad Lab|UT|Light Syndicate Attire
-Mad Lab|UT|Mystic Syndicate Attire
-Mad Lab|UT|Present Dispensing Wand
 Mad Lab|UT|Robe of the Mad Scientist
-Mad Lab|UT|Salju
 Mad Lab|UT|Scepter of Fulmination
-Mad Lab|UT|Sheath of Thunderous Rites
-Mad Lab|UT|Skull-splitter Sword
-Mad Lab|UT|Staff of Horrific Knowledge
-Mad Lab|UT|Staff of Yuletide Carols
-Mad Lab|UT|Storm Caller
-Mad Lab|UT|Sunken Fire Opal Ring
-Mad Lab|UT|Wand of Ancient Terror
 Magic Woods|ST|Bergenia Bow
 Magic Woods|ST|Lifebringing Lotus
 Magic Woods|UT|Corsair's Crown Jewel
 Magic Woods|UT|Enchantment Orb
-Magic Woods|UT|Faded Heart Scarab
 Magic Woods|UT|Fairy Ring
-Magic Woods|UT|Fractured Hannya
-Magic Woods|UT|Heavy Syndicate Attire
-Magic Woods|UT|Light Syndicate Attire
-Magic Woods|UT|Mystic Syndicate Attire
 Magic Woods|UT|Rusted Barrel
 Magic Woods|UT|Shield of Flowing Clarity
 Magic Woods|UT|Spirit Staff
-Magic Woods|UT|Sunken Fire Opal Ring
 Magic Woods|UT|Woodland Robe
 Malogia|ST|Alien Core: Power
 Malogia|UT|Comet of Calamity
-Malogia|UT|Faded Heart Scarab
 Malogia|UT|Fire Blade
-Malogia|UT|Forbidden Artifact
-Malogia|UT|Fractured Hannya
-Malogia|UT|Heavy Syndicate Attire
-Malogia|UT|Light Syndicate Attire
-Malogia|UT|Mystic Syndicate Attire
 Malogia|UT|Sun's Judgement
-Malogia|UT|Sunken Fire Opal Ring
 Manor of the Immortals|ST|Hallowed Hide
 Manor of the Immortals|ST|Ruthven's Rosary
 Manor of the Immortals|ST|Soulcursed Scythe
 Manor of the Immortals|ST|Vampiric Cape
 Manor of the Immortals|UT|Bone Dagger
 Manor of the Immortals|UT|Chasuble of Holy Light
-Manor of the Immortals|UT|Faded Heart Scarab
-Manor of the Immortals|UT|Fractured Hannya
-Manor of the Immortals|UT|Heavy Syndicate Attire
 Manor of the Immortals|UT|Kyuuketsuki Hitogoroshi
-Manor of the Immortals|UT|Light Syndicate Attire
-Manor of the Immortals|UT|Mystic Syndicate Attire
 Manor of the Immortals|UT|Ring of Divine Faith
-Manor of the Immortals|UT|Sheath of Thunderous Rites
 Manor of the Immortals|UT|St. Abraham's Wand
-Manor of the Immortals|UT|Storm Caller
-Manor of the Immortals|UT|Sunken Fire Opal Ring
 Manor of the Immortals|UT|Tome of Purification
+Many dungeons|UT|Faded Heart Scarab
+Many dungeons|UT|Forbidden Artifact
+Many dungeons|UT|Fractured Hannya
+Many dungeons|UT|Heavy Syndicate Attire
+Many dungeons|UT|Light Syndicate Attire
+Many dungeons|UT|Mystic Syndicate Attire
+Many dungeons|UT|Sheath of Thunderous Rites
+Many dungeons|UT|Storied Blades
+Many dungeons|UT|Storm Caller
+Many dungeons|UT|Sunken Fire Opal Ring
 Mountain Temple|ST|Akuma's Tear
 Mountain Temple|ST|Kamishimo
 Mountain Temple|ST|Kazekiri
 Mountain Temple|ST|Ryu's Blade
-Mountain Temple|UT|An Icicle
-Mountain Temple|UT|Bow of Eternal Frost
-Mountain Temple|UT|Bow of Nightmares
-Mountain Temple|UT|Corrupted Cleaver
-Mountain Temple|UT|Dagger of the Terrible Talon
-Mountain Temple|UT|Faded Heart Scarab
-Mountain Temple|UT|Forbidden Artifact
-Mountain Temple|UT|Fractured Hannya
-Mountain Temple|UT|Frostbite
-Mountain Temple|UT|Heavy Syndicate Attire
 Mountain Temple|UT|Jade Storm
 Mountain Temple|UT|Kaiken
-Mountain Temple|UT|Light Syndicate Attire
-Mountain Temple|UT|Mystic Syndicate Attire
 Mountain Temple|UT|Orb of Aether
-Mountain Temple|UT|Present Dispensing Wand
-Mountain Temple|UT|Salju
-Mountain Temple|UT|Skull-splitter Sword
-Mountain Temple|UT|Staff of Horrific Knowledge
-Mountain Temple|UT|Staff of Yuletide Carols
-Mountain Temple|UT|Sunken Fire Opal Ring
-Mountain Temple|UT|Wand of Ancient Terror
 Mountain Temple|UT|Wand of the Fallen
 Neo Forax|ST|Alien Core: Corrosion
 Neo Forax|UT|Acidic Slasher
 Neo Forax|UT|Corrosion Cutter
-Neo Forax|UT|Faded Heart Scarab
 Neo Forax|UT|Foramite Staff
-Neo Forax|UT|Fractured Hannya
-Neo Forax|UT|Heavy Syndicate Attire
-Neo Forax|UT|Light Syndicate Attire
-Neo Forax|UT|Mystic Syndicate Attire
-Neo Forax|UT|Storied Blades
-Neo Forax|UT|Sunken Fire Opal Ring
 Neo Katalund|ST|Alien Core: Warp
 Neo Katalund|UT|Blazon Bow
-Neo Katalund|UT|Faded Heart Scarab
-Neo Katalund|UT|Fractured Hannya
 Neo Katalund|UT|Gaseous Glaive
-Neo Katalund|UT|Heavy Syndicate Attire
-Neo Katalund|UT|Light Syndicate Attire
-Neo Katalund|UT|Mystic Syndicate Attire
-Neo Katalund|UT|Storied Blades
-Neo Katalund|UT|Sunken Fire Opal Ring
 Neo Katalund|UT|Warlord Wand
+Neo Malogia|ST|Alien Core: Power
+Neo Malogia|UT|Comet of Calamity
+Neo Malogia|UT|Fire Blade
+Neo Malogia|UT|Sun's Judgement
+Neo Untaris|ST|Alien Core: Dark Matter
+Neo Untaris|UT|Dueling Daggers
+Neo Untaris|UT|Moonbeam Blade
+Neo Untaris|UT|Snowblind Wand
 Ocean Trench|ST|Imperial Keepsake
 Ocean Trench|ST|Oceanic Apparel
 Ocean Trench|ST|Slurpian Sea Scroll
@@ -830,51 +519,20 @@ Ocean Trench|UT|Coral Bow
 Ocean Trench|UT|Coral Ring
 Ocean Trench|UT|Coral Silk Armor
 Ocean Trench|UT|Coral Venom Trap
-Ocean Trench|UT|Faded Heart Scarab
-Ocean Trench|UT|Forbidden Artifact
-Ocean Trench|UT|Fractured Hannya
-Ocean Trench|UT|Heavy Syndicate Attire
-Ocean Trench|UT|Light Syndicate Attire
-Ocean Trench|UT|Mystic Syndicate Attire
 Ocean Trench|UT|Sharktooth Sigil
-Ocean Trench|UT|Sunken Fire Opal Ring
 Oryx's Castle|ST|Anointed Robe
 Oryx's Castle|ST|Ceremonial Merlot
 Oryx's Castle|ST|Ring of Pagan Favor
 Oryx's Castle|ST|Theurgy Wand
-Oryx's Castle|UT|An Icicle
 Oryx's Castle|UT|Ancient Stone Sword
-Oryx's Castle|UT|Bow of Eternal Frost
-Oryx's Castle|UT|Bow of Nightmares
-Oryx's Castle|UT|Corrupted Cleaver
-Oryx's Castle|UT|Dagger of the Terrible Talon
-Oryx's Castle|UT|Frostbite
-Oryx's Castle|UT|Present Dispensing Wand
-Oryx's Castle|UT|Salju
-Oryx's Castle|UT|Skull-splitter Sword
 Oryx's Castle|UT|Spiteful Scutum
-Oryx's Castle|UT|Staff of Horrific Knowledge
-Oryx's Castle|UT|Staff of Yuletide Carols
-Oryx's Castle|UT|Wand of Ancient Terror
 Oryx's Chamber|ST|Ceremonial Merlot
 Oryx's Chamber|ST|Theurgy Wand
-Oryx's Chamber|UT|An Icicle
 Oryx's Chamber|UT|Anatis Staff
 Oryx's Chamber|UT|Apocalypse Feather
-Oryx's Chamber|UT|Bow of Eternal Frost
-Oryx's Chamber|UT|Bow of Nightmares
 Oryx's Chamber|UT|Chicken Leg of Doom
 Oryx's Chamber|UT|Cloak of the Mad God
-Oryx's Chamber|UT|Corrupted Cleaver
-Oryx's Chamber|UT|Dagger of the Terrible Talon
-Oryx's Chamber|UT|Frostbite
-Oryx's Chamber|UT|Present Dispensing Wand
-Oryx's Chamber|UT|Salju
-Oryx's Chamber|UT|Skull-splitter Sword
-Oryx's Chamber|UT|Staff of Horrific Knowledge
-Oryx's Chamber|UT|Staff of Yuletide Carols
 Oryx's Chamber|UT|Tome of Holy Furor
-Oryx's Chamber|UT|Wand of Ancient Terror
 Oryx's Sanctuary|ST|Angel's Fanfare
 Oryx's Sanctuary|ST|Harmonious Harp
 Oryx's Sanctuary|ST|Heavenly Halo
@@ -903,29 +561,10 @@ Parasite Chambers|ST|Hivemind Circlet
 Parasite Chambers|ST|Parasitic Concoction
 Parasite Chambers|ST|Rags of the Host
 Parasite Chambers|ST|Symbiotic Ripper
-Parasite Chambers|UT|An Icicle
-Parasite Chambers|UT|Bow of Eternal Frost
-Parasite Chambers|UT|Bow of Nightmares
-Parasite Chambers|UT|Corrupted Cleaver
-Parasite Chambers|UT|Dagger of the Terrible Talon
-Parasite Chambers|UT|Faded Heart Scarab
-Parasite Chambers|UT|Forbidden Artifact
-Parasite Chambers|UT|Fractured Hannya
-Parasite Chambers|UT|Frostbite
-Parasite Chambers|UT|Heavy Syndicate Attire
-Parasite Chambers|UT|Light Syndicate Attire
 Parasite Chambers|UT|Maw of Malignance
-Parasite Chambers|UT|Mystic Syndicate Attire
-Parasite Chambers|UT|Present Dispensing Wand
 Parasite Chambers|UT|Recurring Terror Spell
-Parasite Chambers|UT|Salju
 Parasite Chambers|UT|Scepter of Devastation
-Parasite Chambers|UT|Skull-splitter Sword
-Parasite Chambers|UT|Staff of Horrific Knowledge
-Parasite Chambers|UT|Staff of Yuletide Carols
-Parasite Chambers|UT|Sunken Fire Opal Ring
 Parasite Chambers|UT|Tome of Pain
-Parasite Chambers|UT|Wand of Ancient Terror
 Pirate Cave|UT|Corsair Ring
 Plagued Nest|ST|Apiary Armor
 Plagued Nest|ST|Honey Circlet
@@ -934,61 +573,27 @@ Plagued Nest|ST|Nectar Crossfire
 Plagued Nest|UT|Beekeeper's Flamethrower
 Plagued Nest|UT|Blue Beehemoth Armor
 Plagued Nest|UT|Combcutter Kunai
-Plagued Nest|UT|Faded Heart Scarab
-Plagued Nest|UT|Fractured Hannya
 Plagued Nest|UT|Green Beehemoth Armor
 Plagued Nest|UT|Green Beehemoth Quiver
-Plagued Nest|UT|Heavy Syndicate Attire
 Plagued Nest|UT|Hivemaster Helm
 Plagued Nest|UT|Hivemind Mace
-Plagued Nest|UT|Light Syndicate Attire
-Plagued Nest|UT|Mystic Syndicate Attire
 Plagued Nest|UT|Queen's Stinger
 Plagued Nest|UT|Red Beehemoth Armor
-Plagued Nest|UT|Storied Blades
-Plagued Nest|UT|Sunken Fire Opal Ring
 Plagued Nest|UT|Swarmlord's Sigil
 Plagued Nest|UT|Yellow Beehemoth Armor
 Puppet Master's Encore|ST|Lightshow Scepter
 Puppet Master's Encore|ST|Magic Wand
 Puppet Master's Encore|ST|Magician's Robe
 Puppet Master's Encore|ST|Performer's Hat
-Puppet Master's Encore|UT|An Icicle
-Puppet Master's Encore|UT|Bow of Eternal Frost
-Puppet Master's Encore|UT|Bow of Nightmares
-Puppet Master's Encore|UT|Corrupted Cleaver
-Puppet Master's Encore|UT|Dagger of the Terrible Talon
-Puppet Master's Encore|UT|Faded Heart Scarab
-Puppet Master's Encore|UT|Forbidden Artifact
-Puppet Master's Encore|UT|Fractured Hannya
-Puppet Master's Encore|UT|Frostbite
-Puppet Master's Encore|UT|Heavy Syndicate Attire
-Puppet Master's Encore|UT|Light Syndicate Attire
-Puppet Master's Encore|UT|Mystic Syndicate Attire
-Puppet Master's Encore|UT|Present Dispensing Wand
 Puppet Master's Encore|UT|Prism of Dire Instability
-Puppet Master's Encore|UT|Salju
-Puppet Master's Encore|UT|Skull-splitter Sword
-Puppet Master's Encore|UT|Staff of Horrific Knowledge
-Puppet Master's Encore|UT|Staff of Yuletide Carols
-Puppet Master's Encore|UT|Sunken Fire Opal Ring
 Puppet Master's Encore|UT|Thousand Shot
-Puppet Master's Encore|UT|Wand of Ancient Terror
 Puppet Master's Theatre|ST|Lightshow Scepter
 Puppet Master's Theatre|ST|Magic Wand
 Puppet Master's Theatre|ST|Magician's Robe
 Puppet Master's Theatre|ST|Performer's Hat
-Puppet Master's Theatre|UT|Faded Heart Scarab
-Puppet Master's Theatre|UT|Fractured Hannya
 Puppet Master's Theatre|UT|Harlequin Armor
-Puppet Master's Theatre|UT|Heavy Syndicate Attire
-Puppet Master's Theatre|UT|Light Syndicate Attire
 Puppet Master's Theatre|UT|Marionette Ravager
-Puppet Master's Theatre|UT|Mystic Syndicate Attire
 Puppet Master's Theatre|UT|Prism of Dancing Swords
-Puppet Master's Theatre|UT|Sheath of Thunderous Rites
-Puppet Master's Theatre|UT|Storm Caller
-Puppet Master's Theatre|UT|Sunken Fire Opal Ring
 Queen Bunny Chamber|UT|Bunny Ear Tachi
 Queen Bunny Chamber|UT|Caramel Spellblade
 Queen Bunny Chamber|UT|Chocolate Ovipositor
@@ -1028,41 +633,23 @@ Relentless Springs|UT|Token of Warmth
 Relentless Springs|UT|Vitamine Buster
 Relentless Springs|UT|Wand of Egg-cellence
 Risen Hell|ST|Ring of the Inferno
-Risen Hell|UT|An Icicle
-Risen Hell|UT|Bow of Eternal Frost
-Risen Hell|UT|Bow of Nightmares
 Risen Hell|UT|Cold Front
-Risen Hell|UT|Corrupted Cleaver
-Risen Hell|UT|Dagger of the Terrible Talon
 Risen Hell|UT|Doom's Emblem
 Risen Hell|UT|Frost Lich's Finger
-Risen Hell|UT|Frostbite
 Risen Hell|UT|Frosty's Walking Stick
 Risen Hell|UT|Icicle Launcher
 Risen Hell|UT|Obsidian Lyre
 Risen Hell|UT|Orb of Conflict
 Risen Hell|UT|Orb of Terror
-Risen Hell|UT|Present Dispensing Wand
 Risen Hell|UT|Saint Nicolas' Blade
-Risen Hell|UT|Salju
-Risen Hell|UT|Skull-splitter Sword
-Risen Hell|UT|Staff of Horrific Knowledge
-Risen Hell|UT|Staff of Yuletide Carols
-Risen Hell|UT|Wand of Ancient Terror
 Risen Hell|UT|Winter's Breath Wand
 Risen Hell|UT|Yuki
 Runic Tundra|ST|Harmonious Harp
-Runic Tundra|UT|An Icicle
-Runic Tundra|UT|Bow of Eternal Frost
-Runic Tundra|UT|Bow of Nightmares
 Runic Tundra|UT|Cloak of Bloody Surprises
-Runic Tundra|UT|Corrupted Cleaver
 Runic Tundra|UT|Crystallised Fang's Venom
-Runic Tundra|UT|Dagger of the Terrible Talon
 Runic Tundra|UT|Deadly Keg
 Runic Tundra|UT|Fitted Protective Matrix
 Runic Tundra|UT|Frost Lich's Finger
-Runic Tundra|UT|Frostbite
 Runic Tundra|UT|Frostfall Rod
 Runic Tundra|UT|Frosty's Walking Stick
 Runic Tundra|UT|Frozen Whisper
@@ -1074,43 +661,25 @@ Runic Tundra|UT|Kogbold Multitool
 Runic Tundra|UT|Laser Rifle
 Runic Tundra|UT|Magic Protective Matrix
 Runic Tundra|UT|Mighty Stein
-Runic Tundra|UT|Present Dispensing Wand
 Runic Tundra|UT|Runes of Knowledge
 Runic Tundra|UT|Saint Nicolas' Blade
-Runic Tundra|UT|Salju
 Runic Tundra|UT|Shield of Ogmur
-Runic Tundra|UT|Skull-splitter Sword
-Runic Tundra|UT|Staff of Horrific Knowledge
-Runic Tundra|UT|Staff of Yuletide Carols
-Runic Tundra|UT|Wand of Ancient Terror
 Runic Tundra|UT|Winter's Breath Wand
 Runic Tundra|UT|Winter's Dire Kiss
 Runic Tundra|UT|Yuki
 Sanguine Forest|ST|Corruption Tether
 Sanguine Forest|ST|Wings of Sanctity
-Sanguine Forest|UT|An Icicle
 Sanguine Forest|UT|Bloodbath Blade
 Sanguine Forest|UT|Blue Beehemoth Armor
-Sanguine Forest|UT|Bow of Eternal Frost
-Sanguine Forest|UT|Bow of Nightmares
 Sanguine Forest|UT|Cloak of Bloody Surprises
-Sanguine Forest|UT|Corrupted Cleaver
-Sanguine Forest|UT|Dagger of the Terrible Talon
 Sanguine Forest|UT|Frost Lich's Finger
-Sanguine Forest|UT|Frostbite
 Sanguine Forest|UT|Frosty's Walking Stick
 Sanguine Forest|UT|Icicle Launcher
-Sanguine Forest|UT|Present Dispensing Wand
 Sanguine Forest|UT|Ravenous Wand
 Sanguine Forest|UT|Red Beehemoth Armor
 Sanguine Forest|UT|Saint Nicolas' Blade
-Sanguine Forest|UT|Salju
 Sanguine Forest|UT|Skeletal Sigilpede
-Sanguine Forest|UT|Skull-splitter Sword
-Sanguine Forest|UT|Staff of Horrific Knowledge
-Sanguine Forest|UT|Staff of Yuletide Carols
 Sanguine Forest|UT|Tablet of the King's Avatar
-Sanguine Forest|UT|Wand of Ancient Terror
 Sanguine Forest|UT|Winter's Breath Wand
 Sanguine Forest|UT|Yellow Beehemoth Armor
 Sanguine Forest|UT|Yuki
@@ -1118,105 +687,44 @@ Secluded Thicket|ST|Daybreak Chakram
 Secluded Thicket|ST|Heavenly Magatama
 Secluded Thicket|ST|Hirejou Tenne
 Secluded Thicket|ST|Reikoku
-Secluded Thicket|UT|An Icicle
-Secluded Thicket|UT|Bow of Eternal Frost
-Secluded Thicket|UT|Bow of Nightmares
-Secluded Thicket|UT|Corrupted Cleaver
-Secluded Thicket|UT|Dagger of the Terrible Talon
-Secluded Thicket|UT|Faded Heart Scarab
-Secluded Thicket|UT|Forbidden Artifact
-Secluded Thicket|UT|Fractured Hannya
-Secluded Thicket|UT|Frostbite
-Secluded Thicket|UT|Heavy Syndicate Attire
-Secluded Thicket|UT|Light Syndicate Attire
-Secluded Thicket|UT|Mystic Syndicate Attire
 Secluded Thicket|UT|Penetrating Blast Spell
-Secluded Thicket|UT|Present Dispensing Wand
-Secluded Thicket|UT|Salju
 Secluded Thicket|UT|Sealed Crystal Skull
-Secluded Thicket|UT|Skull-splitter Sword
-Secluded Thicket|UT|Staff of Horrific Knowledge
-Secluded Thicket|UT|Staff of Yuletide Carols
-Secluded Thicket|UT|Sunken Fire Opal Ring
 Secluded Thicket|UT|Tezcacoatl's Tail
 Secluded Thicket|UT|Tlatoani's Shroud
-Secluded Thicket|UT|Wand of Ancient Terror
-Shipwreck Cove|UT|An Icicle
-Shipwreck Cove|UT|Bow of Eternal Frost
-Shipwreck Cove|UT|Bow of Nightmares
-Shipwreck Cove|UT|Corrupted Cleaver
-Shipwreck Cove|UT|Dagger of the Terrible Talon
 Shipwreck Cove|UT|Deadly Keg
-Shipwreck Cove|UT|Frostbite
 Shipwreck Cove|UT|Greaterhosen
 Shipwreck Cove|UT|Helm of the Juggernaut
 Shipwreck Cove|UT|Mighty Stein
 Shipwreck Cove|UT|Pirate's Artillery
-Shipwreck Cove|UT|Present Dispensing Wand
 Shipwreck Cove|UT|Quiver of Thunder
-Shipwreck Cove|UT|Salju
 Shipwreck Cove|UT|Shield of Ogmur
-Shipwreck Cove|UT|Skull-splitter Sword
-Shipwreck Cove|UT|Staff of Horrific Knowledge
-Shipwreck Cove|UT|Staff of Yuletide Carols
 Shipwreck Cove|UT|Torrential Staff
 Shipwreck Cove|UT|Trap of the Vile Spirit
-Shipwreck Cove|UT|Wand of Ancient Terror
 Snake Pit|UT|Corsair's Crown Jewel
-Snake Pit|UT|Faded Heart Scarab
-Snake Pit|UT|Fractured Hannya
-Snake Pit|UT|Heavy Syndicate Attire
-Snake Pit|UT|Light Syndicate Attire
-Snake Pit|UT|Mystic Syndicate Attire
 Snake Pit|UT|Rusted Barrel
 Snake Pit|UT|Snake Charmer Pungi
 Snake Pit|UT|Snake Eye Ring
 Snake Pit|UT|Snakeskin Armor
 Snake Pit|UT|Snakeskin Shield
-Snake Pit|UT|Sunken Fire Opal Ring
 Snake Pit|UT|Wand of the Bulwark
-Spectral Penitentiary|UT|Bachelor's Tuxedo
-Spectral Penitentiary|UT|Big Bad Fursuit
-Spectral Penitentiary|UT|Bow of Nightmares
 Spectral Penitentiary|UT|Cackling Straitjacket
 Spectral Penitentiary|UT|Command Cornea
-Spectral Penitentiary|UT|Corrupted Cleaver
-Spectral Penitentiary|UT|Dagger of the Terrible Talon
 Spectral Penitentiary|UT|Damnation
-Spectral Penitentiary|UT|Faded Heart Scarab
-Spectral Penitentiary|UT|Fractured Hannya
-Spectral Penitentiary|UT|Haori of the Wind
-Spectral Penitentiary|UT|Heavy Syndicate Attire
-Spectral Penitentiary|UT|Holy Order's Habit
-Spectral Penitentiary|UT|Light Syndicate Attire
 Spectral Penitentiary|UT|Motivational Megaphone
-Spectral Penitentiary|UT|Mystic Syndicate Attire
 Spectral Penitentiary|UT|Ocular Entrapment
 Spectral Penitentiary|UT|Overwhelming Axehead
-Spectral Penitentiary|UT|Platinum Segmentata
-Spectral Penitentiary|UT|Red Riding Dress
 Spectral Penitentiary|UT|Sinister Syringes
-Spectral Penitentiary|UT|Skull-splitter Sword
-Spectral Penitentiary|UT|Staff of Horrific Knowledge
-Spectral Penitentiary|UT|Storied Blades
-Spectral Penitentiary|UT|Sunken Fire Opal Ring
 Spectral Penitentiary|UT|Tools of the Tarnished
-Spectral Penitentiary|UT|Wand of Ancient Terror
 Spectral Penitentiary|UT|Wretched Rags
 Spider Den|UT|Poison Fang Dagger
 Spider Den|UT|Spider Shuriken
 Spider Den|UT|Spider's Eye Ring
 Sprite Forest|UT|Advent Seal
-Sprite Forest|UT|An Icicle
 Sprite Forest|UT|Anteros Longbow
 Sprite Forest|UT|Babel Blocks
-Sprite Forest|UT|Bow of Eternal Frost
-Sprite Forest|UT|Bow of Nightmares
 Sprite Forest|UT|Carnival's Conjurer
 Sprite Forest|UT|Celestial Recurve
-Sprite Forest|UT|Corrupted Cleaver
 Sprite Forest|UT|Cupid's Bow
-Sprite Forest|UT|Dagger of the Terrible Talon
 Sprite Forest|UT|Diamond-Bladed Katana
 Sprite Forest|UT|Dirk of Cronus
 Sprite Forest|UT|Dreamcaster
@@ -1224,7 +732,6 @@ Sprite Forest|UT|Eternal Snowflake Wand
 Sprite Forest|UT|Frost Citadel Armor
 Sprite Forest|UT|Frost Drake Hide Armor
 Sprite Forest|UT|Frost Elementalist Robe
-Sprite Forest|UT|Frostbite
 Sprite Forest|UT|Heart Jewel Blades
 Sprite Forest|UT|Heart of Gold Prism
 Sprite Forest|UT|Heartfind Dagger
@@ -1234,34 +741,22 @@ Sprite Forest|UT|Lovestruck Yoyo
 Sprite Forest|UT|Morning Star of Sweet Miracles
 Sprite Forest|UT|Pathfinder's Helm
 Sprite Forest|UT|Phantasm Dirk
-Sprite Forest|UT|Present Dispensing Wand
 Sprite Forest|UT|Rift Rippers
 Sprite Forest|UT|Ringmaster's Bow
-Sprite Forest|UT|Salju
-Sprite Forest|UT|Skull-splitter Sword
 Sprite Forest|UT|Staff of Adoration
-Sprite Forest|UT|Staff of Horrific Knowledge
 Sprite Forest|UT|Staff of Iceblast
-Sprite Forest|UT|Staff of Yuletide Carols
 Sprite Forest|UT|Sweetheart Taichi
 Sprite Forest|UT|Throwing Knives
 Sprite Forest|UT|Tome of Frigid Protection
 Sprite Forest|UT|Vinesword
-Sprite Forest|UT|Wand of Ancient Terror
 Sprite Forest|UT|Wand of Budding Romance
 Sprite Forest|UT|Wrathful Conduit
 Sprite World|UT|Cloak of the Planewalker
 Sprite World|UT|Corsair's Crown Jewel
-Sprite World|UT|Faded Heart Scarab
-Sprite World|UT|Fractured Hannya
-Sprite World|UT|Heavy Syndicate Attire
-Sprite World|UT|Light Syndicate Attire
 Sprite World|UT|Mace of the Celestial Forest
-Sprite World|UT|Mystic Syndicate Attire
 Sprite World|UT|Rusted Barrel
 Sprite World|UT|Sprite Wand
 Sprite World|UT|Staff of Extreme Prejudice
-Sprite World|UT|Sunken Fire Opal Ring
 Stromwell's Rift III|ST|Autarch Amulet
 Stromwell's Rift III|ST|Mayhem Medallion
 Stromwell's Rift III|ST|Ring of Wrath
@@ -1321,51 +816,109 @@ Stromwell's Rift III|UT|Squadron Sheathing
 Stromwell's Rift III|UT|Tome of the Tarnished Gods
 Stromwell's Rift III|UT|Tyrant's Toxin
 Stromwell's Rift III|UT|Tyrant's Wand
+Stromwell's Rift II|ST|Autarch Amulet
+Stromwell's Rift II|ST|Mayhem Medallion
+Stromwell's Rift II|ST|Ring of Wrath
+Stromwell's Rift II|UT|Aegis Armor
+Stromwell's Rift II|UT|Amaterasu
+Stromwell's Rift II|UT|Blacklight Artifice
+Stromwell's Rift II|UT|Blade of the Assailant
+Stromwell's Rift II|UT|Blitz Sheath
+Stromwell's Rift II|UT|Bounty Hunter's Dagger
+Stromwell's Rift II|UT|Brutal Buckler
+Stromwell's Rift II|UT|Chief's War Horn
+Stromwell's Rift II|UT|Cloak of the Darkened Sun
+Stromwell's Rift II|UT|Cursed Spire Spell
+Stromwell's Rift II|UT|Demon Lord's Skull
+Stromwell's Rift II|UT|Hawkmaster Sigil
+Stromwell's Rift II|UT|Helm of Exalted Might
+Stromwell's Rift II|UT|Henchman's Claymore
+Stromwell's Rift II|UT|Judge's Robe
+Stromwell's Rift II|UT|Legion Elite Bow
+Stromwell's Rift II|UT|Legion Elite Cloak
+Stromwell's Rift II|UT|Legion Elite Dagger
+Stromwell's Rift II|UT|Legion Elite Drums
+Stromwell's Rift II|UT|Legion Elite Helm
+Stromwell's Rift II|UT|Legion Elite Katana
+Stromwell's Rift II|UT|Legion Elite Leather Armor
+Stromwell's Rift II|UT|Legion Elite Mace
+Stromwell's Rift II|UT|Legion Elite Orb
+Stromwell's Rift II|UT|Legion Elite Plate Armor
+Stromwell's Rift II|UT|Legion Elite Poison
+Stromwell's Rift II|UT|Legion Elite Prism
+Stromwell's Rift II|UT|Legion Elite Quiver
+Stromwell's Rift II|UT|Legion Elite Robe
+Stromwell's Rift II|UT|Legion Elite Scepter
+Stromwell's Rift II|UT|Legion Elite Seal
+Stromwell's Rift II|UT|Legion Elite Sheath
+Stromwell's Rift II|UT|Legion Elite Shield
+Stromwell's Rift II|UT|Legion Elite Sigil
+Stromwell's Rift II|UT|Legion Elite Skull
+Stromwell's Rift II|UT|Legion Elite Spell
+Stromwell's Rift II|UT|Legion Elite Staff
+Stromwell's Rift II|UT|Legion Elite Star
+Stromwell's Rift II|UT|Legion Elite Sword
+Stromwell's Rift II|UT|Legion Elite Tome
+Stromwell's Rift II|UT|Legion Elite Trap
+Stromwell's Rift II|UT|Legion Elite Wakizashi
+Stromwell's Rift II|UT|Legion Elite Wand
+Stromwell's Rift II|UT|Mad Javelin
+Stromwell's Rift II|UT|Mechanical Mace
+Stromwell's Rift II|UT|Oppressor's Staff
+Stromwell's Rift II|UT|Orb of Conquest
+Stromwell's Rift II|UT|Predator Bow
+Stromwell's Rift II|UT|Prism of Shattered Light
+Stromwell's Rift II|UT|Rage Claws
+Stromwell's Rift II|UT|Seal of the Battle God
+Stromwell's Rift II|UT|Siege Scepter
+Stromwell's Rift II|UT|Squadron Sheathing
+Stromwell's Rift II|UT|Tome of the Tarnished Gods
+Stromwell's Rift II|UT|Tyrant's Toxin
+Stromwell's Rift II|UT|Tyrant's Wand
+Stromwell's Rift I|ST|Autarch Amulet
+Stromwell's Rift I|ST|Mayhem Medallion
+Stromwell's Rift I|ST|Ring of Wrath
+Stromwell's Rift I|UT|Aegis Armor
+Stromwell's Rift I|UT|Amaterasu
+Stromwell's Rift I|UT|Blacklight Artifice
+Stromwell's Rift I|UT|Blade of the Assailant
+Stromwell's Rift I|UT|Blitz Sheath
+Stromwell's Rift I|UT|Bounty Hunter's Dagger
+Stromwell's Rift I|UT|Brutal Buckler
+Stromwell's Rift I|UT|Chief's War Horn
+Stromwell's Rift I|UT|Cloak of the Darkened Sun
+Stromwell's Rift I|UT|Cursed Spire Spell
+Stromwell's Rift I|UT|Demon Lord's Skull
+Stromwell's Rift I|UT|Hawkmaster Sigil
+Stromwell's Rift I|UT|Helm of Exalted Might
+Stromwell's Rift I|UT|Henchman's Claymore
+Stromwell's Rift I|UT|Judge's Robe
+Stromwell's Rift I|UT|Mad Javelin
+Stromwell's Rift I|UT|Mechanical Mace
+Stromwell's Rift I|UT|Oppressor's Staff
+Stromwell's Rift I|UT|Orb of Conquest
+Stromwell's Rift I|UT|Predator Bow
+Stromwell's Rift I|UT|Prism of Shattered Light
+Stromwell's Rift I|UT|Rage Claws
+Stromwell's Rift I|UT|Seal of the Battle God
+Stromwell's Rift I|UT|Siege Scepter
+Stromwell's Rift I|UT|Squadron Sheathing
+Stromwell's Rift I|UT|Tome of the Tarnished Gods
+Stromwell's Rift I|UT|Tyrant's Toxin
+Stromwell's Rift I|UT|Tyrant's Wand
 Sulfurous Wetlands|UT|Bogwood Crook
 Sulfurous Wetlands|UT|Brambletooth Tachi
-Sulfurous Wetlands|UT|Faded Heart Scarab
-Sulfurous Wetlands|UT|Forbidden Artifact
-Sulfurous Wetlands|UT|Fractured Hannya
-Sulfurous Wetlands|UT|Heavy Syndicate Attire
-Sulfurous Wetlands|UT|Light Syndicate Attire
-Sulfurous Wetlands|UT|Mystic Syndicate Attire
 Sulfurous Wetlands|UT|Sulfuric Stone
-Sulfurous Wetlands|UT|Sunken Fire Opal Ring
 Sulfurous Wetlands|UT|Thistleleaf Necklace
 Sulfurous Wetlands|UT|Warped Mantle
-The Crawling Depths|UT|An Icicle
-The Crawling Depths|UT|Bow of Eternal Frost
-The Crawling Depths|UT|Bow of Nightmares
-The Crawling Depths|UT|Corrupted Cleaver
-The Crawling Depths|UT|Dagger of the Terrible Talon
 The Crawling Depths|UT|Doku No Ken
-The Crawling Depths|UT|Faded Heart Scarab
-The Crawling Depths|UT|Forbidden Artifact
-The Crawling Depths|UT|Fractured Hannya
-The Crawling Depths|UT|Frostbite
-The Crawling Depths|UT|Heavy Syndicate Attire
-The Crawling Depths|UT|Light Syndicate Attire
 The Crawling Depths|UT|Mace of the Depths
-The Crawling Depths|UT|Mystic Syndicate Attire
-The Crawling Depths|UT|Present Dispensing Wand
-The Crawling Depths|UT|Salju
 The Crawling Depths|UT|Silken Sigil
-The Crawling Depths|UT|Skull-splitter Sword
 The Crawling Depths|UT|Spider Silk Bow
-The Crawling Depths|UT|Staff of Horrific Knowledge
-The Crawling Depths|UT|Staff of Yuletide Carols
-The Crawling Depths|UT|Sunken Fire Opal Ring
-The Crawling Depths|UT|Wand of Ancient Terror
 The Hive|UT|Corsair's Crown Jewel
-The Hive|UT|Faded Heart Scarab
-The Hive|UT|Fractured Hannya
-The Hive|UT|Heavy Syndicate Attire
 The Hive|UT|Honey Scepter
-The Hive|UT|Light Syndicate Attire
-The Hive|UT|Mystic Syndicate Attire
 The Hive|UT|Orb of Sweet Demise
 The Hive|UT|Rusted Barrel
-The Hive|UT|Sunken Fire Opal Ring
 The Machine|ST|Brilliance Bow
 The Machine|ST|Omni-Impotence Ring
 The Machine|UT|Archerang
@@ -1378,35 +931,40 @@ The Machine|UT|Caduceus of Current Craziness
 The Machine|UT|Challenger Helm
 The Machine|UT|Epiphany Skull
 The Machine|UT|FFabulous FFlail
-The Machine|UT|Faded Heart Scarab
 The Machine|UT|Fool's Prism
-The Machine|UT|Fractured Hannya
 The Machine|UT|Groovy Mango
-The Machine|UT|Heavy Syndicate Attire
 The Machine|UT|Helium Trap
 The Machine|UT|Honey Scepter Supreme
 The Machine|UT|K.I.D.D. Force
 The Machine|UT|K.I.D.D. Force 2.0
 The Machine|UT|Karma Orb
-The Machine|UT|Light Syndicate Attire
 The Machine|UT|Lightning in a Bottle
 The Machine|UT|Lullaby
 The Machine|UT|MMace MMurderer
 The Machine|UT|Mirror Cloak
 The Machine|UT|Mister Mango
-The Machine|UT|Mystic Syndicate Attire
 The Machine|UT|NSFWakizashi
 The Machine|UT|Paper Machete
 The Machine|UT|Recursion Mace
 The Machine|UT|Seal of Eternal Life
-The Machine|UT|Sheath of Thunderous Rites
 The Machine|UT|Shield of Pogmur
 The Machine|UT|Sigil of the Rubber Duck
 The Machine|UT|Spelling Spell
-The Machine|UT|Storm Caller
-The Machine|UT|Sunken Fire Opal Ring
 The Machine|UT|Tome of Moral Support
 The Machine|UT|Unshuriken
+The Nest|ST|Apiary Armor
+The Nest|ST|Honey Circlet
+The Nest|ST|Honeytomb Snare
+The Nest|ST|Nectar Crossfire
+The Nest|UT|Beekeeper's Flamethrower
+The Nest|UT|Blue Beehemoth Armor
+The Nest|UT|Combcutter Kunai
+The Nest|UT|Hivemaster Helm
+The Nest|UT|Hivemind Mace
+The Nest|UT|Queen's Stinger
+The Nest|UT|Red Beehemoth Armor
+The Nest|UT|Swarmlord's Sigil
+The Nest|UT|Yellow Beehemoth Armor
 The Realm|ST|Interregnum
 The Realm|ST|Kiritsukeru
 The Realm|ST|Memento Mori
@@ -1419,23 +977,15 @@ The Realm|ST|Traveler's Trinket
 The Realm|ST|Watarimono
 The Realm|UT|Advent Seal
 The Realm|UT|Adventurer's Scarf
-The Realm|UT|Anteros Longbow
-The Realm|UT|Bachelor's Tuxedo
 The Realm|UT|Beach Shovel
 The Realm|UT|Beach Umbrella
-The Realm|UT|Big Bad Fursuit
 The Realm|UT|Blooming Bouquet
 The Realm|UT|Blossom Bow
 The Realm|UT|Bottled Lemonade
-The Realm|UT|Bow of Nightmares
 The Realm|UT|Chocsicle
 The Realm|UT|Cloak of Winter
 The Realm|UT|Coalbearing Quiver
 The Realm|UT|Coral Soda
-The Realm|UT|Corrupted Cleaver
-The Realm|UT|Cupid's Bow
-The Realm|UT|Dagger of the Terrible Talon
-The Realm|UT|Diamond-Bladed Katana
 The Realm|UT|Dual Pops
 The Realm|UT|Eternal Bloom Wand
 The Realm|UT|Fitted Protective Matrix
@@ -1445,12 +995,8 @@ The Realm|UT|Floral Guard Armor
 The Realm|UT|Frost Lich's Finger
 The Realm|UT|Frosty's Walking Stick
 The Realm|UT|Greedsnatcher Trap
-The Realm|UT|Haori of the Wind
-The Realm|UT|Heart Jewel Blades
-The Realm|UT|Heartfind Dagger
 The Realm|UT|Heavy Protective Matrix
 The Realm|UT|Holly Poison
-The Realm|UT|Holy Order's Habit
 The Realm|UT|Icicle Launcher
 The Realm|UT|Ilex Star
 The Realm|UT|Jacket Of Blossoms
@@ -1458,11 +1004,8 @@ The Realm|UT|Jailer's Scythe
 The Realm|UT|Leaf Woven Robe
 The Realm|UT|Life Jacket
 The Realm|UT|Longbow of the Void
-The Realm|UT|Love Heart Spellblade
-The Realm|UT|Lovestruck Yoyo
 The Realm|UT|Mace of the North Pole
 The Realm|UT|Magic Protective Matrix
-The Realm|UT|Morning Star of Sweet Miracles
 The Realm|UT|Morning Star of the Void
 The Realm|UT|Nativity Tome
 The Realm|UT|Ornamental Prism
@@ -1470,29 +1013,20 @@ The Realm|UT|Oryxmas Carol
 The Realm|UT|Pathfinder's Helm
 The Realm|UT|Peppermint Wakizashi
 The Realm|UT|Petal Strike Sword
-The Realm|UT|Platinum Segmentata
 The Realm|UT|Pool Noodle
-The Realm|UT|Red Riding Dress
 The Realm|UT|Resounding Shield
 The Realm|UT|Rosebite Dagger
 The Realm|UT|Saint Nicolas' Blade
 The Realm|UT|Scepter of Sainthood
 The Realm|UT|Skull of Krampus
-The Realm|UT|Skull-splitter Sword
 The Realm|UT|Snowbound Orb
 The Realm|UT|Spellblade of the Void
-The Realm|UT|Staff of Adoration
-The Realm|UT|Staff of Horrific Knowledge
 The Realm|UT|Summer Dress
-The Realm|UT|Sweetheart Taichi
 The Realm|UT|Swim Tube
 The Realm|UT|Vigil Spell
-The Realm|UT|Vinesword
 The Realm|UT|Void Blades
 The Realm|UT|Void Flail
 The Realm|UT|Void Tachi
-The Realm|UT|Wand of Ancient Terror
-The Realm|UT|Wand of Budding Romance
 The Realm|UT|Water Pistol
 The Realm|UT|Winter's Breath Wand
 The Realm|UT|Yuki
@@ -1505,23 +1039,15 @@ The Shatters|ST|Defiled Equilibrium
 The Shatters|ST|Eye of the Void
 The Shatters|ST|Fallen One's Blade
 The Shatters|ST|Flames of Genesis
-The Shatters|ST|Immortal Mantle
 The Shatters|ST|Seraphim's Guard
-The Shatters|ST|Spectral Spell
-The Shatters|ST|Supernatural Staff
 The Shatters|ST|Twilight Shroud
 The Shatters|ST|Vortex Plating
 The Shatters|UT|Bracer of the Guardian
 The Shatters|UT|Chrysalis of Eternity
 The Shatters|UT|Dusky Catalyst
 The Shatters|UT|Dusky Catalyst (Rehearsal)
-The Shatters|UT|Faded Heart Scarab
-The Shatters|UT|Fractured Hannya
-The Shatters|UT|Heavy Syndicate Attire
-The Shatters|UT|Light Syndicate Attire
 The Shatters|UT|Mantle of the Monarchy
 The Shatters|UT|Mantle of the Monarchy (Rehearsal)
-The Shatters|UT|Mystic Syndicate Attire
 The Shatters|UT|Noble Mandolin
 The Shatters|UT|Noble Mandolin (Rehearsal)
 The Shatters|UT|Peacekeeper
@@ -1534,8 +1060,6 @@ The Shatters|UT|Royal Guard's Cuirass
 The Shatters|UT|Royal Guard's Cuirass (Rehearsal)
 The Shatters|UT|Sentinel's Sidearm
 The Shatters|UT|Sentinel's Sidearm (Rehearsal)
-The Shatters|UT|Storied Blades
-The Shatters|UT|Sunken Fire Opal Ring
 The Shatters|UT|The Forgotten Crown
 The Shatters|UT|The Forgotten Ring
 The Shatters|UT|The Twilight Gemstone
@@ -1550,13 +1074,6 @@ The Shatters|UT|Warmonger (Rehearsal)
 The Tavern|UT|Brewer's Bangle
 The Tavern|UT|Cask Corslet
 The Tavern|UT|Double Vision Darts
-The Tavern|UT|Faded Heart Scarab
-The Tavern|UT|Forbidden Artifact
-The Tavern|UT|Fractured Hannya
-The Tavern|UT|Heavy Syndicate Attire
-The Tavern|UT|Light Syndicate Attire
-The Tavern|UT|Mystic Syndicate Attire
-The Tavern|UT|Sunken Fire Opal Ring
 The Tavern|UT|The Right Hook
 The Tavern|UT|Tipsy Topper
 The Third Dimension|ST|Cuband
@@ -1564,145 +1081,58 @@ The Third Dimension|ST|Cubic Frame
 The Third Dimension|ST|Polygonal Garbs
 The Third Dimension|ST|Squaroid Staff
 The Third Dimension|UT|Cloak of Cubic Enigma
-The Third Dimension|UT|Faded Heart Scarab
-The Third Dimension|UT|Forbidden Artifact
-The Third Dimension|UT|Fractured Hannya
-The Third Dimension|UT|Heavy Syndicate Attire
-The Third Dimension|UT|Light Syndicate Attire
 The Third Dimension|UT|Morning Square
-The Third Dimension|UT|Mystic Syndicate Attire
 The Third Dimension|UT|Ring of Cubed Wisdom
 The Third Dimension|UT|Seal of Cubic Conundra
 The Third Dimension|UT|Shadow Serpent Sidearm
-The Third Dimension|UT|Sunken Fire Opal Ring
 The Third Dimension|UT|The Triangle
 The Void|UT|Armor of Nil
 The Void|UT|Bow of the Void
-The Void|UT|Faded Heart Scarab
-The Void|UT|Fractured Hannya
-The Void|UT|Heavy Syndicate Attire
-The Void|UT|Light Syndicate Attire
-The Void|UT|Mystic Syndicate Attire
 The Void|UT|Omnipotence Ring
 The Void|UT|Quiver of Shadows
 The Void|UT|Sourcestone
-The Void|UT|Storied Blades
-The Void|UT|Sunken Fire Opal Ring
 Tomb of the Ancients|ST|Book of Geb
 Tomb of the Ancients|ST|Geb's Ring of Wisdom
 Tomb of the Ancients|ST|Shendyt of Geb
 Tomb of the Ancients|ST|Wand of Geb
-Tomb of the Ancients|UT|An Icicle
-Tomb of the Ancients|UT|Bow of Eternal Frost
-Tomb of the Ancients|UT|Bow of Nightmares
-Tomb of the Ancients|UT|Corrupted Cleaver
-Tomb of the Ancients|UT|Dagger of the Terrible Talon
-Tomb of the Ancients|UT|Faded Heart Scarab
-Tomb of the Ancients|UT|Forbidden Artifact
-Tomb of the Ancients|UT|Fractured Hannya
-Tomb of the Ancients|UT|Frostbite
-Tomb of the Ancients|UT|Heavy Syndicate Attire
-Tomb of the Ancients|UT|Light Syndicate Attire
-Tomb of the Ancients|UT|Mystic Syndicate Attire
 Tomb of the Ancients|UT|Pharaoh's Requiem
-Tomb of the Ancients|UT|Present Dispensing Wand
 Tomb of the Ancients|UT|Ring of the Nile
 Tomb of the Ancients|UT|Ring of the Pyramid
 Tomb of the Ancients|UT|Ring of the Sphinx
-Tomb of the Ancients|UT|Salju
-Tomb of the Ancients|UT|Skull-splitter Sword
-Tomb of the Ancients|UT|Staff of Horrific Knowledge
-Tomb of the Ancients|UT|Staff of Yuletide Carols
-Tomb of the Ancients|UT|Sunken Fire Opal Ring
 Tomb of the Ancients|UT|Tome of Holy Protection
-Tomb of the Ancients|UT|Wand of Ancient Terror
 Toxic Sewers|ST|Acidic Armor
 Toxic Sewers|ST|Pernicious Peridot
 Toxic Sewers|ST|Toxin Tooth
 Toxic Sewers|ST|Virulent Venom
-Toxic Sewers|UT|Faded Heart Scarab
-Toxic Sewers|UT|Fractured Hannya
-Toxic Sewers|UT|Heavy Syndicate Attire
-Toxic Sewers|UT|Light Syndicate Attire
 Toxic Sewers|UT|Murky Toxin
-Toxic Sewers|UT|Mystic Syndicate Attire
-Toxic Sewers|UT|Sheath of Thunderous Rites
-Toxic Sewers|UT|Storm Caller
-Toxic Sewers|UT|Sunken Fire Opal Ring
 Toxic Sewers|UT|Void Blade
 Undead Lair|ST|Edictum Praetoris
 Undead Lair|ST|Toga Picta
 Undead Lair|UT|Doom Bow
-Undead Lair|UT|Faded Heart Scarab
-Undead Lair|UT|Fractured Hannya
-Undead Lair|UT|Heavy Syndicate Attire
-Undead Lair|UT|Light Syndicate Attire
-Undead Lair|UT|Mystic Syndicate Attire
 Undead Lair|UT|Ring of Skeletal Specters
-Undead Lair|UT|Sheath of Thunderous Rites
 Undead Lair|UT|Spectral Sword
-Undead Lair|UT|Storm Caller
-Undead Lair|UT|Sunken Fire Opal Ring
 Undead Lair|UT|Wandering Souls Spell
 Untaris|ST|Alien Core: Dark Matter
 Untaris|UT|Dueling Daggers
-Untaris|UT|Faded Heart Scarab
-Untaris|UT|Forbidden Artifact
-Untaris|UT|Fractured Hannya
-Untaris|UT|Heavy Syndicate Attire
-Untaris|UT|Light Syndicate Attire
 Untaris|UT|Moonbeam Blade
-Untaris|UT|Mystic Syndicate Attire
 Untaris|UT|Snowblind Wand
-Untaris|UT|Sunken Fire Opal Ring
 Wine Cellar|ST|Bloodstone Ring
 Wine Cellar|ST|Champion's Bastion
 Wine Cellar|ST|Mercy's Bane
 Wine Cellar|ST|Oryx's Greatsword
-Wine Cellar|UT|An Icicle
-Wine Cellar|UT|Bow of Eternal Frost
-Wine Cellar|UT|Bow of Nightmares
-Wine Cellar|UT|Corrupted Cleaver
-Wine Cellar|UT|Dagger of the Terrible Talon
-Wine Cellar|UT|Frostbite
 Wine Cellar|UT|Greedsnatcher Trap
 Wine Cellar|UT|Ilex Star
 Wine Cellar|UT|Kagebooshi
 Wine Cellar|UT|Longbow of Spirits and Shadows
 Wine Cellar|UT|Ornamental Prism
-Wine Cellar|UT|Present Dispensing Wand
 Wine Cellar|UT|Resounding Shield
-Wine Cellar|UT|Salju
 Wine Cellar|UT|Scepter of Sainthood
 Wine Cellar|UT|Shield of Jawgmur
 Wine Cellar|UT|Skull of Krampus
-Wine Cellar|UT|Skull-splitter Sword
 Wine Cellar|UT|Snowbound Orb
 Wine Cellar|UT|Spooky Smasher
-Wine Cellar|UT|Staff of Horrific Knowledge
-Wine Cellar|UT|Staff of Yuletide Carols
 Wine Cellar|UT|Tome of Holy Furor
-Wine Cellar|UT|Wand of Ancient Terror
-Woodland Labyrinth|UT|An Icicle
-Woodland Labyrinth|UT|Bow of Eternal Frost
-Woodland Labyrinth|UT|Bow of Nightmares
-Woodland Labyrinth|UT|Corrupted Cleaver
-Woodland Labyrinth|UT|Dagger of the Terrible Talon
 Woodland Labyrinth|UT|Elder Heartwood Staff
-Woodland Labyrinth|UT|Faded Heart Scarab
-Woodland Labyrinth|UT|Forbidden Artifact
-Woodland Labyrinth|UT|Fractured Hannya
-Woodland Labyrinth|UT|Frostbite
-Woodland Labyrinth|UT|Heavy Syndicate Attire
 Woodland Labyrinth|UT|Labyrinth Dweller's Sheath
 Woodland Labyrinth|UT|Leaf Bow
-Woodland Labyrinth|UT|Light Syndicate Attire
-Woodland Labyrinth|UT|Mystic Syndicate Attire
-Woodland Labyrinth|UT|Present Dispensing Wand
-Woodland Labyrinth|UT|Salju
-Woodland Labyrinth|UT|Skull-splitter Sword
-Woodland Labyrinth|UT|Staff of Horrific Knowledge
-Woodland Labyrinth|UT|Staff of Yuletide Carols
-Woodland Labyrinth|UT|Sunken Fire Opal Ring
 Woodland Labyrinth|UT|Wakizashi of Eastern Winds
-Woodland Labyrinth|UT|Wand of Ancient Terror

@@ -3,6 +3,20 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.8.2
+
+- **Dungeons** and **Collection** only list what really drops in each dungeon. Holiday event items (Oryxmas,
+  Halloween, Valentine's...) were listed under every boss that drops them during the event, and items from bosses
+  that wander into lots of dungeons (like the Syndicate attires) were listed everywhere they can turn up. Those are
+  now under "Events and seasonal" and "Many dungeons" in the Collection instead. Deadwater Docks, for example, now
+  shows its 3 UTs and the Pirate King set instead of 22 UTs.
+
+## 2.8.1
+
+- The **Collection** now also counts what's in your **gift chest** and your **seasonal spoils** (hover an item to see
+  where it is). The Vault tab shows your seasonal spoils too, and the diary says how many items it read from each.
+- The last vault the pup saw before updating counts as well, without going back in.
+
 ## 2.8.0
 
 - **81 new badges** (167 in all): bags of every colour (Seeing Red, Golden Retriever, Cyan Sighting, Taste the

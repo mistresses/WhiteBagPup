@@ -52,7 +52,7 @@ public class VaultContentPacket extends Packet {
     /**
      * The contents of the player's seasonal spoils items
      */
-    int[] seasonalSpoilContent;
+    public int[] seasonalSpoilContent;
     /**
      * The cost in gold for the next upgrade to the vault
      */
@@ -130,7 +130,7 @@ public class VaultContentPacket extends Packet {
         }
         int left = buffer.getRemainingBytes();
         System.out.println("[White Bag Pup] vault message: vault " + vaultContents.length + ", potions " + potionContents.length
-                + ", gifts " + giftContents.length + ", last piece " + lastVaultPacket
+                + ", gifts " + giftContents.length + ", spoils " + seasonalSpoilContent.length + ", last piece " + lastVaultPacket
                 + (stopped != null ? ", stopped reading at the " + stopped + " (" + buffer.getIndex() + "/" + buffer.size() + " bytes)"
                 : left > 0 ? ", " + left + " extra bytes ignored" : ""));
         if (left > 0) buffer.readBytes(left); // skip anything new the game added

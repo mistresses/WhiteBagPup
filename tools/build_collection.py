@@ -6,9 +6,11 @@ per item and place it drops:  place|tier|item name
     python tools/build_collection.py path/to/ut_items.json
 
 Only items that can drop in a bag are kept (shop, mystery box and event-chest-only items, and Retro items that no
-longer drop, are left out).
+longer drop, are left out). Holiday event items, which the wiki lists under every boss that drops them during the
+event, go under "Events and seasonal"; items from bosses that wander into many dungeons go under "Many dungeons".
 """
 import json
+import re
 import os
 import sys
 
@@ -25,8 +27,24 @@ BOSS_PLACES = [
     ("forgotten king", "The Shatters"), ("limon", "Sprite World"),
 ]
 EVENTS = "Events and seasonal"
+MANY = "Many dungeons"
+# Bosses that only drop things during a holiday event
+EVENT_WORDS = r"christmas|oryxmas|halloween|candy|valentine|snowman|easter|jolly|rudolph|\bloot elf\b|frost present|new year|event chest"
+# An item dropped in this many places or more comes from a boss that can turn up anywhere, not from those dungeons
+WANDERING = 8
 # Dungeons whose fights are other dungeons' bosses again: their drops are filed under where they really come from
 BORROWED = {"The Trials of Cronus"}
+KEEP = set()
+
+
+def dungeons():
+    """The dungeons on the Dungeons tab (dungeon-atlas.txt): they always keep their own page in the Collection."""
+    atlas = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "resources", "whitebag", "dungeon-atlas.txt")
+    try:
+        with open(atlas, encoding="utf-8") as f:
+            return {l.split("|")[1] for l in f if l.startswith("D|")} - BORROWED
+    except OSError:
+        return set()
 
 
 def place(name):
@@ -40,6 +58,8 @@ def place(name):
 
 
 def main(src, out):
+    global KEEP
+    KEEP = dungeons()
     data = json.load(open(src, encoding="utf-8"))
     items, where = data["items"], data["enemy_locations"]
     lines = set()
@@ -50,7 +70,11 @@ def main(src, out):
         if "(Retro)" in item["name"]:
             continue  # old versions from past events: they don't drop any more
         places = set()
+        holiday = False
         for enemy in item["drops"]:
+            if re.search(EVENT_WORDS, enemy.lower()):
+                holiday = True  # only during a holiday event: doesn't say where it drops the rest of the year
+                continue
             for loc in where.get(item.get("links", {}).get(enemy), []):
                 places.add(place(loc["name"]))
         many = "Elsewhere" in places   # the wiki only says "various dungeons"
@@ -59,11 +83,17 @@ def main(src, out):
         if not places:
             for enemy in item["drops"]:
                 for key, p in BOSS_PLACES:
-                    if key in enemy.lower():
+                    if key in enemy.lower() and not re.search(EVENT_WORDS, enemy.lower()):
                         places.add(p)
         if not places and any("quest chest" in e.lower() for e in item["drops"]):
             places = {"Quest chests"}
-        per_item[(item['tier'], item['name'].strip())] = places or {"Many dungeons" if many else EVENTS}
+        if len(places) >= WANDERING:
+            # during a holiday event almost every boss drops it; otherwise it's from a boss that wanders into lots of
+            # dungeons (Interregnum and the like)
+            places = {EVENTS if len(item["drops"]) >= 15 else MANY}
+        elif not places and holiday:
+            places = {EVENTS}
+        per_item[(item['tier'], item['name'].strip())] = places or {MANY if many else EVENTS}
     # A place whose every item also drops somewhere else has nothing of its own (e.g. The Trials of Cronus, whose
     # bosses are other dungeons' bosses): leave it out, so its items only show where they really come from.
     left_out = []
@@ -76,9 +106,11 @@ def main(src, out):
             if len(places) == 1:
                 own[next(iter(places))] += 1
         removed = False
-        for p in sorted((p for p, n in own.items() if n == 0), key=lambda x: size[x]):
-            # only if every item there still has somewhere else to go
-            if all(len(pl) > 1 for pl in per_item.values() if p in pl):
+        # variants (Heroic, Legacy, Neo...) go before the dungeon they're a version of
+        variant = lambda x: not re.match(r"(Heroic|Legacy|Neo|Infernal) |.*(Rift|Takeover)", x)
+        for p in sorted((p for p, n in own.items() if n == 0), key=lambda x: (variant(x), size[x])):
+            # only if every item there still has somewhere else to go, and it isn't a dungeon you can run yourself
+            if p not in KEEP and all(len(pl) > 1 for pl in per_item.values() if p in pl):
                 for key in per_item:
                     per_item[key] = per_item[key] - {p}
                 left_out.append(p)

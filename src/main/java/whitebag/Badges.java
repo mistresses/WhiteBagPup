@@ -588,8 +588,9 @@ final class Badges {
         s.tradePartners = partners.size();
         java.util.Set<Integer> vault = new java.util.HashSet<>(), seasonal = new java.util.HashSet<>();
         for (Owned.Sighting o : Owned.of(mine)) {
-            if (o.where.equals(Owned.VAULT) || o.where.equals(Owned.SEASONAL_VAULT)) vault.add(o.item);
-            if (o.where.equals(Owned.SEASONAL_VAULT) || o.where.equals(Owned.SEASONAL_CHARACTER)) seasonal.add(o.item);
+            if (o.where.equals(Owned.VAULT) || o.where.equals(Owned.SEASONAL_VAULT) || o.where.equals(Owned.GIFT_CHEST)
+                    || o.where.equals(Owned.SEASONAL_SPOILS)) vault.add(o.item);
+            if (o.where.equals(Owned.SEASONAL_VAULT) || o.where.equals(Owned.SEASONAL_CHARACTER) || o.where.equals(Owned.SEASONAL_SPOILS)) seasonal.add(o.item);
         }
         s.vaultItems = vault.size();
         s.seasonalItems = seasonal.size();

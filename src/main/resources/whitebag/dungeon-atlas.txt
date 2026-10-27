@@ -1,4 +1,4 @@
-# White Bag Pup dungeon atlas: D|name|type|difficulty, then P|portal drop|1 if always, U|UT item, S|ST item (Retro items are left out: they no longer drop) (from the RealmEye wiki, 2026-10-09)
+# White Bag Pup dungeon atlas: D|name|type|difficulty, then P|portal drop|1 if always, U|UT item, S|ST item (Retro items are left out: they no longer drop) (from the RealmEye wiki, 2026-10-09) Holiday event items and items from bosses that wander into many dungeons are left out (they're under Events and seasonal / Many dungeons in the Collection).
 D|Pirate Cave|Realm Dungeons|1
 P|Pirate|0
 P|Piratess|0
@@ -41,29 +41,17 @@ P|Great Coil Snake|1
 U|Corsair's Crown Jewel
 U|Cracked Crystal Skull
 U|Crystal Bone Ring
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Robe of the Tlatoani
 U|Rusted Barrel
 U|Staff of the Crystal Serpent
-U|Sunken Fire Opal Ring
 D|The Hive|Realm Dungeons|2
 P|Wasp Queen|1
 P|Warrior Bee|1
 P|Legion Surveyor|1
 U|Corsair's Crown Jewel
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
 U|Honey Scepter
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Orb of Sweet Demise
 U|Rusted Barrel
-U|Sunken Fire Opal Ring
 D|Snake Pit|Realm Dungeons|2.5
 P|Lizard God|0
 P|Undead Dwarf God|0
@@ -74,17 +62,11 @@ P|Flying Seahorse|0
 P|Medusa|0
 P|Insurgent Rebel Commander|0
 U|Corsair's Crown Jewel
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Rusted Barrel
 U|Snake Charmer Pungi
 U|Snake Eye Ring
 U|Snakeskin Armor
 U|Snakeskin Shield
-U|Sunken Fire Opal Ring
 U|Wand of the Bulwark
 D|Sprite World|Realm Dungeons|2.5
 P|Sprite Beast|0
@@ -93,16 +75,10 @@ P|Celestial Sprite|1
 P|Cosmic Sprite|1
 U|Cloak of the Planewalker
 U|Corsair's Crown Jewel
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Mace of the Celestial Forest
-U|Mystic Syndicate Attire
 U|Rusted Barrel
 U|Sprite Wand
 U|Staff of Extreme Prejudice
-U|Sunken Fire Opal Ring
 D|Cave of a Thousand Treasures|Realm Dungeons|2.5
 P|Sunken Soul|0
 P|Silvery Narwhal|0
@@ -120,14 +96,8 @@ P|Sword in the Stone|0
 U|Amber Encrusted Helmet
 U|Arcane Rapier
 U|Corsair's Crown Jewel
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Rusted Barrel
 U|Sandstone Seal
-U|Sunken Fire Opal Ring
 U|Titan's Heart
 S|Aquamarine Amulet
 S|Embellished Quiver
@@ -143,16 +113,10 @@ P|Ent Ancient|1
 P|Legion Scout Master|1
 U|Corsair's Crown Jewel
 U|Enchantment Orb
-U|Faded Heart Scarab
 U|Fairy Ring
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Rusted Barrel
 U|Shield of Flowing Clarity
 U|Spirit Staff
-U|Sunken Fire Opal Ring
 U|Woodland Robe
 S|Bergenia Bow
 S|Lifebringing Lotus
@@ -173,16 +137,8 @@ P|Burning Bones|0
 P|Ghost God|0
 P|Flesh Golem|0
 U|Doom Bow
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Ring of Skeletal Specters
-U|Sheath of Thunderous Rites
 U|Spectral Sword
-U|Storm Caller
-U|Sunken Fire Opal Ring
 U|Wandering Souls Spell
 S|Edictum Praetoris
 S|Toga Picta
@@ -192,17 +148,9 @@ P|Corrupt Sprite|0
 P|Unsung Jester|0
 P|Leviathan|0
 P|Sinister Scarecrow|0
-U|Faded Heart Scarab
-U|Fractured Hannya
 U|Harlequin Armor
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Marionette Ravager
-U|Mystic Syndicate Attire
 U|Prism of Dancing Swords
-U|Sheath of Thunderous Rites
-U|Storm Caller
-U|Sunken Fire Opal Ring
 S|Lightshow Scepter
 S|Magic Wand
 S|Magician's Robe
@@ -213,15 +161,7 @@ P|Smelly Octopus|0
 P|Brimstone Wyvern|0
 P|Slime God|0
 P|Eternal Tormentor|0
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Murky Toxin
-U|Mystic Syndicate Attire
-U|Sheath of Thunderous Rites
-U|Storm Caller
-U|Sunken Fire Opal Ring
 U|Void Blade
 S|Acidic Armor
 S|Pernicious Peridot
@@ -234,30 +174,10 @@ P|Harrowed Fiend|0
 P|Beholder|0
 P|Shady Sect Leader|1
 P|Legion Excavator|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
 U|Corruption Cutter
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Necronomicon
-U|Present Dispensing Wand
 U|Ronin's Wakizashi
-U|Salju
 U|Scholar's Seal
-U|Sheath of Thunderous Rites
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Storm Caller
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 U|Wand of Hidden Knowledge
 S|Deathless Crossbow
 S|Quiver of Shrieking Specters
@@ -268,30 +188,10 @@ P|Banshee|0
 P|Hazardous Sprite|0
 P|Flying Brain|0
 P|Artificial Sprite God|0
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
 U|Conducting Wand
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
 U|Experimental Ring
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
 U|Robe of the Mad Scientist
-U|Salju
 U|Scepter of Fulmination
-U|Sheath of Thunderous Rites
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Storm Caller
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 S|Abomination's Wrath
 S|Garment of the Beast
 S|Grotesque Scepter
@@ -305,14 +205,6 @@ P|Vagabond Satyr|0
 P|Legion Guard Captain|1
 U|Berserker's Breastplate
 U|Demon Blade
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Sheath of Thunderous Rites
-U|Storm Caller
-U|Sunken Fire Opal Ring
 U|Volcanic Sheath
 S|Molten Mantle
 S|Ring of the Inferno
@@ -324,17 +216,9 @@ P|Cerberus|0
 P|Kage Kami|1
 U|Bone Dagger
 U|Chasuble of Holy Light
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
 U|Kyuuketsuki Hitogoroshi
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Ring of Divine Faith
-U|Sheath of Thunderous Rites
 U|St. Abraham's Wand
-U|Storm Caller
-U|Sunken Fire Opal Ring
 U|Tome of Purification
 S|Hallowed Hide
 S|Ruthven's Rosary
@@ -344,35 +228,9 @@ D|Haunted Cemetery|Realm Dungeons|4.5
 P|Headless Horseman|1
 P|Lantern Holder|1
 U|Amulet of Dispersion
-U|An Icicle
-U|Bachelor's Tuxedo
-U|Big Bad Fursuit
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Frostbite
-U|Haori of the Wind
-U|Heavy Syndicate Attire
-U|Holy Order's Habit
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Plague Poison
-U|Platinum Segmentata
-U|Present Dispensing Wand
-U|Red Riding Dress
 U|Resurrected Warrior's Armor
-U|Salju
-U|Sheath of Thunderous Rites
-U|Skull-splitter Sword
 U|Soul's Guidance
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Storm Caller
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 S|Etherite Dagger
 S|Ghastly Drape
 S|Mantle of Skuld
@@ -392,33 +250,25 @@ U|Caduceus of Current Craziness
 U|Challenger Helm
 U|Epiphany Skull
 U|FFabulous FFlail
-U|Faded Heart Scarab
 U|Fool's Prism
-U|Fractured Hannya
 U|Groovy Mango
-U|Heavy Syndicate Attire
 U|Helium Trap
 U|Honey Scepter Supreme
 U|K.I.D.D. Force
 U|K.I.D.D. Force 2.0
 U|Karma Orb
-U|Light Syndicate Attire
 U|Lightning in a Bottle
 U|Lullaby
 U|MMace MMurderer
 U|Mirror Cloak
 U|Mister Mango
-U|Mystic Syndicate Attire
 U|NSFWakizashi
 U|Paper Machete
 U|Recursion Mace
 U|Seal of Eternal Life
-U|Sheath of Thunderous Rites
 U|Shield of Pogmur
 U|Sigil of the Rubber Duck
 U|Spelling Spell
-U|Storm Caller
-U|Sunken Fire Opal Ring
 U|Tome of Moral Support
 U|Unshuriken
 S|Brilliance Bow
@@ -429,17 +279,10 @@ P|Sunken Treasure|0
 P|Well of Souls|1
 P|Ghost Ship|1
 U|Captain's Ring
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
 U|Ghostly Prism
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Quartermaster Scabbard
 U|Spectral Cloth Armor
 U|Spirit Dagger
-U|Sunken Fire Opal Ring
 D|Ocean Trench|Realm Dungeons|5
 P|Abyssal Squid|0
 P|Ice Giant|0
@@ -450,14 +293,7 @@ U|Coral Bow
 U|Coral Ring
 U|Coral Silk Armor
 U|Coral Venom Trap
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Sharktooth Sigil
-U|Sunken Fire Opal Ring
 S|Imperial Keepsake
 S|Oceanic Apparel
 S|Slurpian Sea Scroll
@@ -468,29 +304,10 @@ P|Spore Spreader|0
 P|Sting Spider|0
 P|Critter Brood|0
 P|Legion Lead Strategist|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
 U|Doku No Ken
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Mace of the Depths
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
-U|Salju
 U|Silken Sigil
-U|Skull-splitter Sword
 U|Spider Silk Bow
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 D|Woodland Labyrinth|Realm Dungeons|5.5
 P|Bloodroot Treant|0
 P|Man-Eating Flytrap|0
@@ -498,56 +315,18 @@ P|Great Owl|0
 P|Hornet's Nest|0
 P|Possessed Pumpkin|1
 P|Legion Head Researcher|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
 U|Elder Heartwood Staff
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
 U|Labyrinth Dweller's Sheath
 U|Leaf Bow
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
 U|Wakizashi of Eastern Winds
-U|Wand of Ancient Terror
 D|Deadwater Docks|Realm Dungeons|5.5
 P|Snow Wolf|0
 P|Corsair Crab|0
 P|Bilgewater's Galleon|1
 P|Crab Sovereign|1
 P|Legion Watchmaster|1
-U|An Icicle
 U|Big Berdtha
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Pirate King's Cutlass
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 U|Wavecrest Concertina
 S|First Mate's Hook
 S|Naval Uniform
@@ -559,27 +338,8 @@ P|Organ Harvester|0
 P|Daughter of Limon|1
 P|Maze Minotaur|1
 P|Court of Oryx|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
 U|Prism of Dire Instability
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
 U|Thousand Shot
-U|Wand of Ancient Terror
 S|Lightshow Scepter
 S|Magic Wand
 S|Magician's Robe
@@ -590,55 +350,17 @@ P|Hadopelagic Jellyfish|0
 P|Man-eating Barnacle|1
 P|World's Oyster|1
 P|Court of Oryx|1
-U|An Icicle
 U|Bottled Medusozoan
-U|Bow of Eternal Frost
-U|Bow of Nightmares
 U|Cnidaria Rod
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 D|Parasite Chambers|Realm Dungeons|5.5
 P|Blood Ooze|0
 P|Abyssal Kraken|0
 P|Cold Soul|1
 P|Scout Colony|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Maw of Malignance
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
 U|Recurring Terror Spell
-U|Salju
 U|Scepter of Devastation
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
 U|Tome of Pain
-U|Wand of Ancient Terror
 S|Hivemind Circlet
 S|Parasitic Concoction
 S|Rags of the Host
@@ -650,13 +372,6 @@ P|Beer God|1
 U|Brewer's Bangle
 U|Cask Corslet
 U|Double Vision Darts
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Sunken Fire Opal Ring
 U|The Right Hook
 U|Tipsy Topper
 D|Sulfurous Wetlands|Realm Dungeons|6
@@ -667,14 +382,7 @@ P|Elder Ent Ancient|0
 P|The Plague Doctor|1
 U|Bogwood Crook
 U|Brambletooth Tachi
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Sulfuric Stone
-U|Sunken Fire Opal Ring
 U|Thistleleaf Necklace
 U|Warped Mantle
 D|Mountain Temple|Realm Dungeons|6
@@ -682,28 +390,9 @@ P|Vegetarian Tiger|0
 P|Runic Golem|0
 P|Skull Knight|1
 P|Jade Statue|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
 U|Jade Storm
 U|Kaiken
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Orb of Aether
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 U|Wand of the Fallen
 S|Akuma's Tear
 S|Kamishimo
@@ -716,16 +405,9 @@ P|Frost Dragon|0
 P|Rock Dragon|1
 U|Celestial Blade
 U|Draconic Insignia
-U|Faded Heart Scarab
 U|Fire Dragon Battle Armor
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
 U|Leaf Dragon Hide Armor
-U|Light Syndicate Attire
 U|Midnight Star
-U|Mystic Syndicate Attire
-U|Sunken Fire Opal Ring
 U|Vision of Draconis
 U|Water Dragon Silk Robe
 S|Alexander's Band
@@ -750,30 +432,11 @@ P|Animate Sigillaria|0
 P|The Lich King|1
 P|Legion General|1
 P|Grand Sphinx|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Pharaoh's Requiem
-U|Present Dispensing Wand
 U|Ring of the Nile
 U|Ring of the Pyramid
 U|Ring of the Sphinx
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
 U|Tome of Holy Protection
-U|Wand of Ancient Terror
 S|Book of Geb
 S|Geb's Ring of Wisdom
 S|Shendyt of Geb
@@ -787,17 +450,10 @@ P|Cube Deity|1
 P|Astral Rift|1
 P|Cube God|1
 U|Cloak of Cubic Enigma
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Morning Square
-U|Mystic Syndicate Attire
 U|Ring of Cubed Wisdom
 U|Seal of Cubic Conundra
 U|Shadow Serpent Sidearm
-U|Sunken Fire Opal Ring
 U|The Triangle
 S|Cuband
 S|Cubic Frame
@@ -808,21 +464,9 @@ P|Raging Ifrit|0
 P|Ravenous Harpy|0
 P|Stygian Mirror|1
 P|Court of Oryx|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Frostbite
 U|Igneous Starblossom
-U|Present Dispensing Wand
-U|Salju
 U|Skull of Endless Torment
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
 U|Wakizashi of Crossing Fires
-U|Wand of Ancient Terror
 S|Fiery Katana
 S|Firelight Necklace
 S|Flame Guard
@@ -831,29 +475,10 @@ D|Secluded Thicket|Realm Dungeons|6.5
 P|Rhinoceros|0
 P|Scutosaurus|0
 P|Court of Oryx|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Penetrating Blast Spell
-U|Present Dispensing Wand
-U|Salju
 U|Sealed Crystal Skull
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Sunken Fire Opal Ring
 U|Tezcacoatl's Tail
 U|Tlatoani's Shroud
-U|Wand of Ancient Terror
 S|Daybreak Chakram
 S|Heavenly Magatama
 S|Hirejou Tenne
@@ -864,16 +489,9 @@ P|Artificial Slop|1
 P|Court of Oryx|1
 U|B.O.W.
 U|E.Y.E.
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Q.U.I.V.E.R.
 U|S.H.E.A.T.H.
 U|S.T.A.F.F.
-U|Sunken Fire Opal Ring
 S|A.R.M.O.R.
 S|B.O.O.M.
 S|C.L.A.W.
@@ -887,15 +505,8 @@ U|Esben's Shaman Attire
 U|Esben's Twisted Heart
 U|Esben's Vows
 U|Esben's Wedding Ring
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Skullish Remains of Esben
 U|Staff of Esben
-U|Storied Blades
-U|Sunken Fire Opal Ring
 S|Chainmail Body Armor
 S|Dalvar's Battle Axe
 S|Frozen Heart
@@ -912,35 +523,16 @@ D|Moonlight Village|Realm Dungeons|9
 P|Colossal Mantis|0
 P|Alluring Blossom|0
 P|Ethereal Shrine|1
-U|Bachelor's Tuxedo
-U|Big Bad Fursuit
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Haori of the Wind
-U|Holy Order's Habit
-U|Platinum Segmentata
-U|Red Riding Dress
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Wand of Ancient Terror
 D|The Nest|Realm Event Dungeons|7
 P|Corrupted Bramblethorn|0
 P|Killer Bee Nest|0
 U|Beekeeper's Flamethrower
 U|Blue Beehemoth Armor
 U|Combcutter Kunai
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
 U|Hivemaster Helm
 U|Hivemind Mace
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Queen's Stinger
 U|Red Beehemoth Armor
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Swarmlord's Sigil
 U|Yellow Beehemoth Armor
 S|Apiary Armor
@@ -951,48 +543,22 @@ D|Cultist Hideout|Realm Event Dungeons|7
 P|Agonized Titan|0
 U|Bloodshed Ring
 U|Burial Blades
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Ritual Robe
 U|Skull of Corrupted Souls
 U|Staff of Unholy Sacrifice
-U|Storied Blades
-U|Sunken Fire Opal Ring
 D|Fungal Cavern|Realm Event Dungeons|7.5
 P|Ancient Kaiju|0
 P|Crystal Worm Father|0
 P|Sentient Monolith|0
 P|Adult Baneserpent|0
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
 U|Cave Dweller Trap
-U|Corrupted Cleaver
 U|Crystal Shield
 U|Crystallised Fang's Venom
 U|Crystallized Worm Spellblade
-U|Dagger of the Terrible Talon
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Frostbite
 U|Fungal Breastplate
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
 U|Ring of Decades
-U|Salju
-U|Skull-splitter Sword
 U|Sporous Spray Spell
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Tome of the Mushroom Tribes
-U|Wand of Ancient Terror
 S|Crystalline Kunai
 S|Luminous Armor
 S|Quartz Cutter
@@ -1003,18 +569,11 @@ U|Cloak of Refraction
 U|Crystalline Sigil
 U|Crystallised Mist
 U|Echoes Prism
-U|Faded Heart Scarab
 U|Fractal Blades
 U|Fractured Gemstone Wakizashi
-U|Fractured Hannya
-U|Heavy Syndicate Attire
 U|Irradiance Sheath
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Ring of Decades
 U|Star of Enlightenment
-U|Storied Blades
-U|Sunken Fire Opal Ring
 S|Crystalline Kunai
 S|Luminous Armor
 S|Quartz Cutter
@@ -1022,65 +581,32 @@ S|Radiant Heart
 D|Spectral Penitentiary|Realm Event Dungeons|8
 P|Spectral Jailer|0
 P|Skeletal Centipede|0
-U|Bachelor's Tuxedo
-U|Big Bad Fursuit
-U|Bow of Nightmares
 U|Cackling Straitjacket
 U|Command Cornea
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
 U|Damnation
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Haori of the Wind
-U|Heavy Syndicate Attire
-U|Holy Order's Habit
-U|Light Syndicate Attire
 U|Motivational Megaphone
-U|Mystic Syndicate Attire
 U|Ocular Entrapment
 U|Overwhelming Axehead
-U|Platinum Segmentata
-U|Red Riding Dress
 U|Sinister Syringes
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Tools of the Tarnished
-U|Wand of Ancient Terror
 U|Wretched Rags
 D|Kogbold Steamworks|Realm Event Dungeons|8
 P|Aerial Warship|0
 P|Kogbold Expedition Engine|0
 U|Brain Cube
 U|Chain Dagger
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
 U|Kogbold Cower Shield
 U|Laser Pointer
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Overclocking Amulet
 U|Scepter of Rust
 U|Steam Pipe
-U|Storied Blades
-U|Sunken Fire Opal Ring
 D|Lost Halls|Realm Event Dungeons|8
 P|Bloodroot Heart|0
 P|Ravenous Rot|0
 P|Lost Sentry|0
 U|Breastplate of New Life
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Magical Lodestone
 U|Marble Seal
-U|Mystic Syndicate Attire
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Sword of the Colossus
 S|Brain of the Golem
 S|Carved Golem Remains
@@ -1091,16 +617,9 @@ P|Marble Colossus|0
 P|Vial of Pure Darkness|0
 U|Armor of Nil
 U|Bow of the Void
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Omnipotence Ring
 U|Quiver of Shadows
 U|Sourcestone
-U|Storied Blades
-U|Sunken Fire Opal Ring
 D|The Shatters|Realm Event Dungeons|10
 P|Behemoth's Egg|0
 P|Avatar of the Forgotten King|0
@@ -1108,13 +627,8 @@ U|Bracer of the Guardian
 U|Chrysalis of Eternity
 U|Dusky Catalyst
 U|Dusky Catalyst (Rehearsal)
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Mantle of the Monarchy
 U|Mantle of the Monarchy (Rehearsal)
-U|Mystic Syndicate Attire
 U|Noble Mandolin
 U|Noble Mandolin (Rehearsal)
 U|Peacekeeper
@@ -1127,8 +641,6 @@ U|Royal Guard's Cuirass
 U|Royal Guard's Cuirass (Rehearsal)
 U|Sentinel's Sidearm
 U|Sentinel's Sidearm (Rehearsal)
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|The Forgotten Crown
 U|The Forgotten Ring
 U|The Twilight Gemstone
@@ -1149,39 +661,17 @@ S|Defiled Equilibrium
 S|Eye of the Void
 S|Fallen One's Blade
 S|Flames of Genesis
-S|Immortal Mantle
 S|Seraphim's Guard
-S|Spectral Spell
-S|Supernatural Staff
 S|Twilight Shroud
 S|Vortex Plating
 D|Heroic Undead Lair|Advanced Dungeons|6
 P|Snow Troll|0
 P|Death Knight|0
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
 U|Bow of the Morning Star
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
 U|Doom Bow
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Frostbite
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Present Dispensing Wand
 U|Ring of Skeletal Specters
-U|Salju
-U|Skull-splitter Sword
 U|Spectral Sword
 U|Spirit's Bane
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Storied Blades
-U|Sunken Fire Opal Ring
-U|Wand of Ancient Terror
 U|Wandering Souls Spell
 S|Edictum Praetoris
 S|Interregnum
@@ -1192,13 +682,6 @@ P|Sunflower Sentinel|0
 P|Infernal Ironsmith|0
 U|Adamantine Helm
 U|Berserker's Breastplate
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Sword of Illumination
 U|Volcanic Sheath
 S|Scorchium Stone
@@ -1209,19 +692,12 @@ P|Killer Bee Nest|1
 U|Beekeeper's Flamethrower
 U|Blue Beehemoth Armor
 U|Combcutter Kunai
-U|Faded Heart Scarab
-U|Fractured Hannya
 U|Green Beehemoth Armor
 U|Green Beehemoth Quiver
-U|Heavy Syndicate Attire
 U|Hivemaster Helm
 U|Hivemind Mace
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Queen's Stinger
 U|Red Beehemoth Armor
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Swarmlord's Sigil
 U|Yellow Beehemoth Armor
 S|Apiary Armor
@@ -1231,82 +707,39 @@ S|Nectar Crossfire
 D|Advanced Kogbold Steamworks|Advanced Dungeons|9
 P|Aerial Warship|1
 P|Kogbold Expedition Engine|1
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Storied Blades
-U|Sunken Fire Opal Ring
 D|Court of Oryx|Oryx's Castle|3.5
 P|Janus the Doorwarden|1
 D|Oryx's Castle|Oryx's Castle|4.5
-U|An Icicle
 U|Ancient Stone Sword
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Frostbite
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
 U|Spiteful Scutum
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
-U|Wand of Ancient Terror
 S|Anointed Robe
 S|Ceremonial Merlot
 S|Ring of Pagan Favor
 S|Theurgy Wand
 D|Oryx's Chamber|Oryx's Castle|4.5
 P|Red Stone Guardian|1
-U|An Icicle
 U|Anatis Staff
 U|Apocalypse Feather
-U|Bow of Eternal Frost
-U|Bow of Nightmares
 U|Chicken Leg of Doom
 U|Cloak of the Mad God
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Frostbite
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
 U|Tome of Holy Furor
-U|Wand of Ancient Terror
 S|Ceremonial Merlot
 S|Theurgy Wand
 D|Wine Cellar|Oryx's Castle|6
 P|Oryx the Mad God|1
 P|Wine Cellar Incantation|1
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
-U|Frostbite
 U|Greedsnatcher Trap
 U|Ilex Star
 U|Kagebooshi
 U|Longbow of Spirits and Shadows
 U|Ornamental Prism
-U|Present Dispensing Wand
 U|Resounding Shield
-U|Salju
 U|Scepter of Sainthood
 U|Shield of Jawgmur
 U|Skull of Krampus
-U|Skull-splitter Sword
 U|Snowbound Orb
 U|Spooky Smasher
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
 U|Tome of Holy Furor
-U|Wand of Ancient Terror
 S|Bloodstone Ring
 S|Champion's Bastion
 S|Mercy's Bane
@@ -1343,44 +776,23 @@ P|Alien Reactor (Adept)|0
 P|Alien Biff|0
 P|Alien Leprechaun|0
 U|Comet of Calamity
-U|Faded Heart Scarab
 U|Fire Blade
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
 U|Sun's Judgement
-U|Sunken Fire Opal Ring
 S|Alien Core: Power
 D|Untaris|Wormholes|5
 P|Alien Reactor (Adept)|0
 P|Alien Biff|0
 P|Alien Leprechaun|0
 U|Dueling Daggers
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Moonbeam Blade
-U|Mystic Syndicate Attire
 U|Snowblind Wand
-U|Sunken Fire Opal Ring
 S|Alien Core: Dark Matter
 D|Katalund|Wormholes|5
 P|Alien Reactor (Adept)|0
 P|Alien Biff|0
 P|Alien Leprechaun|0
 U|Blazon Bow
-U|Faded Heart Scarab
-U|Forbidden Artifact
-U|Fractured Hannya
 U|Gaseous Glaive
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Sunken Fire Opal Ring
 U|Warlord Wand
 S|Alien Core: Warp
 D|Forax|Wormholes|5
@@ -1389,85 +801,38 @@ P|Alien Biff|0
 P|Alien Leprechaun|0
 U|Acidic Slasher
 U|Corrosion Cutter
-U|Faded Heart Scarab
 U|Foramite Staff
-U|Forbidden Artifact
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Sunken Fire Opal Ring
 S|Alien Core: Corrosion
 D|Neo Malogia|Advanced Wormholes|8
 P|Alien Reactor (Veteran)|0
 U|Comet of Calamity
-U|Faded Heart Scarab
 U|Fire Blade
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Storied Blades
 U|Sun's Judgement
-U|Sunken Fire Opal Ring
 S|Alien Core: Power
 D|Neo Untaris|Advanced Wormholes|8
 P|Alien Reactor (Veteran)|0
 U|Dueling Daggers
-U|Faded Heart Scarab
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
 U|Moonbeam Blade
-U|Mystic Syndicate Attire
 U|Snowblind Wand
-U|Storied Blades
-U|Sunken Fire Opal Ring
 S|Alien Core: Dark Matter
 D|Neo Katalund|Advanced Wormholes|8
 P|Alien Reactor (Veteran)|0
 U|Blazon Bow
-U|Faded Heart Scarab
-U|Fractured Hannya
 U|Gaseous Glaive
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Storied Blades
-U|Sunken Fire Opal Ring
 U|Warlord Wand
 S|Alien Core: Warp
 D|Neo Forax|Advanced Wormholes|8
 P|Alien Reactor (Veteran)|0
 U|Acidic Slasher
 U|Corrosion Cutter
-U|Faded Heart Scarab
 U|Foramite Staff
-U|Fractured Hannya
-U|Heavy Syndicate Attire
-U|Light Syndicate Attire
-U|Mystic Syndicate Attire
-U|Storied Blades
-U|Sunken Fire Opal Ring
 S|Alien Core: Corrosion
 D|Legacy Heroic Undead Lair|Heroic Dungeons|5
 P|Key Fairy (mid)|0
 D|Legacy Heroic Abyss of Demons|Heroic Dungeons|5
 P|Key Fairy (mid)|0
-U|An Icicle
-U|Bow of Eternal Frost
-U|Bow of Nightmares
-U|Corrupted Cleaver
-U|Dagger of the Terrible Talon
 U|Demon Blade
-U|Frostbite
-U|Present Dispensing Wand
-U|Salju
-U|Skull-splitter Sword
-U|Staff of Horrific Knowledge
-U|Staff of Yuletide Carols
 U|Sword of Illumination
-U|Wand of Ancient Terror
 S|Molten Mantle
 S|Ring of the Inferno
 S|Scorchium Stone
@@ -1567,17 +932,13 @@ D|The Trials of Cronus|Special Event Dungeons|6.5
 P|The Festival Overseer|0
 D|Hidden Interregnum|Special Event Dungeons|7
 P|Shady Vagrant|0
-U|Faded Heart Scarab
-U|Fractured Hannya
 U|Frangible Longbow
 U|Gilded Chain Scythe
 U|Huntsman's Volley
-U|Light Syndicate Attire
 U|Obsidian Macuahuitl
 U|Pirate's Sidearms
 U|Ritual Khopesh
 U|Royal Sekhem
-U|Sunken Fire Opal Ring
 D|White Snake Invasion II|Special Event Dungeons|7.5
 P|Primal Snake (Realm)|0
 D|Stromwell's Rift II|Special Event Dungeons|7.5

@@ -93,7 +93,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
 - **Loot**: every bag seen (all colours), by dungeon, dry streaks ("23 Shatters runs since your last white"),
   drop rates ("1 white per 12 Shatters runs") and best drops.
 - **Collection**: every UT and ST item that can drop (and every shiny version), by dungeon, greyed out until you've
-  looted it or the pup has seen it in your vault, seasonal vault or on one of your characters. Share it on Discord,
+  looted it or the pup has seen it in your vault, seasonal vault, gift chest, seasonal spoils or on one of your characters. Share it on Discord,
   and bag posts say when an item is new to your collection.
 - **Dungeons**: every dungeon side by side, with its difficulty, what drops the portal and the UT/ST items there. Hover over an item to see if it's in your collection.
 - **Wardrobe** (under Me): hats and outfits for the pup, unlocked by badges.

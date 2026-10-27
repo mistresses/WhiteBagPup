@@ -82,12 +82,14 @@ final class Account {
         vault = new VaultStore(() -> {
             if (vaultPage != null) vaultPage.changed();
         }, t -> host.log(prefix() + t));
-        // everything in the vault (and gift chest) counts for the Collection; a seasonal character has its own vault
+        // everything in the vault, gift chest and seasonal spoils counts for the Collection; a seasonal character has its
+        // own vault. A 4th (null) entry means it's the saved copy from last time, so it isn't known if it was seasonal.
         vault.onRead = v -> {
             if (key == null) return;
-            boolean seasonal = Owned.seasonal(me.character());
+            boolean seasonal = v.length < 4 && Owned.seasonal(me.character());
             String where = seasonal ? Owned.SEASONAL_VAULT : Owned.VAULT;
-            int n = Owned.note(key, where, v[0]) + Owned.note(key, where, v[1]);
+            int n = Owned.note(key, where, v[0]) + Owned.note(key, Owned.GIFT_CHEST, v[1])
+                    + (v.length > 2 ? Owned.note(key, Owned.SEASONAL_SPOILS, v[2]) : 0);
             if (n > 0) {
                 if (bookPage != null) bookPage.changed();
                 if (dungeonPage != null) dungeonPage.changed();

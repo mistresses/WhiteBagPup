@@ -163,6 +163,14 @@ final class MoreTabs {
                 gap(4);
                 slots(gift, 10);
             }
+
+            List<Integer> spoil = filled(store.spoils());
+            if (!spoil.isEmpty()) {
+                gap(14);
+                list.add(small("Seasonal spoils  (" + spoil.size() + " items)"));
+                gap(4);
+                slots(spoil, 10);
+            }
         }
 
         private static List<Integer> filled(int[] a) {
