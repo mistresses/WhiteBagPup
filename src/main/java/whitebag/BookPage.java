@@ -387,10 +387,10 @@ final class BookPage extends MoreTabs.Page {
                 LootBook.Item it = items.get(i);
                 boolean got = found.containsKey(it);
                 int x = (i % per) * (SLOT + GAP), y = (i / per) * (SLOT + GAP);
-                Color accent = it.tier.equals("ST") ? new Color(0xE0A100) : new Color(0xA35BFF);
-                g.setColor(got ? Cute.mix(Color.WHITE, accent, 0.14) : new Color(0xF4F2F7));
+                Color accent = it.tier.equals("ST") ? Theme.c(0xE0A100) : Theme.c(0xA35BFF);
+                g.setColor(got ? Cute.mix(Theme.WHITE, accent, 0.14) : Theme.c(0xF4F2F7));
                 g.fill(new RoundRectangle2D.Double(x, y, SLOT, SLOT, 12, 12));
-                g.setColor(got ? accent : new Color(0xDDD8E4));
+                g.setColor(got ? accent : Theme.c(0xDDD8E4));
                 g.setStroke(new BasicStroke(got ? 2.4f : 1.4f));
                 g.draw(new RoundRectangle2D.Double(x + 1, y + 1, SLOT - 2, SLOT - 2, 11, 11));
                 BufferedImage[] pics = icons(it.id);
@@ -398,7 +398,7 @@ final class BookPage extends MoreTabs.Page {
                 if (pic != null) {
                     g.drawImage(pic, x + (SLOT - pic.getWidth()) / 2, y + (SLOT - pic.getHeight()) / 2, null);
                 } else {
-                    g.setColor(got ? Pixel.INK : new Color(0xB9B1C6));
+                    g.setColor(got ? Pixel.INK : Theme.c(0xB9B1C6));
                     g.setFont(Cute.font(Font.BOLD, 11));
                     FontMetrics fm = g.getFontMetrics();
                     g.drawString(it.tier, x + (SLOT - fm.stringWidth(it.tier)) / 2, y + (SLOT + fm.getAscent()) / 2 - 2);
@@ -406,7 +406,7 @@ final class BookPage extends MoreTabs.Page {
                 if (got) Cute.drawHeart(g, x + SLOT - 13, y + 3, 10, Pixel.PINK);
                 if (it.name.endsWith("(Shiny)")) {
                     // a little sparkle on shiny items
-                    g.setColor(got ? new Color(0xF0B10A) : new Color(0xD8D2E0));
+                    g.setColor(got ? Theme.c(0xF0B10A) : Theme.c(0xD8D2E0));
                     double cx = x + 10, cy = y + 10, r = 6, k = 1.6;
                     java.awt.geom.Path2D star = new java.awt.geom.Path2D.Double();
                     star.moveTo(cx, cy - r);

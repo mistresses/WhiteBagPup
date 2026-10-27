@@ -105,7 +105,7 @@ final class LogTabs {
                     protected void paintComponent(Graphics g0) {
                         Graphics2D g = (Graphics2D) g0.create();
                         boolean on = isSelected();
-                        Pixel.frame(g, 0, 0, getWidth(), getHeight(), on ? Pixel.INK : Pixel.SHEET, on ? Pixel.INK : Pixel.LINE, 2);
+                        Pixel.frame(g, 0, 0, getWidth(), getHeight(), on ? Pixel.CHOSEN : Pixel.SHEET, on ? Pixel.CHOSEN_EDGE : Pixel.LINE, 2);
                         if (isFocusOwner()) {
                             g.setColor(Pixel.PINK);
                             g.fillRect(6, getHeight() - 5, getWidth() - 12, 2);
@@ -113,7 +113,7 @@ final class LogTabs {
                         Cute.smooth(g);
                         g.setFont(getFont());
                         FontMetrics fm = g.getFontMetrics();
-                        g.setColor(on ? Color.WHITE : Pixel.INK);
+                        g.setColor(on ? Pixel.CHOSEN_TEXT : Pixel.INK);
                         g.drawString(getText(), (getWidth() - fm.stringWidth(getText())) / 2, (getHeight() - fm.getHeight()) / 2 + fm.getAscent());
                         g.dispose();
                     }
@@ -253,7 +253,7 @@ final class LogTabs {
                 boolean special = !item.rarity.isEmpty();
                 boolean enchanted = item.enchant != Enchant.NONE;
                 Color edge = enchanted ? item.enchant.color : special ? item.rarityColor : Pixel.LINE;
-                Pixel.frame(g, x, y, SLOT, SLOT, enchanted || special ? Cute.mix(Color.WHITE, edge, 0.14) : Pixel.SHEET, edge, 2);
+                Pixel.frame(g, x, y, SLOT, SLOT, enchanted || special ? Cute.mix(Theme.WHITE, edge, 0.14) : Pixel.SHEET, edge, 2);
                 BufferedImage ic = icons.get(i);
                 if (ic != null) {
                     g.drawImage(ic, x + (SLOT - ic.getWidth()) / 2, y + (SLOT - ic.getHeight()) / 2, null);
@@ -266,7 +266,7 @@ final class LogTabs {
                 if (enchanted) {
                     // one dot per enchantment slot, in the rarity's colour (like the game's slot icon)
                     for (int k = 0; k < item.enchant.ordinal(); k++) {
-                        g.setColor(Color.WHITE);
+                        g.setColor(Theme.WHITE);
                         g.fillRect(x + 3 + k * 7, y + 3, 6, 6);
                         g.setColor(item.enchant.color);
                         g.fillRect(x + 4 + k * 7, y + 4, 4, 4);
@@ -279,7 +279,7 @@ final class LogTabs {
                     FontMetrics fm = g.getFontMetrics();
                     int bw = fm.stringWidth(item.rarity) + 8;
                     Pixel.frame(g, x + SLOT - bw + 3, y + SLOT - 9, bw, 14, item.rarityColor, null, 0);
-                    g.setColor(Color.WHITE);
+                    g.setColor(Theme.WHITE);
                     g.drawString(item.rarity, x + SLOT - bw + 7, y + SLOT + 1);
                 }
                 x += SLOT + 6;
@@ -323,10 +323,10 @@ final class LogTabs {
         private final SimpleAttributeSet body = style(Pixel.INK, false, false);
         private final SimpleAttributeSet nameStyle = style(Pixel.INK, true, false);
         private final SimpleAttributeSet mine = style(Pixel.PINK_INK, true, false);
-        private final SimpleAttributeSet npc = style(new Color(0xB4642A), true, false);
-        private final SimpleAttributeSet npcText = style(new Color(0x8A6650), false, true);
-        private final SimpleAttributeSet guild = style(new Color(0x1F8A72), true, false);
-        private final SimpleAttributeSet party = style(new Color(0x6A4BD6), true, false);
+        private final SimpleAttributeSet npc = style(Theme.c(0xB4642A), true, false);
+        private final SimpleAttributeSet npcText = style(Theme.c(0x8A6650), false, true);
+        private final SimpleAttributeSet guild = style(Theme.c(0x1F8A72), true, false);
+        private final SimpleAttributeSet party = style(Theme.c(0x6A4BD6), true, false);
         private final SimpleAttributeSet whisper = style(Pixel.PINK_INK, true, false);
         private final SimpleAttributeSet highlight = style(Pixel.INK, false, false);
 
@@ -686,7 +686,7 @@ final class LogTabs {
                     int tw = tf.stringWidth(tag) + 10;
                     int tx = barX + barW - tw;
                     Pixel.frame(g, tx, y + 3, tw, 12, Pixel.INK, null, 0);
-                    g.setColor(Color.WHITE);
+                    g.setColor(Theme.WHITE);
                     g.drawString(tag, tx + 5, y + 13);
                 }
                 g.setFont(Cute.font(Font.BOLD, 12));
@@ -696,7 +696,7 @@ final class LogTabs {
                 g.setFont(Cute.font(Font.PLAIN, 12));
                 fm = g.getFontMetrics();
                 rightText(g, fm, String.format(Locale.ROOT, "%.1f%%", r.percent), xShare, y + 13);
-                g.setColor(new Color(0xC2185B));
+                g.setColor(Theme.c(0xC2185B));
                 rightText(g, fm, r.takenHits >= 0 ? String.valueOf(r.takenHits) : "–", xHits, y + 13);
                 rightText(g, fm, r.takenHits >= 0 ? shortNum(r.takenDmg) : "–", xTaken, y + 13);
                 g.setColor(Pixel.INK);

@@ -82,8 +82,8 @@ final class DungeonPage extends JPanel {
     // ---------------------------------------------------------------- layout
 
     private static final int LABEL_W = 132, COL_W = 214, HEAD_H = 74, LINE = 24, PAD = 10, CHIP = 24, DIFF_H = 38;
-    private static final Color UT = new Color(0xA35BFF), ST = new Color(0xE0A100);
-    private static final Color GREY = new Color(0x9C92AC), SOFT = new Color(0xF8F4FC), MARK = new Color(0xFFE28A);
+    private static final Color UT = Theme.c(0xA35BFF), ST = Theme.c(0xE0A100);
+    private static final Color GREY = Theme.c(0x9C92AC), SOFT = Theme.c(0xF8F4FC), MARK = Theme.c(0xFFE28A);
     private static final String[] ROWS = {"Difficulty", "Portal drops from", "UT items", "ST items", "Shiny items"};
 
     private final Predicate<LootStats.Entry> mine;
@@ -479,9 +479,9 @@ final class DungeonPage extends JPanel {
             String chip = list.size() + " " + tier + "  ·  " + have + " collected";
             g.setFont(Cute.font(Font.BOLD, 11));
             FontMetrics cf = g.getFontMetrics();
-            g.setColor(Cute.mix(Color.WHITE, accent, 0.16));
+            g.setColor(Cute.mix(Theme.WHITE, accent, 0.16));
             g.fill(new RoundRectangle2D.Double(x + 12, y + PAD, cf.stringWidth(chip) + 12, 18, 8, 8));
-            g.setColor(Cute.mix(accent, Color.BLACK, 0.25));
+            g.setColor(Cute.mix(accent, Theme.BLACK, 0.25));
             g.drawString(chip, x + 18, y + PAD + 13);
             for (int k = 0; k < list.size(); k++) {
                 String name = list.get(k);
@@ -523,10 +523,10 @@ final class DungeonPage extends JPanel {
             String chip = list.size() + " shiny  ·  " + have + " collected";
             g.setFont(Cute.font(Font.BOLD, 11));
             FontMetrics cf = g.getFontMetrics();
-            Color gold = new Color(0xF0B10A);
-            g.setColor(Cute.mix(Color.WHITE, gold, 0.18));
+            Color gold = Theme.c(0xF0B10A);
+            g.setColor(Cute.mix(Theme.WHITE, gold, 0.18));
             g.fill(new RoundRectangle2D.Double(x + 12, y + PAD, cf.stringWidth(chip) + 12, 18, 8, 8));
-            g.setColor(Cute.mix(gold, Color.BLACK, 0.35));
+            g.setColor(Cute.mix(gold, Theme.BLACK, 0.35));
             g.drawString(chip, x + 18, y + PAD + 13);
             for (int k = 0; k < list.size(); k++) {
                 LootBook.Item it = list.get(k);
@@ -583,8 +583,8 @@ final class DungeonPage extends JPanel {
                 LootBook.Found f = foundShiny.get(sh);
                 StringBuilder sb = new StringBuilder("<html><div style='width:240px'><b>").append(esc(sh.name.replace(" (Shiny)", "")))
                         .append("</b> (shiny ").append(sh.tier).append(")<br>");
-                if (f == null) sb.append("<span style='color:#B0305F'><b>Not in your collection yet</b></span>");
-                else sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>").append(LootBook.describe(f));
+                if (f == null) sb.append("<span style='color:" + Theme.hex(0xB0305F) + "'><b>Not in your collection yet</b></span>");
+                else sb.append("<span style='color:" + Theme.hex(0x1F8A70) + "'><b>In your collection</b></span><br>").append(LootBook.describe(f));
                 return sb.append("</div></html>").toString();
             }
             String name = itemAt(e.getPoint());
@@ -597,9 +597,9 @@ final class DungeonPage extends JPanel {
             if (it == null) {
                 sb.append("<i>Not in the collection log</i>");
             } else if (f == null) {
-                sb.append("<span style='color:#B0305F'><b>Not in your collection yet</b></span>");
+                sb.append("<span style='color:" + Theme.hex(0xB0305F) + "'><b>Not in your collection yet</b></span>");
             } else {
-                sb.append("<span style='color:#1F8A70'><b>In your collection</b></span><br>").append(LootBook.describe(f));
+                sb.append("<span style='color:" + Theme.hex(0x1F8A70) + "'><b>In your collection</b></span><br>").append(LootBook.describe(f));
             }
             return sb.append("</div></html>").toString();
         }

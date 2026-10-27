@@ -482,11 +482,11 @@ final class AboutMe {
 
     /** e.g. "DEX 60/75 (+4)", or "ATT 75 MAX" in green when maxed. */
     private static JLabel stat(String name, int base, int boost, int max) {
-        String b = boost != 0 ? " <span style='color:#1F8A72'>(" + (boost > 0 ? "+" : "") + boost + ")</span>" : "";
+        String b = boost != 0 ? " <span style='color:" + Theme.hex(0x1F8A72) + "'>(" + (boost > 0 ? "+" : "") + boost + ")</span>" : "";
         String v;
         if (base < 0) v = "?";
         else if (max <= 0) v = String.valueOf(base);
-        else if (base >= max) v = "<span style='color:#1F8A72'><b>" + base + " MAX</b></span>";
+        else if (base >= max) v = "<span style='color:" + Theme.hex(0x1F8A72) + "'><b>" + base + " MAX</b></span>";
         else v = base + "/" + max;
         JLabel l = new JLabel("<html><b>" + name + "</b>&nbsp; " + v + b + "</html>");
         l.setFont(Cute.font(Font.PLAIN, 13));
@@ -837,16 +837,16 @@ final class AboutMe {
                 boolean special = item != null && !item.rarity.isEmpty();
                 boolean cross = isCrossed(i);
                 boolean done = cross || (have != null && have[i]);
-                Color fill = done ? new Color(0xDDF5EC) : Pixel.SHEET;
+                Color fill = done ? Theme.c(0xDDF5EC) : Pixel.SHEET;
                 Enchant en = enchants != null && i < enchants.length && enchants[i] != null ? enchants[i] : Enchant.NONE;
                 Color edge = en != Enchant.NONE ? en.color : item != null ? item.rarityColor : Pixel.LINE;
                 boolean tinted = (special || en != Enchant.NONE) && !done;
-                Pixel.frame(g, x, 0, SLOT, SLOT, tinted ? Cute.mix(Color.WHITE, edge, 0.14) : fill,
+                Pixel.frame(g, x, 0, SLOT, SLOT, tinted ? Cute.mix(Theme.WHITE, edge, 0.14) : fill,
                         (special || en != Enchant.NONE) && !cross ? edge : Pixel.LINE, 2);
                 if (en != Enchant.NONE) {
                     // one dot per enchantment slot, like the game's slot icon
                     for (int k = 0; k < en.ordinal(); k++) {
-                        g.setColor(Color.WHITE);
+                        g.setColor(Theme.WHITE);
                         g.fillRect(x + 3 + k * 7, SLOT - 9, 6, 6);
                         g.setColor(en.color);
                         g.fillRect(x + 4 + k * 7, SLOT - 8, 4, 4);
@@ -872,7 +872,7 @@ final class AboutMe {
                 if (have != null) {
                     // tick or cross in the corner
                     Pixel.frame(g, x + SLOT - 16, 2, 14, 14, done ? Pixel.TEAL : Pixel.PINK, null, 0);
-                    g.setColor(Color.WHITE);
+                    g.setColor(Theme.WHITE);
                     if (done) {
                         int[][] tick = {{4, 7}, {5, 8}, {6, 9}, {7, 8}, {8, 7}, {9, 6}, {10, 5}};
                         for (int[] t : tick) g.fillRect(x + SLOT - 16 + t[0] - 1, 2 + t[1] - 1, 2, 2);
@@ -917,7 +917,7 @@ final class AboutMe {
             Pixel.frame(g, 0, 18, w, 10, Pixel.TRACK, Pixel.LINE, 2);
             int fw = (int) Math.round((w - 4) * fill);
             if (fw > 0) {
-                g.setColor(fill >= 1 ? Pixel.PINK : new Color(0xFF9EC4));
+                g.setColor(fill >= 1 ? Pixel.PINK : Theme.c(0xFF9EC4));
                 g.fillRect(2, 20, fw, 6);
             }
             g.dispose();

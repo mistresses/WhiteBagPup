@@ -222,11 +222,11 @@ final class PuzzlePage extends MoreTabs.Page {
             for (int i = 0; i < 9; i++) {
                 int x = (i % 3) * (CELL + GAP), y = (i / 3) * (CELL + GAP);
                 boolean green = (board >> i & 1) != 0;
-                Color fill = green ? new Color(0x5FD08A) : new Color(0xF0707A);
-                Color edge = green ? new Color(0x2F9E5E) : new Color(0xC2434F);
+                Color fill = green ? Theme.c(0x5FD08A) : Theme.c(0xF0707A);
+                Color edge = green ? Theme.c(0x2F9E5E) : Theme.c(0xC2434F);
                 g.setColor(new Color(0, 0, 0, 30));
                 g.fill(new RoundRectangle2D.Double(x, y + 4, CELL, CELL, 18, 18));
-                g.setColor(Cute.mix(Color.WHITE, fill, 0.25));
+                g.setColor(Cute.mix(Theme.WHITE, fill, 0.25));
                 g.fill(new RoundRectangle2D.Double(x, y, CELL, CELL, 18, 18));
                 g.setColor(edge);
                 g.setStroke(new BasicStroke(3f));
@@ -244,7 +244,7 @@ final class PuzzlePage extends MoreTabs.Page {
                 g.setColor(edge);
                 g.setStroke(new BasicStroke(2f));
                 g.drawRoundRect(cx - 11, y + 24, 22, CELL - 44, 6, 6);
-                g.setColor(Color.WHITE);
+                g.setColor(Theme.WHITE);
                 g.fill(new Ellipse2D.Double(cx - 8, y + 12, 16, 16));
                 g.setColor(edge);
                 g.draw(new Ellipse2D.Double(cx - 8, y + 12, 16, 16));

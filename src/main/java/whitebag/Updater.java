@@ -102,7 +102,7 @@ final class Updater {
     }
 
     /**
-     * Writes and starts the script that swaps {@code downloaded} in for {@code jar} once this app has closed and opens
+     * Writes and starts the script that swaps {@code downloaded} (null: nothing, just restart) in for {@code jar} once this app has closed and opens
      * the new version. The caller then closes the app.
      */
     static void handOver(File jar, File downloaded) throws IOException {
@@ -121,11 +121,13 @@ final class Updater {
             s.append("Wait-Process -Id ").append(pid()).append(" -Timeout 60\r\n");
             s.append("Start-Sleep -Milliseconds 700\r\n");
             s.append("$jar = ").append(ps(jar.getAbsolutePath())).append("\r\n");
-            s.append("$new = ").append(ps(downloaded.getAbsolutePath())).append("\r\n");
-            s.append("for ($i = 0; $i -lt 30; $i++) {\r\n");
-            s.append("  try { Copy-Item -LiteralPath $jar -Destination ($jar + '.old') -Force -ErrorAction Stop;"
-                    + " Move-Item -LiteralPath $new -Destination $jar -Force -ErrorAction Stop; break } catch { Start-Sleep -Milliseconds 500 }\r\n");
-            s.append("}\r\n");
+            if (downloaded != null) {
+                s.append("$new = ").append(ps(downloaded.getAbsolutePath())).append("\r\n");
+                s.append("for ($i = 0; $i -lt 30; $i++) {\r\n");
+                s.append("  try { Copy-Item -LiteralPath $jar -Destination ($jar + '.old') -Force -ErrorAction Stop;"
+                        + " Move-Item -LiteralPath $new -Destination $jar -Force -ErrorAction Stop; break } catch { Start-Sleep -Milliseconds 500 }\r\n");
+                s.append("}\r\n");
+            }
             StringBuilder argList = new StringBuilder("@('-jar', ('\"' + $jar + '\"')");
             for (String a : args) argList.append(", ").append(ps("\"" + a.replace("\"", "") + "\""));
             argList.append(")");
@@ -139,8 +141,10 @@ final class Updater {
         } else {
             StringBuilder s = new StringBuilder("#!/bin/sh\n");
             s.append("while kill -0 ").append(pid()).append(" 2>/dev/null; do sleep 1; done\n");
-            s.append("cp -f ").append(sh(jar.getAbsolutePath())).append(' ').append(sh(jar.getAbsolutePath() + ".old")).append('\n');
-            s.append("mv -f ").append(sh(downloaded.getAbsolutePath())).append(' ').append(sh(jar.getAbsolutePath())).append('\n');
+            if (downloaded != null) {
+                s.append("cp -f ").append(sh(jar.getAbsolutePath())).append(' ').append(sh(jar.getAbsolutePath() + ".old")).append('\n');
+                s.append("mv -f ").append(sh(downloaded.getAbsolutePath())).append(' ').append(sh(jar.getAbsolutePath())).append('\n');
+            }
             if (relaunch) {
                 s.append("cd ").append(sh(work)).append(" && nohup ").append(sh(javaExe())).append(" -jar ").append(sh(jar.getAbsolutePath()));
                 for (String a : args) s.append(' ').append(sh(a));

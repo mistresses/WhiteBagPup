@@ -23,6 +23,7 @@ final class Wardrobe {
         HATS.put(PixelPup.Hat.VIKING, "boss500");
         HATS.put(PixelPup.Hat.HALO, "blessed");
         HATS.put(PixelPup.Hat.CROWN, "dungeonmaster");
+        HATS.put(PixelPup.Hat.NIGHTCAP, null);
         OUTFITS.put(PixelPup.Outfit.NONE, null);
         OUTFITS.put(PixelPup.Outfit.BOWTIE, "white10");
         OUTFITS.put(PixelPup.Outfit.BANDANA, "fetch");
@@ -30,6 +31,7 @@ final class Wardrobe {
         OUTFITS.put(PixelPup.Outfit.CAPE, "solo");
         OUTFITS.put(PixelPup.Outfit.GOLD_COLLAR, "white100");
         OUTFITS.put(PixelPup.Outfit.ROYAL_CAPE, "mythic");
+        OUTFITS.put(PixelPup.Outfit.PYJAMAS, null);
     }
 
     static boolean has(PixelPup.Hat h) {

@@ -27,18 +27,22 @@ final class Pixel {
 
     // ------------------------------------------------------------------ palette
 
-    static final Color PAGE = new Color(0xE9E2F3);
-    static final Color SHEET = Color.WHITE;
-    static final Color INK = new Color(0x3A2B4E);
-    static final Color MUTED = Color.BLACK; // was grey (0x84779A); black reads better over a background picture
-    static final Color LINE = new Color(0xD5C9E4);
-    static final Color TAB_OFF = new Color(0xDCD2EA);
-    static final Color PINK = new Color(0xFF6FA8);
-    static final Color PINK_SOFT = new Color(0xFFE2EE);
-    static final Color PINK_INK = new Color(0xD63F7E);
-    static final Color TEAL = new Color(0x2FA88F);
-    static final Color TRACK = new Color(0xF1ECF7);
-    static final Color OTHERS = new Color(0xBBA8F0);
+    static final Color PAGE = Theme.c(0xE9E2F3);
+    static final Color SHEET = Theme.WHITE;
+    static final Color INK = Theme.c(0x3A2B4E);
+    static final Color MUTED = Theme.BLACK; // was grey (0x84779A); black reads better over a background picture
+    static final Color LINE = Theme.c(0xD5C9E4);
+    static final Color TAB_OFF = Theme.c(0xDCD2EA);
+    static final Color PINK = Theme.c(0xFF6FA8);
+    static final Color PINK_SOFT = Theme.c(0xFFE2EE);
+    static final Color PINK_INK = Theme.c(0xD63F7E);
+    static final Color TEAL = Theme.c(0x2FA88F);
+    static final Color TRACK = Theme.c(0xF1ECF7);
+    static final Color OTHERS = Theme.c(0xBBA8F0);
+    /** The picked option in a row of choices: plum with white text by day, soft pink at night. */
+    static final Color CHOSEN = Theme.DARK ? new Color(0x5A2A4F) : new Color(0x3A2B4E);
+    static final Color CHOSEN_EDGE = Theme.DARK ? PINK : CHOSEN;
+    static final Color CHOSEN_TEXT = Theme.DARK ? INK : Color.WHITE;
 
     /**
      * Fill for the card the tab pages sit on. Plain white normally; see-through white when a
@@ -52,7 +56,7 @@ final class Pixel {
 
     static void setCardOpacity(int percent) {
         int a = Math.max(0, Math.min(255, Math.round(percent * 2.55f)));
-        sheetFill = new Color(255, 255, 255, a);
+        sheetFill = Theme.c(255, 255, 255, a);
     }
 
     /** One pixel-art "pixel" in screen pixels. */
@@ -353,7 +357,7 @@ final class Pixel {
             boolean on = isEnabled();
             boolean pressed = down && on;
             int dy = pressed ? 3 : 0;
-            Color fill = !on ? TRACK : primary ? (over ? new Color(0xFF85B6) : PINK) : (over ? PINK_SOFT : SHEET);
+            Color fill = !on ? TRACK : primary ? (over ? Theme.c(0xFF85B6) : PINK) : (over ? PINK_SOFT : SHEET);
             Color edge = on ? INK : LINE;
             if (on && !pressed) frame(g, 0, 3, w, h, edge, edge, 2);
             frame(g, 0, dy, w, h, fill, edge, 2);
@@ -364,7 +368,7 @@ final class Pixel {
             Cute.smooth(g);
             g.setFont(getFont());
             FontMetrics fm = g.getFontMetrics();
-            g.setColor(!on ? MUTED : primary ? Color.WHITE : INK);
+            g.setColor(!on ? MUTED : primary ? Theme.WHITE : INK);
             g.drawString(getText(), (w - fm.stringWidth(getText())) / 2, dy + (h - fm.getHeight()) / 2 + fm.getAscent());
             g.dispose();
         }
@@ -390,7 +394,7 @@ final class Pixel {
             int h = getHeight(), s = 18, y = (h - s) / 2;
             frame(g, 0, y, s, s, isSelected() ? PINK : SHEET, INK, 2);
             if (isSelected()) {
-                g.setColor(Color.WHITE);
+                g.setColor(Theme.WHITE);
                 int[][] tick = {{4, 9}, {6, 11}, {8, 9}, {10, 7}, {12, 5}};
                 for (int[] t : tick) g.fillRect(t[0], y + t[1] - 1, 2, 3);
             }
@@ -437,7 +441,7 @@ final class Pixel {
             Cute.smooth(g);
             g.setFont(getFont());
             FontMetrics fm = g.getFontMetrics();
-            g.setColor(active ? new Color(0x1F7A67) : MUTED);
+            g.setColor(active ? Theme.c(0x1F7A67) : MUTED);
             g.drawString(text, 18, (h - fm.getHeight()) / 2 + fm.getAscent());
             g.dispose();
         }
@@ -451,7 +455,7 @@ final class Pixel {
                 if (getText().isEmpty() && !isFocusOwner()) {
                     Graphics2D p = (Graphics2D) g0.create();
                     Cute.smooth(p);
-                    p.setColor(Color.BLACK);
+                    p.setColor(Theme.BLACK);
                     p.setFont(getFont().deriveFont(Font.ITALIC)); // italic so example text doesn't look like something you typed
                     Insets in = getInsets();
                     FontMetrics fm = p.getFontMetrics();
@@ -525,7 +529,7 @@ final class Pixel {
             boolean on = isSelected();
             int s = SIZE;
             if (on) frame(g, 0, 3, s, s, INK, INK, 2);
-            frame(g, 0, 0, s, s, on ? PINK_SOFT : (over ? new Color(0xF7F3FB) : SHEET), on ? INK : (over ? INK : LINE), on ? 3 : 2);
+            frame(g, 0, 0, s, s, on ? PINK_SOFT : (over ? Theme.c(0xF7F3FB) : SHEET), on ? INK : (over ? INK : LINE), on ? 3 : 2);
             if (sprite == null) {
                 BufferedImage raw = LootImage.sprites.sprite(type.spriteType());
                 if (raw != null) sprite = LootImage.pixelIcon(raw, 40);
@@ -544,7 +548,7 @@ final class Pixel {
             if (type.name().startsWith("BOOSTED")) {
                 // small "+" tab in the corner marks a boosted bag
                 frame(g, s - 17, 4, 13, 13, on ? PINK : SHEET, on ? INK : LINE, 2);
-                g.setColor(on ? Color.WHITE : MUTED);
+                g.setColor(on ? Theme.WHITE : MUTED);
                 g.fillRect(s - 12, 7, 3, 7);
                 g.fillRect(s - 14, 9, 7, 3);
             }
@@ -747,7 +751,7 @@ final class Pixel {
                 // tab: outline on three sides; the selected tab runs into the sheet
                 g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                 Color edge = on ? LINE : (i == hover ? INK : TAB_OFF);
-                Color fill = on ? sheetFill : (i == hover ? new Color(0xEFE9F7) : TAB_OFF);
+                Color fill = on ? sheetFill : (i == hover ? Theme.c(0xEFE9F7) : TAB_OFF);
                 Shape inner = stepped(x + 2, top + 2, w - 4, rowY + H - top + 6, 2);
                 java.awt.geom.Area ring = new java.awt.geom.Area(stepped(x, top, w, rowY + H - top + 6, 2));
                 ring.subtract(new java.awt.geom.Area(inner));
@@ -763,7 +767,7 @@ final class Pixel {
                     Cute.smooth(g);
                     g.setFont(Cute.font(Font.BOLD, 11));
                     FontMetrics fm = g.getFontMetrics();
-                    g.setColor(Color.WHITE);
+                    g.setColor(Theme.WHITE);
                     g.drawString(n, bx + (bw - fm.stringWidth(n)) / 2, by + 12);
                 }
                 x += w + gap;

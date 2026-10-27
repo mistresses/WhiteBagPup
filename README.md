@@ -97,6 +97,7 @@ Vault, Badges), **Chat** (Chat, Trades), **Events** and **Puzzle**.
   and bag posts say when an item is new to your collection.
 - **Dungeons**: every dungeon side by side, with its difficulty, what drops the portal and the UT/ST items there. Hover over an item to see if it's in your collection.
 - **Wardrobe** (under Me): hats and outfits for the pup, unlocked by badges.
+- **Dark mode**: a tick box on Home (the pup restarts to switch, and wears pyjamas at night).
 - **Titles** (under Me): every title in the game, with the ones you've worn ticked off.
 - **Badges**: pup achievements that unlock as you play, announced on Discord.
 - **Puzzle**: a solver for The Shatters' Puzzle Room: the towers to shoot to turn them all green.

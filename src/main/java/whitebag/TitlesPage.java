@@ -84,7 +84,7 @@ final class TitlesPage extends MoreTabs.Page {
             for (Map.Entry<Integer, List<Titles.Info>> e : byTier.entrySet()) {
                 JLabel tier = new JLabel(e.getKey() > 0 ? "Tier " + e.getKey() : "No tier");
                 tier.setFont(Cute.font(Font.BOLD, 12));
-                tier.setForeground(new Color(0x8A7F99));
+                tier.setForeground(Theme.c(0x8A7F99));
                 list.add(left(tier));
                 gap(4);
                 JPanel grid = new JPanel(new GridLayout(0, 4, 8, 8));
@@ -121,10 +121,10 @@ final class TitlesPage extends MoreTabs.Page {
             Cute.smooth(g);
             int w = getWidth(), h = getHeight();
             boolean on = since != null;
-            Color accent = t.kind.equals("prefix") ? new Color(0x6EC6FF) : t.kind.equals("suffix") ? new Color(0xB388FF) : Pixel.PINK;
-            g.setColor(now ? Pixel.PINK_SOFT : on ? Cute.mix(Color.WHITE, accent, 0.18) : new Color(0xF4F2F7));
+            Color accent = t.kind.equals("prefix") ? Theme.c(0x6EC6FF) : t.kind.equals("suffix") ? Theme.c(0xB388FF) : Pixel.PINK;
+            g.setColor(now ? Pixel.PINK_SOFT : on ? Cute.mix(Theme.WHITE, accent, 0.18) : Theme.c(0xF4F2F7));
             g.fill(new RoundRectangle2D.Double(0, 0, w - 1, h - 1, 12, 12));
-            g.setColor(now ? Pixel.PINK : on ? accent : new Color(0xE2DCEA));
+            g.setColor(now ? Pixel.PINK : on ? accent : Theme.c(0xE2DCEA));
             g.setStroke(new BasicStroke(on ? 2f : 1.2f));
             g.draw(new RoundRectangle2D.Double(1, 1, w - 3, h - 3, 11, 11));
             g.setFont(Cute.font(on ? Font.BOLD : Font.PLAIN, 12));
@@ -133,13 +133,13 @@ final class TitlesPage extends MoreTabs.Page {
             int room = w - (on ? 34 : 16);
             while (fm.stringWidth(s) > room && s.length() > 3) s = s.substring(0, s.length() - 1);
             if (!s.equals(t.words)) s = s.trim() + "…";
-            g.setColor(on ? Pixel.INK : new Color(0x9C92AC));
+            g.setColor(on ? Pixel.INK : Theme.c(0x9C92AC));
             g.drawString(s, 10, (h + fm.getAscent()) / 2 - 2);
             if (now) {
                 Cute.drawHeart(g, w - 20, (h - 10) / 2, 10, Pixel.PINK);
             } else if (on) {
                 // a little tick
-                g.setColor(Cute.mix(accent, Color.BLACK, 0.3));
+                g.setColor(Cute.mix(accent, Theme.BLACK, 0.3));
                 g.setStroke(new BasicStroke(2.2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
                 int x = w - 20, y = h / 2;
                 g.drawLine(x, y, x + 3, y + 3);

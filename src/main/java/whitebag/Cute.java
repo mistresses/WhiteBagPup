@@ -412,16 +412,16 @@ final class Cute {
             PixelPup.Hat hat = PixelPup.hatFor(java.time.Instant.ofEpochMilli(now).atZone(java.time.ZoneId.systemDefault()).toLocalDate());
             boolean wagFast = (now / 160) % 2 == 0, wagSlow = (now / 380) % 2 == 0;
             if (celebrateStart >= 0 && now - celebrateStart < CELEBRATE_MS)
-                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.wornOutfit);
+                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.outfitNow());
             if (petStart >= 0 && now - petStart < PET_MS)
-                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.wornOutfit);
+                return PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, wagFast ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.outfitNow());
             if (!watching)
-                return PixelPup.frame(PixelPup.Face.CLOSED, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat, PixelPup.wornOutfit);
+                return PixelPup.frame(PixelPup.Face.CLOSED, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat, PixelPup.outfitNow());
             if (isSad())
-                return PixelPup.frame(PixelPup.Face.SAD, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat, PixelPup.wornOutfit);
+                return PixelPup.frame(PixelPup.Face.SAD, PixelPup.Ears.DOWN, PixelPup.Tail.DOWN, hat, PixelPup.outfitNow());
             boolean blink = now % 4300 < 140;
             return PixelPup.frame(blink ? PixelPup.Face.CLOSED : PixelPup.Face.OPEN, PixelPup.Ears.UP,
-                    wagSlow ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.wornOutfit);
+                    wagSlow ? PixelPup.Tail.UP : PixelPup.Tail.SIDE, hat, PixelPup.outfitNow());
         }
 
         @Override
@@ -440,7 +440,7 @@ final class Cute {
                 for (int i = 0; i < 3; i++) {
                     double ph = ((now / 1000.0) + i * 0.66) % 2.0 / 2.0;
                     int zx = px + PUP_W - 2 + (int) (ph * 14), zy = py + PUP_H / 3 + 6 - (int) (ph * 30);
-                    Pixel.text(g, "z", zx, zy, 2 + (ph > 0.5 ? 1 : 0), new Color(0x84, 0x77, 0x9A, (int) (255 * (1 - ph))));
+                    Pixel.text(g, "z", zx, zy, 2 + (ph > 0.5 ? 1 : 0), Theme.c(0x84, 0x77, 0x9A, (int) (255 * (1 - ph))));
                 }
             }
             // heart above the head while being petted
@@ -467,9 +467,9 @@ final class Cute {
             smooth(g);
             // the version, small, after the name
             g.setFont(font(Font.BOLD, 12));
-            g.setColor(new Color(0x8A7F99));
+            g.setColor(Theme.c(0x8A7F99));
             g.drawString("v" + UpdateCheck.VERSION, tx + Pixel.textWidth("white bag pup", 4) + 10, getHeight() - 88 + Pixel.capHeight(4));
-            g.setColor(Color.BLACK); // black so it stands out over the background picture
+            g.setColor(Theme.BLACK); // black so it stands out over the background picture
             g.setFont(font(Font.PLAIN, 14));
             g.drawString(watching ? (isSad() ? "Still looking for a white bag..." : "Watching for white bags.")
                     : "Asleep. Press Start watching to wake the pup.", tx + 1, getHeight() - 32);

@@ -96,6 +96,7 @@ public class WhiteBagNotifier {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception ignored) {
         }
+        Theme.installUi();
         WhiteBagNotifier app = new WhiteBagNotifier();
         SwingUtilities.invokeLater(app::buildGui);
         app.loadAssets();
@@ -118,7 +119,7 @@ public class WhiteBagNotifier {
                 + "and time played), posted to its own channel, with pictures of the loot in one post. Only what happened while the app was running counts; "
                 + "if it's closed when one is due, it's posted next time you open it.</div></html>");
         intro.setFont(Cute.font(Font.PLAIN, 12));
-        intro.setForeground(Color.BLACK);
+        intro.setForeground(Theme.BLACK);
         section(home, intro, 6);
 
         JPanel urlRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -242,7 +243,7 @@ public class WhiteBagNotifier {
         });
         section(home, join, 12);
         JLabel joinNote = Pixel.note("Needs a bot recap link. Shares your in-game name and totals with the bot.");
-        joinNote.setForeground(Color.BLACK);
+        joinNote.setForeground(Theme.BLACK);
         section(home, joinNote, 2);
     }
 
@@ -250,7 +251,7 @@ public class WhiteBagNotifier {
     private void buildBadgeHook(JPanel hooks) {
         section(hooks, new Pixel.Heading("badges", 2), 26);
         JLabel intro = Pixel.note("New badges are posted here. Leave it empty to post them to the bag webhook.");
-        intro.setForeground(Color.BLACK);
+        intro.setForeground(Theme.BLACK);
         section(hooks, intro, 6);
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         row.setOpaque(false);
@@ -346,7 +347,7 @@ public class WhiteBagNotifier {
     private void buildBackups(JPanel home) {
         section(home, new Pixel.Heading("backups", 2), 26);
         JLabel intro = Pixel.note("Your logs, badges, settings and sounds, zipped into the backups folder (the last " + Backup.KEEP + " are kept).");
-        intro.setForeground(Color.BLACK);
+        intro.setForeground(Theme.BLACK);
         section(home, intro, 6);
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         row.setOpaque(false);
@@ -389,6 +390,38 @@ public class WhiteBagNotifier {
             saveSettings();
         });
         section(home, autoUpdate, 2);
+        Pixel.Check dark = new Pixel.Check("Dark mode (the pup wears pyjamas)", Theme.DARK);
+        dark.addActionListener(e -> {
+            settings.setProperty("theme.dark", String.valueOf(dark.isSelected()));
+            saveSettings();
+            if (dark.isSelected() == Theme.DARK) return;
+            int ok = JOptionPane.showConfirmDialog(frame, "The pup needs to restart to switch to " + (dark.isSelected() ? "dark" : "light")
+                    + " mode.\nRestart now?", "Dark mode", JOptionPane.YES_NO_OPTION);
+            if (ok == JOptionPane.YES_OPTION) restartPup();
+            else log("*nods* " + (dark.isSelected() ? "dark" : "light") + " mode starts next time you open the pup.");
+        });
+        section(home, dark, 2);
+    }
+
+    /** Closes and opens the pup again (onto a waiting update, if there is one). */
+    private void restartPup() {
+        java.io.File jar = Updater.runningJar();
+        if (jar == null) {
+            log("*tilts head* couldn't find the pup's jar to restart it. Close and open the pup to finish.");
+            return;
+        }
+        try {
+            saveSettings();
+            handedOver = true;
+            boolean update = pendingUpdate != null && pendingUpdate.isFile();
+            Updater.handOver(jar, update ? pendingUpdate : null);
+            log("*stretches* restarting the pup...");
+            stopSniffer();
+            new Timer(800, ev -> System.exit(0)).start();
+        } catch (Exception ex) {
+            handedOver = false;
+            log("*whimper* couldn't restart: " + ex.getMessage() + ". Close and open the pup to finish.");
+        }
     }
 
     /** Picks a backup and puts it back (after backing up what's there now), then closes so it opens fresh. */
@@ -688,7 +721,7 @@ public class WhiteBagNotifier {
         TcpStreamErrorHandler.INSTANCE.setErrorMessageHandler((error, dump) -> log("*whimper* sniffer error: " + error));
         TcpStreamErrorHandler.INSTANCE.setErrorStopHandler(() -> SwingUtilities.invokeLater(this::stopSniffer));
 
-        frame = new JFrame("White Bag Pup " + UpdateCheck.VERSION);
+        frame = new JFrame("White Bag Pup");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setIconImages(java.util.Arrays.asList(Cute.catIcon(16), Cute.catIcon(32), Cute.catIcon(48), Cute.catIcon(64), Cute.catIcon(128), Cute.catIcon(256)));
 
@@ -740,6 +773,10 @@ public class WhiteBagNotifier {
                 else if (pos.equals("left")) x = 0;
                 else if (pos.equals("right")) x = W - w;
                 g0.drawImage(scaled, x, y, null);
+                if (Theme.DARK) { // dim the picture so light text reads over it
+                    g0.setColor(new Color(0x16, 0x12, 0x1D, 150));
+                    g0.fillRect(0, 0, W, H);
+                }
             }
         };
         backdrop.setBackground(Pixel.PAGE);
@@ -815,7 +852,7 @@ public class WhiteBagNotifier {
 
         // ---- pointer to the Webhooks tab
         JLabel hookNote = Pixel.note("Discord webhooks (bag posts, recaps and badges) are on the Webhooks tab.");
-        hookNote.setForeground(Color.BLACK);
+        hookNote.setForeground(Theme.BLACK);
         section(home, hookNote, 0);
 
         // ---- Discord
@@ -911,12 +948,12 @@ public class WhiteBagNotifier {
         gridWrap.add(grid);
         section(home, gridWrap, 12);
         watchingLabel = Pixel.note("");
-        watchingLabel.setForeground(Color.BLACK); // black so it stands out over the background picture
+        watchingLabel.setForeground(Theme.BLACK); // black so it stands out over the background picture
         section(home, watchingLabel, 8);
         applyWatched();
         // only post bags to Discord with an item of at least this rarity (enchantment slots)
         JLabel rarityLabel = Pixel.label("Post to Discord only when an item is at least");
-        rarityLabel.setForeground(Color.BLACK);
+        rarityLabel.setForeground(Theme.BLACK);
         section(home, rarityLabel, 12);
         JPanel rarityRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         rarityRow.setOpaque(false);

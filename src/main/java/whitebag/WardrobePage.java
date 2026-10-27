@@ -78,9 +78,9 @@ final class WardrobePage extends MoreTabs.Page {
         protected void paintComponent(Graphics g0) {
             Graphics2D g = (Graphics2D) g0.create();
             Cute.smooth(g);
-            g.setColor(new Color(0xF8F4FC));
+            g.setColor(Theme.c(0xF8F4FC));
             g.fill(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 18, 18));
-            BufferedImage f = PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, PixelPup.Tail.UP, shownHat(), PixelPup.wornOutfit);
+            BufferedImage f = PixelPup.frame(PixelPup.Face.HAPPY, PixelPup.Ears.UP, PixelPup.Tail.UP, shownHat(), PixelPup.outfitNow());
             PixelPup.draw(g, f, 12, 8, 6);
             g.dispose();
         }
@@ -124,9 +124,9 @@ final class WardrobePage extends MoreTabs.Page {
             Graphics2D g = (Graphics2D) g0.create();
             Cute.smooth(g);
             int w = getWidth(), h = getHeight();
-            g.setColor(worn ? Pixel.PINK_SOFT : open ? (over ? new Color(0xF7F3FB) : Color.WHITE) : new Color(0xF4F2F7));
+            g.setColor(worn ? Pixel.PINK_SOFT : open ? (over ? Theme.c(0xF7F3FB) : Theme.WHITE) : Theme.c(0xF4F2F7));
             g.fill(new RoundRectangle2D.Double(0, 0, w - 1, h - 1, 14, 14));
-            g.setColor(worn ? Pixel.PINK : open ? Pixel.LINE : new Color(0xE2DCEA));
+            g.setColor(worn ? Pixel.PINK : open ? Pixel.LINE : Theme.c(0xE2DCEA));
             g.setStroke(new BasicStroke(worn ? 2.4f : 1.4f));
             g.draw(new RoundRectangle2D.Double(1, 1, w - 3, h - 3, 13, 13));
             PixelPup.Hat hh = hat != null ? hat : (outfit != null ? PixelPup.Hat.NONE : null);
@@ -137,7 +137,7 @@ final class WardrobePage extends MoreTabs.Page {
             PixelPup.draw(g, f, (w - PixelPup.W * 3) / 2, 4, 3);
             g.setFont(Cute.font(Font.BOLD, 12));
             FontMetrics fm = g.getFontMetrics();
-            g.setColor(open ? Pixel.INK : new Color(0x9C92AC));
+            g.setColor(open ? Pixel.INK : Theme.c(0x9C92AC));
             g.drawString(label, (w - fm.stringWidth(label)) / 2, h - (open ? 12 : 22));
             if (!open) {
                 g.setFont(Cute.font(Font.PLAIN, 10));

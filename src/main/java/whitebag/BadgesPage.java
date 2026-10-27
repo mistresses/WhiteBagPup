@@ -94,15 +94,15 @@ final class BadgesPage extends MoreTabs.Page {
             Cute.smooth(g);
             int w = getWidth(), h = getHeight();
             boolean on = u != null;
-            g.setColor(on ? Cute.mix(Color.WHITE, b.tier.color, 0.10) : new Color(0xF7F5FA));
+            g.setColor(on ? Cute.mix(Theme.WHITE, b.tier.color, 0.10) : Theme.c(0xF7F5FA));
             g.fill(new RoundRectangle2D.Double(0, 0, w, h, 16, 16));
-            g.setColor(on ? b.tier.color : new Color(0xE2DCEA));
+            g.setColor(on ? b.tier.color : Theme.c(0xE2DCEA));
             g.setStroke(new BasicStroke(on ? 2.2f : 1.4f));
             g.draw(new RoundRectangle2D.Double(1, 1, w - 2, h - 2, 15, 15));
             medal(g, 12, 10, 50, b, on);
             int tx = 74;
             g.setFont(Cute.font(Font.BOLD, 14));
-            g.setColor(on ? Pixel.INK : new Color(0x8A7F99));
+            g.setColor(on ? Pixel.INK : Theme.c(0x8A7F99));
             g.drawString(b.name, tx, 24);
             g.setFont(Cute.font(Font.PLAIN, 12));
             String d = b.desc;
@@ -111,7 +111,7 @@ final class BadgesPage extends MoreTabs.Page {
             g.drawString(d.equals(b.desc) ? d : d + "…", tx, 42);
             if (on) {
                 g.setFont(Cute.font(Font.BOLD, 11));
-                g.setColor(Cute.mix(b.tier.color, Color.BLACK, 0.25));
+                g.setColor(Cute.mix(b.tier.color, Theme.BLACK, 0.25));
                 g.drawString(u.quiet ? "Unlocked (earned before badges)" : "Unlocked " + new SimpleDateFormat("d MMM yyyy", Locale.ROOT).format(new Date(u.at * 1000L)), tx, 60);
             } else if (have >= b.need) {
                 // earned, but not checked yet (the pup checks while it's watching the game)
@@ -120,13 +120,13 @@ final class BadgesPage extends MoreTabs.Page {
                 g.drawString("Ready! Unlocks when you next play", tx, 60);
             } else {
                 int bw = Math.max(40, w - tx - 70);
-                g.setColor(new Color(0xEEE8F3));
+                g.setColor(Theme.c(0xEEE8F3));
                 g.fill(new RoundRectangle2D.Double(tx, 52, bw, 7, 7, 7));
                 g.setColor(Cute.PINK);
                 int fw = (int) Math.round(bw * Math.min(1, have / (double) b.need));
                 if (fw > 0) g.fill(new RoundRectangle2D.Double(tx, 52, Math.max(7, fw), 7, 7, 7));
                 g.setFont(Cute.font(Font.BOLD, 11));
-                g.setColor(new Color(0x8A7F99));
+                g.setColor(Theme.c(0x8A7F99));
                 g.drawString(String.format(Locale.ROOT, "%,d / %,d", have, b.need), tx + bw + 8, 60);
             }
             g.dispose();
@@ -135,9 +135,9 @@ final class BadgesPage extends MoreTabs.Page {
         }
 
         static void medal(Graphics2D g, int x, int y, int s, Badges.Badge b, boolean on) {
-            Color c = on ? b.tier.color : new Color(0xD3CCDD);
+            Color c = on ? b.tier.color : Theme.c(0xD3CCDD);
             // ribbon
-            g.setColor(on ? Cute.mix(c, Pixel.PINK, 0.5) : new Color(0xE4DEEC));
+            g.setColor(on ? Cute.mix(c, Pixel.PINK, 0.5) : Theme.c(0xE4DEEC));
             GeneralPath rib = new GeneralPath();
             rib.moveTo(x + s * 0.30, y + s * 0.55);
             rib.lineTo(x + s * 0.18, y + s * 1.02);
@@ -153,22 +153,22 @@ final class BadgesPage extends MoreTabs.Page {
             // coin
             double r = s * 0.40;
             double cx = x + s / 2.0, cy = y + s * 0.42;
-            g.setColor(Cute.mix(c, Color.BLACK, 0.22));
+            g.setColor(Cute.mix(c, Theme.BLACK, 0.22));
             g.fill(new Ellipse2D.Double(cx - r, cy - r + 2, r * 2, r * 2));
             g.setColor(c);
             if (on && b.tier == Badges.Tier.PRISMATIC) {
                 // a rainbow coin for the hardest badges
                 float[] at = {0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f};
-                Color[] rainbow = {new Color(0xFF6FA8), new Color(0xFFB347), new Color(0xFFE066), new Color(0x7BDCB5),
-                        new Color(0x6EC6FF), new Color(0xB388FF)};
+                Color[] rainbow = {Theme.c(0xFF6FA8), Theme.c(0xFFB347), Theme.c(0xFFE066), Theme.c(0x7BDCB5),
+                        Theme.c(0x6EC6FF), Theme.c(0xB388FF)};
                 g.setPaint(new java.awt.LinearGradientPaint((float) (cx - r), (float) (cy - r), (float) (cx + r), (float) (cy + r), at, rainbow));
             }
             g.fill(new Ellipse2D.Double(cx - r, cy - r, r * 2, r * 2));
             g.setPaint(c);
-            g.setColor(Cute.mix(c, Color.WHITE, 0.45));
+            g.setColor(Cute.mix(c, Theme.WHITE, 0.45));
             g.setStroke(new BasicStroke(2f));
             g.draw(new Ellipse2D.Double(cx - r + 4, cy - r + 4, r * 2 - 8, r * 2 - 8));
-            g.setColor(on ? Color.WHITE : new Color(0xF4F1F8));
+            g.setColor(on ? Theme.WHITE : Theme.c(0xF4F1F8));
             if (b.glyph.equals("paw")) {
                 paw(g, cx, cy, s * 0.30);
                 return;

@@ -18,7 +18,7 @@ final class PixelPup {
     enum Tail { UP, SIDE, DOWN }
     enum Hat {
         NONE("No hat"), WITCH("Witch hat"), SANTA("Santa hat"), PARTY("Party hat"), BOW("Pink bow"), FLOWERS("Flower crown"),
-        TOPHAT("Top hat"), VIKING("Viking helmet"), HALO("Halo"), CROWN("Crown");
+        TOPHAT("Top hat"), VIKING("Viking helmet"), HALO("Halo"), CROWN("Crown"), NIGHTCAP("Nightcap");
         final String label;
 
         Hat(String label) {
@@ -28,7 +28,7 @@ final class PixelPup {
 
     enum Outfit {
         NONE("Just the collar"), BOWTIE("Bow tie"), BANDANA("Red bandana"), SCARF("Cosy scarf"), CAPE("Hero cape"),
-        GOLD_COLLAR("Gold collar"), ROYAL_CAPE("Royal cape");
+        GOLD_COLLAR("Gold collar"), ROYAL_CAPE("Royal cape"), PYJAMAS("Pyjamas");
         final String label;
 
         Outfit(String label) {
@@ -44,6 +44,12 @@ final class PixelPup {
     static Hat hatFor(java.time.LocalDate day) {
         Hat h = wornHat;
         return h != null ? h : seasonalHat(day);
+    }
+
+    /** What the pup wears right now: in dark mode it's in pyjamas unless you picked something else. */
+    static Outfit outfitNow() {
+        Outfit o = wornOutfit;
+        return o == Outfit.NONE && Theme.DARK ? Outfit.PYJAMAS : o;
     }
 
     /** Canvas size in sprite pixels. The body sits 8 rows down to leave room for ears and hats. */
@@ -87,6 +93,8 @@ final class PixelPup {
         PAL.put('S', 0xFFFFE08A); // scarf stripe
         PAL.put('u', 0xFF7A3FD0); // royal purple
         PAL.put('U', 0xFF5A2BA0); // royal purple shade
+        PAL.put('z', 0xFFA9C1FF); // pyjamas
+        PAL.put('Z', 0xFF7E97E6); // pyjama stripes
     }
 
     // ---- hats: 12 wide, drawn over the top of the head (the bottom row sits on the head's outline)
@@ -192,6 +200,25 @@ final class PixelPup {
             ".....kGGk...",
             ".....kjjk...",
             "......kk....",
+    };
+    /** Striped pyjamas over the lower body (rows 11-15 of the body). */
+    private static final String[] PYJAMAS = {
+            "....zZzzzyzzzZzZ....",
+            "....zZzzzzzzzZzZ....",
+            "....zZzzzyzzzZzZ....",
+            "....zZz.zzzz.zZZ....",
+            "....ZZZ.ZZZZ.ZZZ....",
+    };
+    private static final String[] NIGHTCAP = {
+            "........kk..",
+            ".......kyyk.",
+            "......kzkk..",
+            ".....kzZk...",
+            "....kzzZk...",
+            "...kzzzzZk..",
+            "..kzZzzZzzk.",
+            "kwwwwwwwwwwk",
+            "kkkkkkkkkkkk",
     };
     private static final String[] ERMINE = {
             "kwwkwwwwwwkwwk",
@@ -304,6 +331,7 @@ final class PixelPup {
         else layer(img, TAIL_DOWN, bx + 15, by + 13);
         // perked ears sit behind the head
         layer(img, BODY, bx, by);
+        if (outfit == Outfit.PYJAMAS) layer(img, PYJAMAS, bx, by + 11);
         face(img, face, bx, by);
         if (ears == Ears.UP) {
             layer(img, EAR_UP, bx, by - 1);
@@ -343,6 +371,7 @@ final class PixelPup {
             case VIKING: return VIKING;
             case HALO: return HALO;
             case CROWN: return CROWN;
+            case NIGHTCAP: return NIGHTCAP;
             default: return null;
         }
     }

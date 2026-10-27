@@ -3,18 +3,25 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.7.0
+
+- **Dark mode**: tick "Dark mode" on Home and the pup restarts in night colours (and wears pyjamas, unless you've
+  dressed it in something else). A background picture is dimmed so the text stays easy to read. Discord posts and
+  pictures stay the same.
+- New in the Wardrobe for everyone: a Nightcap and Pyjamas.
+
 ## 2.6.10
 
 - The **Collection** now counts items you already own, not just ones you looted while the pup was watching: everything
   in your vault, your seasonal vault (open it on a seasonal character), your gift chest, and on your characters (gear,
   inventory and backpack). Open each vault once and log in each character for a minute to fill it in. Hover an item to
   see where it was seen. Kept in owned-items.txt.
+- The window's title bar just says "White Bag Pup" again (the version is still at the top of the pup and in the diary).
 - Dungeons tab, collection badges and the friends leaderboard's collection count use the same thing.
 
 ## 2.6.9
 
-- The version shows next to "White Bag Pup" at the top, in the window's title bar, and in the diary when the pup
-  opens.
+- The version shows next to "White Bag Pup" at the top and in the diary when the pup opens.
 
 ## 2.6.8
 
