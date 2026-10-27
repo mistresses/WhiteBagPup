@@ -252,8 +252,10 @@ final class LogTabs {
                 ItemInfo item = items.get(i);
                 boolean special = !item.rarity.isEmpty();
                 boolean enchanted = item.enchant != Enchant.NONE;
-                Color edge = enchanted ? item.enchant.color : special ? item.rarityColor : Pixel.LINE;
-                Pixel.frame(g, x, y, SLOT, SLOT, enchanted || special ? Cute.mix(Theme.WHITE, edge, 0.14) : Pixel.SHEET, edge, 2);
+                // the frame's colour is the enchantment rarity; an item with no slots gets a plain frame (its UT/ST
+                // tag below still says what it is), so a UT isn't mistaken for a Legendary
+                Color edge = enchanted ? item.enchant.color : Pixel.LINE;
+                Pixel.frame(g, x, y, SLOT, SLOT, enchanted ? Cute.mix(Theme.WHITE, edge, 0.14) : Pixel.SHEET, edge, 2);
                 BufferedImage ic = icons.get(i);
                 if (ic != null) {
                     g.drawImage(ic, x + (SLOT - ic.getWidth()) / 2, y + (SLOT - ic.getHeight()) / 2, null);

@@ -410,6 +410,21 @@ final class AboutMe {
         return h;
     }
 
+    /** A tiny "UT" / "ST" / "T12" tag in a slot's corner, for items whose frame colour shows enchantment rarity. */
+    static void rarityTag(Graphics2D g0, int x, int y, String text, Color color) {
+        if (text == null || !text.matches("UT|ST|T\\d{1,2}")) return;
+        Graphics2D g = (Graphics2D) g0.create();
+        Cute.smooth(g);
+        g.setFont(Cute.font(Font.BOLD, 8));
+        FontMetrics fm = g.getFontMetrics();
+        int w = fm.stringWidth(text) + 5, h = fm.getAscent() + 1;
+        g.setColor(color);
+        g.fillRoundRect(x, y, w, h, 4, 4);
+        g.setColor(Cute.mix(color, Color.BLACK, 0.55));
+        g.drawString(text, x + 3, y + fm.getAscent() - 1);
+        g.dispose();
+    }
+
     static <T extends JComponent> T left(T c) {
         c.setAlignmentX(Component.LEFT_ALIGNMENT);
         return c;
@@ -839,6 +854,10 @@ final class AboutMe {
                 boolean done = cross || (have != null && have[i]);
                 Color fill = done ? Theme.c(0xDDF5EC) : Pixel.SHEET;
                 Enchant en = enchants != null && i < enchants.length && enchants[i] != null ? enchants[i] : Enchant.NONE;
+                // where rarity is known (trades, gear), the frame's colour is the rarity: an item with no
+                // enchantment slots gets a plain frame and a small UT/ST tag, so a UT isn't mistaken for a Legendary
+                boolean tagged = enchants != null && special;
+                if (tagged) special = false;
                 Color edge = en != Enchant.NONE ? en.color : item != null ? item.rarityColor : Pixel.LINE;
                 boolean tinted = (special || en != Enchant.NONE) && !done;
                 Pixel.frame(g, x, 0, SLOT, SLOT, tinted ? Cute.mix(Theme.WHITE, edge, 0.14) : fill,
@@ -852,6 +871,7 @@ final class AboutMe {
                         g.fillRect(x + 4 + k * 7, SLOT - 8, 4, 4);
                     }
                 }
+                if (tagged) rarityTag(g, x + 3, 3, item.rarity, item.rarityColor);
                 BufferedImage ic = icons.get(i);
                 if (ic != null) {
                     Composite old = g.getComposite();

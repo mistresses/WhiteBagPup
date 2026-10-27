@@ -3,6 +3,17 @@
 What's new in each version of White Bag Pup, newest first.
 Download the latest from [Releases](../../releases/latest).
 
+## 2.8.5
+
+- In trades, your gear (About Me) and the bag log, a slot's frame colour now only means its enchantment rarity
+  (green Uncommon, blue Rare, purple Legendary, gold Divine). Items with no enchantment slots get a plain frame. UT
+  and ST items have a small tag in the corner instead, so a 0-slot UT no longer looks like a Legendary.
+
+## 2.8.4
+
+- Took out the Battle Pass test from 2.8.3: it showed the game loads the Battle Pass from its website, so the pup
+  can't see it.
+
 ## 2.8.2
 
 - **Dungeons** and **Collection** only list what really drops in each dungeon. Holiday event items (Oryxmas,
